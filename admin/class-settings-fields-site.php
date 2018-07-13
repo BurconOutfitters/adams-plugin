@@ -92,7 +92,7 @@ class Settings_Fields_Site {
 			sprintf(
 				'%1s %2s',
 				get_bloginfo( 'name' ),
-				__( 'Extended Settings', 'controlled-chaos-addon' )
+				__( 'Extended Settings', 'adams-plugin' )
 			),
 			[ $this, 'adams_field_section_extended_callback' ],
 			'adams-site-extended'
@@ -101,11 +101,11 @@ class Settings_Fields_Site {
 		// Add a demo field to the new section.
 		add_settings_field(
 			'adams_demo_extended_field',
-			__( 'Demo Field', 'controlled-chaos-addon' ),
+			__( 'Demo Field', 'adams-plugin' ),
 			[ $this, 'adams_demo_extended_field_callback' ],
 			'adams-site-extended',
 			'adams-site-extended',
-			[ esc_html__( 'Check this box', 'controlled-chaos-addon' ) ]
+			[ esc_html__( 'Check this box', 'adams-plugin' ) ]
 		);
 
 		register_setting(
@@ -122,15 +122,15 @@ class Settings_Fields_Site {
 		// Hide this plugin's settings page.
 		add_settings_field(
 			'adams_hide_addon_settings',
-			__( 'Hide Addon Settings', 'controlled-chaos-addon' ),
+			__( 'Hide Addon Settings', 'adams-plugin' ),
 			[ $this, 'adams_hide_addon_settings_callback' ],
 			ADAMS_PARENT_PREFIX . '-site-admin-menu',
 			ADAMS_PARENT_PREFIX . '-site-admin-menu',
 			[ sprintf(
 				'%1s %2s %3s',
-				esc_html__( 'Hide the', 'controlled-chaos-addon' ),
+				esc_html__( 'Hide the', 'adams-plugin' ),
 				ADAMS_CHILD_NAME,
-				esc_html__( 'link in the admin menu', 'controlled-chaos-addon' )
+				esc_html__( 'link in the admin menu', 'adams-plugin' )
 			) ]
 		);
 
@@ -153,9 +153,9 @@ class Settings_Fields_Site {
 
 		$html = sprintf(
 			'<p class="description">%1s %2s %3s</p>',
-			esc_html( 'This demo tab was added by the', 'controlled-chaos-addon' ),
+			esc_html( 'This demo tab was added by the', 'adams-plugin' ),
 			ADAMS_PARENT_NAME,
-			esc_html( 'plugin.', 'controlled-chaos-addon' )
+			esc_html( 'plugin.', 'adams-plugin' )
 		);
 
 		echo $html;

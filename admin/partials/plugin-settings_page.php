@@ -27,6 +27,6 @@ if ( ! defined( 'WPINC' ) ) {
 	); ?>
 
 	<!-- Page description -->
-    <p class="description"><?php esc_html_e( 'A WordPress starter plugin for building child or addon plugins.', 'controlled-chaos-addon' ); ?></p>
+    <p class="description"><?php esc_html_e( 'A WordPress starter plugin for building child or addon plugins.', 'adams-plugin' ); ?></p>
 
 </div>

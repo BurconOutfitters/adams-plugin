@@ -116,7 +116,7 @@ class Settings {
 				'<a href="?page=%1s-settings&tab=extended" class="nav-tab %2s"><span class="dashicons dashicons-lightbulb"></span> %3s</a>',
 				CCP_ADMIN_SLUG,
 				$active_tab == 'extended' ? 'nav-tab-active' : '',
-				esc_html__( 'Extended', 'controlled-chaos-addon' )
+				esc_html__( 'Extended', 'adams-plugin' )
 			)
 		];
 
@@ -197,7 +197,7 @@ class Settings {
 
 		// Return new button text if on the new tab.
 		if ( 'extended' == $active_tab ) {
-			$save = __( 'Save Extended', 'controlled-chaos-addon' );
+			$save = __( 'Save Extended', 'adams-plugin' );
 			return $save;
 		}
 

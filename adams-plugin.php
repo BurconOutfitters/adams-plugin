@@ -2,8 +2,6 @@
 /**
  * Adams' Pack Station plugin
  *
- * Change this header information to suit your needs.
- *
  * @package     Adams_Plugin
  * @version     1.0.0
  * @author      Greg Sweet <greg@ccdzine.com>
@@ -20,7 +18,7 @@
  * Author URI:  http://ccdzine.com/
  * License:     GPL-3.0+
  * License URI: https://www.gnu.org/licenses/gpl.txt
- * Text Domain: controlled-chaos-addon
+ * Text Domain: adams-plugin
  * Domain Path: /languages
  */
 
@@ -137,7 +135,7 @@ if ( ! defined( 'ADAMS_VERSION' ) ) {
  * @return string Returns the URL slug of the admin pages.
  */
 if ( ! defined( 'ADAMS_ADMIN_SLUG' ) ) {
-	define( 'ADAMS_ADMIN_SLUG', 'controlled-chaos-addon' );
+	define( 'ADAMS_ADMIN_SLUG', 'adams-plugin' );
 }
 
 /**
@@ -296,7 +294,7 @@ function controlled_chaos_addon_about_link( $links ) {
 			sprintf(
 				'<a href="%1s" class="' . ADAMS_ADMIN_SLUG . '-settings-link">%2s</a>',
 				admin_url( 'options-general.php?page=' . ADAMS_ADMIN_SLUG . '-settings' ),
-				esc_attr( 'Settings', 'controlled-chaos-addon' )
+				esc_attr( 'Settings', 'adams-plugin' )
 			),
 		];
 

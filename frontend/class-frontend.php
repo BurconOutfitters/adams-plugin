@@ -92,7 +92,7 @@ class Frontend {
 	public function enqueue_styles() {
 
 		// Frontend plugin styles.
-		wp_enqueue_style( 'controlled-chaos-addon', plugin_dir_url( __FILE__ ) . 'assets/css/frontend.css', [], ADAMS_VERSION, 'all' );
+		wp_enqueue_style( 'adams-plugin', plugin_dir_url( __FILE__ ) . 'assets/css/frontend.css', [], ADAMS_VERSION, 'all' );
 
 	}
 
@@ -106,7 +106,7 @@ class Frontend {
 	public function enqueue_scripts() {
 
 		// Frontend plugin script.
-		wp_enqueue_script( 'controlled-chaos-addon', plugin_dir_url( __FILE__ ) . 'assets/js/frontend.js', [ 'jquery' ], ADAMS_VERSION, true );
+		wp_enqueue_script( 'adams-plugin', plugin_dir_url( __FILE__ ) . 'assets/js/frontend.js', [ 'jquery' ], ADAMS_VERSION, true );
 
 	}
 
