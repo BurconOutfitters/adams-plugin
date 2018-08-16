@@ -132,16 +132,6 @@ function mc_remove_cache( $cache ) {
 }
 
 /**
- * Old support box function
- *
- * @see mc_show_sidebar()
- * @deprecated
- */
-function jd_show_support_box() {
-	mc_show_sidebar();
-}
-
-/**
  * Odd toggle. Unknown when last used.
  *
  * @param int $int Any integer.

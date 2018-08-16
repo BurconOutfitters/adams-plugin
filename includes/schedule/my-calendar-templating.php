@@ -256,9 +256,7 @@ function mc_templates_edit() {
 			</div>
 		</div>
 	</div>
-	<?php
-	mc_show_sidebar();
-}
+	<?php }
 
 /**
  * Check whether the current key refers to a core template

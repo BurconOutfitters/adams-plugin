@@ -127,9 +127,7 @@ function my_calendar_group_edit() {
 		</div>
 		</div>
 		<?php
-	}
-	mc_show_sidebar();
-	?>
+	} ?>
 	</div>
 	<?php
 }

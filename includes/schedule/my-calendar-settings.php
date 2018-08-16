@@ -1000,10 +1000,7 @@ function mc_remote_db() {
 
 	</div>
 	</div>
-
-	<?php mc_show_sidebar(); ?>
-
-	</div>
+</div>
 	<?php
 }
 

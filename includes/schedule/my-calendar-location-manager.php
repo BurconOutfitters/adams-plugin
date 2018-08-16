@@ -46,8 +46,7 @@ function my_calendar_manage_locations() {
 			</div>
 		</div>
 	</div>
-		<?php mc_show_sidebar(); ?>
-	</div>
+</div>
 	<?php
 }
 

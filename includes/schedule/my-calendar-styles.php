@@ -250,8 +250,7 @@ function my_calendar_style_edit() {
 			</div>
 		</div>
 	</div>
-	<?php mc_show_sidebar(); ?>
-	</div>
+</div>
 	<?php
 }
 

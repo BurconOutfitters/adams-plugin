@@ -3272,7 +3272,7 @@ function mc_controls( $mode, $has_data, $event, $position = 'header' ) {
 		}
 	}
 
-	$manage_text         = ( current_user_can( 'mc_manage_events' ) ) ? __( 'Manage events', 'my-calendar' ) : __( 'Manage your events', 'my-calendar' );
+	$manage_text         = ( current_user_can( 'mc_manage_events' ) ) ? __( 'Manage schedules', 'my-calendar' ) : __( 'Manage your events', 'my-calendar' );
 	$controls['manage']  = "<span class='dashicons dashicons-calendar' aria-hidden='true'></span>" . '<a href="' . admin_url( 'admin.php?page=my-calendar-manage' ) . '">' . $manage_text . '</a>';
 	$controls['publish'] = '<input type="submit" name="save" class="button-primary" value="' . esc_attr( $publish_text ) . '" />';
 	// Schedule Status settings: draft, published, trash, (custom).

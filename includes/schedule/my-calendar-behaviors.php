@@ -121,7 +121,6 @@ function my_calendar_behaviors_edit() {
 				</div>
 			</div>
 		</div>
-		<?php mc_show_sidebar(); ?>
 	</div>
 	<?php
 }
