@@ -9,7 +9,7 @@
  * @author     Greg Sweet <greg@ccdzine.com>
  */
 
-namespace CC_Addon\Includes;
+namespace Adams_Plugin\Includes;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -76,6 +76,9 @@ class Init {
 
 		// Admin/backend functionality, scripts and styles.
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin.php';
+
+		// Schedule for employees, volunteers, etc.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/schedule/class-schedule.php';
 
 		// Frontend functionality, scripts and styles.
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'frontend/class-frontend.php';

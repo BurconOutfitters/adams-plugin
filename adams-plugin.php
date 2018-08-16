@@ -86,10 +86,12 @@ if ( ! defined( 'ADAMS_CHILD_NAME' ) ) {
  *
  * @since  1.0.0
  * @return void
+ *
+ * @todo   Activate check when Burcon plugin is ready.
  */
 if ( ! is_plugin_active( ADAMS_PARENT ) ) {
 
-	add_action( 'admin_notices', 'adams_parent_notice' );
+	// add_action( 'admin_notices', 'adams_parent_notice' );
 
 }
 
@@ -110,9 +112,11 @@ function adams_parent_notice() {
  *
  * @since  1.0.0
  * @return void
+ *
+ * @todo   Activate check when Burcon plugin is ready.
  */
 if ( ! is_plugin_active( ADAMS_PARENT ) ) {
-	return;
+	// return;
 }
 
 /**

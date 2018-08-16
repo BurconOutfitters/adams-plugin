@@ -9,7 +9,7 @@
  * @author     Greg Sweet <greg@ccdzine.com>
  */
 
-namespace CC_Addon\Includes\Partials;
+namespace Adams_Plugin\Includes\Partials;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
