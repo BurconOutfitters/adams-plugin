@@ -2,7 +2,7 @@
 /**
  * Generate limits to event queries.
  *
- * @category Events
+ * @category Schedules
  * @package    Adams_Plugin
  * @author   Joe Dolson
  * @license  GPLv2 or later

@@ -11,7 +11,7 @@
  * @todo       Add some some content, ideally demo fields.
  */
 
-namespace Adams_Plugin\Admin\Partials;
+//  namespace Adams_Plugin\Admin\Partials;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {

@@ -29,12 +29,12 @@ function mc_widget_defaults() {
 			'template' => $default_template,
 			'category' => '',
 			'text'     => '',
-			'title'    => 'Upcoming Events',
+			'title'    => 'Upcoming Schedules',
 		),
 		'today'    => array(
 			'template' => $default_template,
 			'category' => '',
-			'title'    => 'Today\'s Events',
+			'title'    => 'Today\'s Schedules',
 			'text'     => '',
 		),
 	);
@@ -407,7 +407,7 @@ function mc_flag_event( $id, $time ) {
 /**
  * Review location table to find matches between saved locations event locations
  *
- * @param object $event Event object.
+ * @param object $event Schedule object.
  * @param array  $locations array of location objects.
  *
  * @return boolean

@@ -74,7 +74,7 @@ add_action( 'admin_menu', 'mc_add_outer_box' );
  * Add meta boxes
  */
 function mc_add_outer_box() {
-	add_meta_box( 'mcs_add_event', __( 'Schedule Event', 'my-calendar' ), 'mc_add_inner_box', 'mc-events', 'side', 'high' );
+	add_meta_box( 'mcs_add_event', __( 'Schedule Schedule', 'my-calendar' ), 'mc_add_inner_box', 'mc-events', 'side', 'high' );
 }
 
 /**
@@ -91,7 +91,7 @@ function mc_add_inner_box() {
 			// Translators: Name of event location.
 			$content .= '<p>' . sprintf( __( '<strong>Location:</strong> %s', 'my-calendar' ), strip_tags( $event->event_label, mc_strip_tags() ) ) . '</p>';
 		}
-		// Translators: Event URL.
+		// Translators: Schedule URL.
 		$content .= '<p>' . sprintf( __( '<a href="%s">Edit event</a>.', 'my-calendar' ), $url ) . '</p>';
 
 		echo $content;

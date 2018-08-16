@@ -213,7 +213,7 @@ function my_calendar_draw_events( $events, $params, $process_date, $template = '
 /**
  * Draw a single event
  *
- * @param object $event Event object.
+ * @param object $event Schedule object.
  * @param string $type Type of view being drawn.
  * @param string $process_date Current date being displayed.
  * @param string $time Time view being drawn.
@@ -340,7 +340,7 @@ function my_calendar_draw_event( $event, $type = 'calendar', $process_date, $tim
 			if ( 'false' != $display_more && ! isset( $_GET['mc_id'] ) ) {
 				$details_label = mc_get_details_label( $event, $data );
 				$details_link  = mc_get_details_link( $event );
-				// Translators: Event title.
+				// Translators: Schedule title.
 				$aria = " aria-label='" . sprintf( __( 'Details about %s', 'my-calendar' ), $event_title ) . "'";
 				if ( _mc_is_url( $details_link ) ) {
 					$more = "<p class='mc_details'><a$aria itemprop='url' href='" . esc_url( $details_link ) . "'>$details_label</a></p>\n";
@@ -432,7 +432,7 @@ function my_calendar_draw_event( $event, $type = 'calendar', $process_date, $tim
 		}
 
 		$img_class  = ( '' != $img ) ? ' has-image' : ' no-image';
-		$container  = "<div id='$uid-$day_id-$type-details' class='details$img_class' role='alert' aria-labelledby='$uid-title' itemscope itemtype='http://schema.org/Event'>\n";
+		$container  = "<div id='$uid-$day_id-$type-details' class='details$img_class' role='alert' aria-labelledby='$uid-title' itemscope itemtype='http://schema.org/Schedule'>\n";
 		$container .= "<meta itemprop='name' content='" . strip_tags( $event->event_title ) . "' />";
 		$container  = apply_filters( 'mc_before_event', $container, $event, $type, $time );
 		$details    = $header . $container . apply_filters( 'mc_inner_content', $details, $event, $type, $time );
@@ -498,7 +498,7 @@ function mc_get_details( $data, $template, $type ) {
 /**
  * Get image for an event
  *
- * @param object $event Event object.
+ * @param object $event Schedule object.
  * @param array  $data event tags.
  *
  * @return string HTML output
@@ -531,7 +531,7 @@ function mc_get_event_image( $event, $data ) {
 /**
  * Generate classes for a given event
  *
- * @param object $event Event Object.
+ * @param object $event Schedule Object.
  * @param string $uid Unique ID for event.
  * @param string $type Type of view being shown.
  *
@@ -1074,7 +1074,7 @@ function mc_search_results_title( $title, $id = false ) {
 	if ( ( isset( $_GET['mcs'] ) || isset( $_POST['mcs'] ) ) && ( is_page( $id ) || is_single( $id ) ) && in_the_loop() ) {
 		$query = ( isset( $_GET['mcs'] ) ) ? $_GET['mcs'] : $_POST['mcs'];
 		// Translators: entered search query.
-		$title = sprintf( __( 'Events Search for &ldquo;%s&rdquo;', 'my-calendar' ), esc_html( $query ) );
+		$title = sprintf( __( 'Schedules Search for &ldquo;%s&rdquo;', 'my-calendar' ), esc_html( $query ) );
 	}
 
 	return $title;
@@ -1162,7 +1162,7 @@ function mc_hidden_event() {
 /**
  * Filter titles on event pages
  *
- * @param string $title Event title.
+ * @param string $title Schedule title.
  * @param string $sep Defined separator.
  * @param string $seplocation Location of separator in relation to title.
  *
@@ -1271,8 +1271,8 @@ function mc_show_event_template( $content ) {
 /**
  * Get all events related to an event ID (group IDs)
  *
- * @param int    $id Event group ID.
- * @param int    $this_id Event ID.
+ * @param int    $id Schedule group ID.
+ * @param int    $this_id Schedule ID.
  * @param string $template Display template.
  *
  * @return string list of related events
@@ -1320,7 +1320,7 @@ function mc_list_related( $id, $this_id, $template = '{date}, {time}' ) {
 /**
  * Determine whether event is published.
  *
- * @param object $event Event object.
+ * @param object $event Schedule object.
  *
  * @return boolean
  */
@@ -1335,7 +1335,7 @@ function mc_event_published( $event ) {
 /**
  * Check whether an event should be hidden (privacy)
  *
- * @param object $event Event object.
+ * @param object $event Schedule object.
  *
  * @return boolean
  */
@@ -1619,7 +1619,7 @@ function my_calendar( $args ) {
 				if ( 'week' != $params['time'] && 'day' != $params['time'] ) {
 					$list_heading = ( $months <= 1 ) ? $current_header . $caption_text . "\n" : $current_month_header . '&ndash;' . $through_month_header . $caption_text;
 					// Translators: time period displayed.
-					$list_heading = sprintf( __( 'Events in %s', 'my-calendar' ), $list_heading );
+					$list_heading = sprintf( __( 'Schedules in %s', 'my-calendar' ), $list_heading );
 				} else {
 					$list_heading = mc_draw_template( $values, stripslashes( $week_template ) );
 				}
@@ -2224,7 +2224,7 @@ function mc_run_shortcodes( $content ) {
 /**
  * Set up button wrapping event title
  *
- * @param string $title Event title.
+ * @param string $title Schedule title.
  *
  * @return string title with wrapper if appropriate
  */
@@ -2586,7 +2586,7 @@ function mc_filters( $args, $target_url, $ltype ) {
 				break;
 		}
 	}
-	$form .= '<p><input type="submit" value="' . esc_attr( __( 'Filter Events', 'my-calendar' ) ) . '" /></p>
+	$form .= '<p><input type="submit" value="' . esc_attr( __( 'Filter Schedules', 'my-calendar' ) ) . '" /></p>
 	</form></div>';
 	if ( $return ) {
 		return $form;
@@ -2817,9 +2817,9 @@ function my_calendar_searchform( $type, $url ) {
 		<div class="mc-search-container" role="search">
 			<form method="get" action="' . apply_filters( 'mc_search_page', esc_url( $url ) ) . '" >
 				<div class="mc-search">
-					<label class="screen-reader-text" for="mcs">' . __( 'Search Events', 'my-calendar' ) . '</label>
+					<label class="screen-reader-text" for="mcs">' . __( 'Search Schedules', 'my-calendar' ) . '</label>
 					<input type="text" value="' . esc_attr( stripslashes( $query ) ) . '" name="mcs" id="mcs" />
-					<input type="submit" id="searchsubmit" value="' . __( 'Search Events', 'my-calendar' ) . '" />
+					<input type="submit" id="searchsubmit" value="' . __( 'Search Schedules', 'my-calendar' ) . '" />
 				</div>
 			</form>
 		</div>';
@@ -3033,7 +3033,7 @@ add_action( 'mc_save_event', 'mc_refresh_cache', 10, 4 );
  *
  * @param string $action Type of action performed.
  * @param array  $data Data passed to filter.
- * @param int    $event_id Event ID being affected.
+ * @param int    $event_id Schedule ID being affected.
  * @param int    $result Result of calendar save query.
  */
 function mc_refresh_cache( $action, $data, $event_id, $result ) {

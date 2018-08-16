@@ -2,7 +2,7 @@
 /**
  * Get event data. Queries to fetch events and create or modify objects.
  *
- * @category Events
+ * @category Schedules
  * @package    Adams_Plugin
  * @author   Joe Dolson
  * @license  GPLv2 or later
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Processes objects to add needed properties.
  *
- * @param object $object Event object.
+ * @param object $object Schedule object.
  *
  * @return object $object Modifed event.
  */
@@ -186,7 +186,7 @@ function mc_get_all_events( $args ) {
 	$events2 = array();
 	$events3 = array();
 
-	// Events before today.
+	// Schedules before today.
 	if ( $before > 0 ) {
 		$before  = $before + 15;
 		$events1 = $mcdb->get_results( 'SELECT *, UNIX_TIMESTAMP(occur_begin) AS ts_occur_begin, UNIX_TIMESTAMP(occur_end) AS ts_occur_end
@@ -201,7 +201,7 @@ function mc_get_all_events( $args ) {
 		$exclude_categories
 		ORDER BY occur_begin DESC LIMIT 0,$before" );
 	}
-	// Events happening today.
+	// Schedules happening today.
 	if ( 'yes' == $today ) {
 		$events3 = $mcdb->get_results( 'SELECT *, UNIX_TIMESTAMP(occur_begin) AS ts_occur_begin, UNIX_TIMESTAMP(occur_end) AS ts_occur_end
 		FROM ' . my_calendar_event_table( $site ) . '
@@ -214,7 +214,7 @@ function mc_get_all_events( $args ) {
 		$exclude_categories
 		AND ( ( DATE(occur_begin) < '$date' AND DATE(occur_end) > '$date' ) OR DATE(occur_begin) = '$date' )" );
 	}
-	// Upcoming Events.
+	// Upcoming Schedules.
 	if ( $after > 0 ) {
 		$after   = $after + 15;
 		$events2 = $mcdb->get_results( 'SELECT *, UNIX_TIMESTAMP(occur_begin) AS ts_occur_begin, UNIX_TIMESTAMP(occur_end) AS ts_occur_end
@@ -386,10 +386,10 @@ function mc_get_search_results( $search ) {
 /**
  * Get event basic info
  *
- * @param int     $id Event ID in my_calendar db.
+ * @param int     $id Schedule ID in my_calendar db.
  * @param boolean $rebuild Get core data only if doing an event rebuild.
  *
- * @return Event object
+ * @return Schedule object
  */
 function mc_get_event_core( $id, $rebuild = false ) {
 	if ( ! is_numeric( $id ) ) {
@@ -415,9 +415,9 @@ function mc_get_event_core( $id, $rebuild = false ) {
 /**
  * Fetches the first fully-realized event object with all parameters even if the specific instance ID isn't available.
  *
- * @param int $id Event core ID.
+ * @param int $id Schedule core ID.
  *
- * @return object Event
+ * @return object Schedule
  */
 function mc_get_first_event( $id ) {
 	global $wpdb;
@@ -434,9 +434,9 @@ function mc_get_first_event( $id ) {
 /**
  * Fetch the instance of an event closest to today.
  *
- * @param int $id Event core ID.
+ * @param int $id Schedule core ID.
  *
- * @return object Event
+ * @return object Schedule
  */
 function mc_get_nearest_event( $id ) {
 	global $wpdb;
@@ -453,7 +453,7 @@ function mc_get_nearest_event( $id ) {
 /**
  * Returns the event object for a specific instance of an event.
  *
- * @param int    $id  Event instance ID.
+ * @param int    $id  Schedule instance ID.
  * @param string $type  'object' or 'html'.
  *
  * @return mixed object/string
@@ -487,7 +487,7 @@ function mc_get_event( $id, $type = 'object' ) {
  * Get a single data field from an event.
  *
  * @param string $field database column.
- * @param int    $id Event core ID.
+ * @param int    $id Schedule core ID.
  *
  * @return mixed string/integer value
  */
@@ -608,7 +608,7 @@ function my_calendar_events_now( $category = 'default', $template = '<strong>{li
 /**
  *  Get all occurrences associated with an event.
  *
- * @param int $id Event ID.
+ * @param int $id Schedule ID.
  *
  * @return array of objects with instance and event IDs.
  */
@@ -626,7 +626,7 @@ function mc_get_occurrences( $id ) {
 /**
  * Get all events with a grouped relationship with the current event.
  *
- * @param int $id Event ID.
+ * @param int $id Schedule ID.
  *
  * @return array Array event IDs of related events
  */
@@ -709,7 +709,7 @@ function mc_set_date_array( $events ) {
 /**
  * Get post associated with a given Schedule event
  *
- * @param int $event_id Event ID.
+ * @param int $event_id Schedule ID.
  *
  * @return mixed int/boolean post ID if found; else false
  */

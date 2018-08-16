@@ -46,18 +46,18 @@ function mc_show_event_editing( $status, $args ) {
 
 		// cannot change these keys.
 		$input_labels = array(
-			'event_location_dropdown' => __( 'Event Location Dropdown Menu', 'my-calendar' ),
-			'event_short'             => __( 'Event Short Description field', 'my-calendar' ),
-			'event_desc'              => __( 'Event Description Field', 'my-calendar' ),
-			'event_category'          => __( 'Event Category field', 'my-calendar' ),
-			'event_image'             => __( 'Event Image field', 'my-calendar' ),
-			'event_link'              => __( 'Event Link field', 'my-calendar' ),
-			'event_recurs'            => __( 'Event Recurrence Options', 'my-calendar' ),
-			'event_open'              => __( 'Event Registration options', 'my-calendar' ),
-			'event_location'          => __( 'Event Location fields', 'my-calendar' ),
+			'event_location_dropdown' => __( 'Schedule Location Dropdown Menu', 'my-calendar' ),
+			'event_short'             => __( 'Schedule Short Description field', 'my-calendar' ),
+			'event_desc'              => __( 'Schedule Description Field', 'my-calendar' ),
+			'event_category'          => __( 'Schedule Category field', 'my-calendar' ),
+			'event_image'             => __( 'Schedule Image field', 'my-calendar' ),
+			'event_link'              => __( 'Schedule Link field', 'my-calendar' ),
+			'event_recurs'            => __( 'Schedule Recurrence Options', 'my-calendar' ),
+			'event_open'              => __( 'Schedule Registration options', 'my-calendar' ),
+			'event_location'          => __( 'Schedule Location fields', 'my-calendar' ),
 			'event_specials'          => __( 'Set Special Scheduling options', 'my-calendar' ),
-			'event_access'            => __( 'Event Accessibility', 'my-calendar' ),
-			'event_host'              => __( 'Event Host', 'my-calendar' ),
+			'event_access'            => __( 'Schedule Accessibility', 'my-calendar' ),
+			'event_host'              => __( 'Schedule Host', 'my-calendar' ),
 		);
 
 		$output = '';
@@ -77,7 +77,7 @@ function mc_show_event_editing( $status, $args ) {
 		$button  = get_submit_button( __( 'Apply' ), 'button', 'screen-options-apply', false );
 		$return .= '
 	<fieldset>
-	<legend>' . __( 'Event editing fields to show', 'my-calendar' ) . "</legend>
+	<legend>' . __( 'Schedule editing fields to show', 'my-calendar' ) . "</legend>
 	<div class='metabox-prefs'>
 		<div><input type='hidden' name='wp_screen_options[option]' value='mc_show_on_page' /></div>
 		<div><input type='hidden' name='wp_screen_options[value]' value='yes' /></div>
@@ -124,7 +124,7 @@ function mc_add_screen_option() {
 	$items_per_page = ( get_option( 'mc_num_per_page' ) ) ? get_option( 'mc_num_per_page' ) : 50;
 	$option         = 'per_page';
 	$args           = array(
-		'label'   => 'Events',
+		'label'   => 'Schedules',
 		'default' => $items_per_page,
 		'option'  => 'mc_num_per_page',
 	);

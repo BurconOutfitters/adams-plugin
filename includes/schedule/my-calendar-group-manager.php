@@ -2,7 +2,7 @@
 /**
  * Manage Schedule events groups
  *
- * @category Events
+ * @category Schedules
  * @package    Adams_Plugin
  * @author   Joe Dolson
  * @license  GPLv2 or later
@@ -58,11 +58,11 @@ function my_calendar_group_edit() {
 					// Translators: Calendar URL.
 					$url = sprintf( __( 'View <a href="%s">your calendar</a>.', 'my-calendar' ), mc_get_uri() );
 					if ( false === $result ) {
-						$message = mc_show_error( __( 'Event not updated.', 'my-calendar' ) . " $url", false );
+						$message = mc_show_error( __( 'Schedule not updated.', 'my-calendar' ) . " $url", false );
 					} elseif ( 0 === $result ) {
 						$message = mc_show_notice( "#$event_id: " . __( 'Nothing was changed in that update.', 'my-calendar' ) . "  $url", false );
 					} else {
-						$message = mc_show_notice( "#$event_id: " . __( 'Event updated successfully', 'my-calendar' ) . ". $url", false );
+						$message = mc_show_notice( "#$event_id: " . __( 'Schedule updated successfully', 'my-calendar' ) . ". $url", false );
 					}
 				}
 				break;
@@ -77,11 +77,11 @@ function my_calendar_group_edit() {
 						$result   = $wpdb->update( my_calendar_table(), $update, array( 'event_id' => $event_id ), $formats, '%d' );
 
 						if ( false === $result ) {
-							$message = mc_show_error( __( 'Event not grouped.', 'my-calendar' ), false );
+							$message = mc_show_error( __( 'Schedule not grouped.', 'my-calendar' ), false );
 						} elseif ( 0 === $result ) {
 							$message = mc_show_notice( "#$event_id: " . __( 'Nothing was changed in that update.', 'my-calendar' ), false );
 						} else {
-							$message = mc_show_notice( "#$event_id: " . __( 'Event grouped successfully', 'my-calendar' ), false );
+							$message = mc_show_notice( "#$event_id: " . __( 'Schedule grouped successfully', 'my-calendar' ), false );
 						}
 					}
 				}
@@ -94,7 +94,7 @@ function my_calendar_group_edit() {
 	<?php
 	my_calendar_check_db();
 	if ( 'edit' == $action ) {
-		echo '<h1>' . __( 'Edit Event Group', 'my-calendar' ) . '</h1>';
+		echo '<h1>' . __( 'Edit Schedule Group', 'my-calendar' ) . '</h1>';
 		if ( empty( $event_id ) || empty( $group_id ) ) {
 			mc_show_error( __( 'You must provide an event group id in order to edit it', 'my-calendar' ) );
 		} else {
@@ -102,7 +102,7 @@ function my_calendar_group_edit() {
 		}
 	} else {
 		?>
-		<h1><?php _e( 'Manage Event Groups', 'my-calendar' ); ?></h1>
+		<h1><?php _e( 'Manage Schedule Groups', 'my-calendar' ); ?></h1>
 		<p>
 			<?php _e( 'When you choose a group of events to edit, the form will be pre-filled with the content from the event you started from. You will also see a set of checkboxes to choose which events you want to apply these changes to.', 'my-calendar' ); ?>
 		</p>
@@ -111,7 +111,7 @@ function my_calendar_group_edit() {
 		<div class="metabox-holder">
 			<div class="ui-sortable meta-box-sortables">
 				<div class="postbox">
-					<h2><?php _e( 'Manage Event Groups', 'my-calendar' ); ?></h2>
+					<h2><?php _e( 'Manage Schedule Groups', 'my-calendar' ); ?></h2>
 
 					<div class="inside">
 						<p><?php _e( 'Select an event group to edit.', 'my-calendar' ); ?></p>
@@ -139,7 +139,7 @@ function my_calendar_group_edit() {
  *
  * @param string $action Type of action: add, edit.
  * @param array  $output Data and status of data check.
- * @param int    $event_id Event ID.
+ * @param int    $event_id Schedule ID.
  *
  * @return message
  */
@@ -169,7 +169,7 @@ function my_calendar_save_group( $action, $output, $event_id = false ) {
 			} elseif ( 0 === $result ) {
 				$message = mc_show_notice( "#$event_id: " . __( 'Nothing was changed in that update.', 'my-calendar' ) . " $url", false );
 			} else {
-				$message = mc_show_notice( "#$event_id: " . __( 'Event updated successfully', 'my-calendar' ) . ". $url", false );
+				$message = mc_show_notice( "#$event_id: " . __( 'Schedule updated successfully', 'my-calendar' ) . ". $url", false );
 			}
 		} else {
 			$message = mc_show_error( "#$event_id: " . __( 'You do not have sufficient permissions to edit that event.', 'my-calendar' ), false );
@@ -183,7 +183,7 @@ function my_calendar_save_group( $action, $output, $event_id = false ) {
 /**
  * Get event data for a group. Sourced from the passed event ID.
  *
- * @param int $event_id Event ID.
+ * @param int $event_id Schedule ID.
  *
  * @return mixed string/array/object
  */
@@ -283,7 +283,7 @@ function mc_group_form( $group_id, $type = 'break' ) {
  * The event edit form for the manage events admin page
  *
  * @param string $mode Editing mode.
- * @param int    $event_id Event ID.
+ * @param int    $event_id Schedule ID.
  * @param int    $group_id Group ID.
  */
 function mc_edit_groups( $mode = 'edit', $event_id = false, $group_id = false ) {
@@ -309,9 +309,9 @@ function mc_edit_groups( $mode = 'edit', $event_id = false, $group_id = false ) 
 /**
  * Generate form to edit group editable fields.
  *
- * @param object $data Event object data.
+ * @param object $data Schedule object data.
  * @param string $mode Editing mode.
- * @param int    $event_id Event ID.
+ * @param int    $event_id Schedule ID.
  * @param int    $group_id Group ID.
  */
 function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = '' ) {
@@ -348,16 +348,16 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 	</div>
 	<div class="ui-sortable meta-box-sortables">
 		<div class="postbox">
-			<h2><?php _e( 'Manage Event Groups', 'my-calendar' ); ?></h2>
+			<h2><?php _e( 'Manage Schedule Groups', 'my-calendar' ); ?></h2>
 
 			<div class="inside">
 				<div class="mc-controls">
 					<ul>
-						<li><input type="submit" name="save" class="button-primary" value="<?php _e( 'Edit Event Group', 'my-calendar' ); ?>"/></li>
+						<li><input type="submit" name="save" class="button-primary" value="<?php _e( 'Edit Schedule Group', 'my-calendar' ); ?>"/></li>
 					</ul>
 				</div>
 				<p>
-					<label for="e_title"><?php _e( 'Event Title', 'my-calendar' ); ?> <span><?php _e( '(required)', 'my-calendar' ); ?></span>
+					<label for="e_title"><?php _e( 'Schedule Title', 'my-calendar' ); ?> <span><?php _e( '(required)', 'my-calendar' ); ?></span>
 					<?php
 					if ( ! mc_compare_group_members( $group_id, 'event_title' ) ) {
 							echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
@@ -399,7 +399,7 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 					<div id="group_description">
 						<label for="content">
 						<?php
-						_e( 'Event Description (<abbr title="hypertext markup language">HTML</abbr> allowed)', 'my-calendar' );
+						_e( 'Schedule Description (<abbr title="hypertext markup language">HTML</abbr> allowed)', 'my-calendar' );
 						if ( ! mc_compare_group_members( $group_id, 'event_desc' ) ) {
 							echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 						}
@@ -414,7 +414,7 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 					<p>
 						<label for="e_short">
 						<?php
-						_e( 'Event Short Description (<abbr title="hypertext markup language">HTML</abbr> allowed)', 'my-calendar' );
+						_e( 'Schedule Short Description (<abbr title="hypertext markup language">HTML</abbr> allowed)', 'my-calendar' );
 						if ( ! mc_compare_group_members( $group_id, 'event_short' ) ) {
 							echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 						}
@@ -462,7 +462,7 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 				<p>
 					<label for="e_host">
 					<?php
-					_e( 'Event Host', 'my-calendar' );
+					_e( 'Schedule Host', 'my-calendar' );
 					if ( ! mc_compare_group_members( $group_id, 'event_host' ) ) {
 						echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 					}
@@ -519,7 +519,7 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 					<p>
 						<label for="e_link">
 						<?php
-						_e( 'Event Link (Optional)', 'my-calendar' );
+						_e( 'Schedule Link (Optional)', 'my-calendar' );
 						if ( ! mc_compare_group_members( $group_id, 'event_link' ) ) {
 							echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 						}
@@ -540,11 +540,11 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 		?>
 	<div class="ui-sortable meta-box-sortables">
 		<div class="postbox">
-			<h2><?php _e( 'Event Registration Options', 'my-calendar' ); ?></h2>
+			<h2><?php _e( 'Schedule Registration Options', 'my-calendar' ); ?></h2>
 
 			<div class="inside">
 				<fieldset>
-					<legend><?php _e( 'Event Registration Status', 'my-calendar' ); ?></legend>
+					<legend><?php _e( 'Schedule Registration Status', 'my-calendar' ); ?></legend>
 					<?php echo apply_filters( 'mc_event_registration', '', $has_data, $data, 'admin' ); ?>
 				</fieldset>
 			</div>
@@ -563,11 +563,11 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 		?>
 	<div class="ui-sortable meta-box-sortables">
 		<div class="postbox">
-			<h2><?php _e( 'Event Location', 'my-calendar' ); ?></h2>
+			<h2><?php _e( 'Schedule Location', 'my-calendar' ); ?></h2>
 
 			<div class="inside location_form">
 				<fieldset>
-					<legend><?php _e( 'Event Location', 'my-calendar' ); ?></legend>
+					<legend><?php _e( 'Schedule Location', 'my-calendar' ); ?></legend>
 		<?php
 	}
 	if ( 'on' == $mc_input['event_location_dropdown'] || $input_all ) {
@@ -878,7 +878,7 @@ function mc_check_group_data( $action, $post ) {
 	// A title is required, and can't be more than 255 characters.
 	$title_length = strlen( $title );
 	if ( ! ( $title_length >= 1 && $title_length <= 255 ) ) {
-		$title = __( 'Untitled Event', 'my-calendar' );
+		$title = __( 'Untitled Schedule', 'my-calendar' );
 	}
 	$proceed = true;
 	$submit  = array(
@@ -1003,10 +1003,10 @@ function mc_list_groups() {
 	<div class='inside'>
 		<ul class="links">
 			<li>
-				<a <?php echo ( isset( $_GET['limit'] ) && 'grouped' == $_GET['limit'] ) ? ' class="active-link"' : ''; ?> href="<?php echo admin_url( 'admin.php?page=my-calendar-groups&amp;limit=grouped#my-calendar-admin-table' ); ?>"><?php _e( 'Grouped Events', 'my-calendar' ); ?></a>
+				<a <?php echo ( isset( $_GET['limit'] ) && 'grouped' == $_GET['limit'] ) ? ' class="active-link"' : ''; ?> href="<?php echo admin_url( 'admin.php?page=my-calendar-groups&amp;limit=grouped#my-calendar-admin-table' ); ?>"><?php _e( 'Grouped Schedules', 'my-calendar' ); ?></a>
 			</li>
 			<li>
-				<a <?php echo ( isset( $_GET['limit'] ) && 'ungrouped' == $_GET['limit'] ) ? ' class="active-link"' : ''; ?> href="<?php echo admin_url( 'admin.php?page=my-calendar-groups&amp;limit=ungrouped#my-calendar-admin-table' ); ?>"><?php _e( 'Ungrouped Events', 'my-calendar' ); ?></a>
+				<a <?php echo ( isset( $_GET['limit'] ) && 'ungrouped' == $_GET['limit'] ) ? ' class="active-link"' : ''; ?> href="<?php echo admin_url( 'admin.php?page=my-calendar-groups&amp;limit=ungrouped#my-calendar-admin-table' ); ?>"><?php _e( 'Ungrouped Schedules', 'my-calendar' ); ?></a>
 			</li>
 			<li>
 				<a <?php echo ( isset( $_GET['limit'] ) && 'all' == $_GET['limit'] || ! isset( $_GET['limit'] ) ) ? ' class="active-link"' : ''; ?> href="<?php echo admin_url( 'admin.php?page=my-calendar-groups#my-calendar-admin-table' ); ?>"><?php _e( 'All', 'my-calendar' ); ?></a>
@@ -1019,8 +1019,8 @@ function mc_list_groups() {
 		$page_links = paginate_links( array(
 			'base'      => add_query_arg( 'paged', '%#%' ),
 			'format'    => '',
-			'prev_text' => __( '&laquo; Previous<span class="screen-reader-text"> Events</span>', 'my-calendar' ),
-			'next_text' => __( 'Next<span class="screen-reader-text"> Events</span> &raquo;', 'my-calendar' ),
+			'prev_text' => __( '&laquo; Previous<span class="screen-reader-text"> Schedules</span>', 'my-calendar' ),
+			'next_text' => __( 'Next<span class="screen-reader-text"> Schedules</span> &raquo;', 'my-calendar' ),
 			'total'     => $num_pages,
 			'current'   => $current,
 			'mid_size'  => 1,
@@ -1111,7 +1111,7 @@ function mc_list_groups() {
 							<?php
 							if ( $can_edit ) {
 								?>
-								<a href="<?php echo admin_url( "admin.php?page=my-calendar&amp;mode=edit&amp;event_id=$event->event_id" ); ?>" class='edit' aria-describedby='event_<?php echo $event->event_id; ?>'><?php _e( 'Edit Event', 'my-calendar' ); ?></a> |
+								<a href="<?php echo admin_url( "admin.php?page=my-calendar&amp;mode=edit&amp;event_id=$event->event_id" ); ?>" class='edit' aria-describedby='event_<?php echo $event->event_id; ?>'><?php _e( 'Edit Schedule', 'my-calendar' ); ?></a> |
 								<?php
 								if ( mc_event_is_grouped( $event->event_group_id ) ) {
 									?>

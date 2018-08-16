@@ -150,7 +150,7 @@ function mc_templates_edit() {
 			<div class="metabox-holder">
 				<div class="ui-sortable meta-box-sortables">
 					<div class="postbox">
-						<h2 class='hndle'><?php _e( 'Event Template Tags', 'my-calendar' ); ?></h2>
+						<h2 class='hndle'><?php _e( 'Schedule Template Tags', 'my-calendar' ); ?></h2>
 
 						<div class='mc_template_tags inside'>
 							<p>
@@ -230,7 +230,7 @@ function mc_templates_edit() {
 								<dd><?php _e( 'Output the URL for the location.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{hcard}</code></dt>
-								<dd><?php _e( 'Event address in <a href="http://microformats.org/wiki/hcard">hcard</a> format.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Schedule address in <a href="http://microformats.org/wiki/hcard">hcard</a> format.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{link_map}</code></dt>
 								<dd><?php _e( 'Link to Google Map to the event, if address information is available.', 'my-calendar' ); ?></dd>

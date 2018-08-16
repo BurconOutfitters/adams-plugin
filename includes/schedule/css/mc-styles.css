@@ -4,7 +4,7 @@
 }
 
 #my-calendar #wp-content-editor-tools {
-	background: #fff;
+	background: inherit;
 }
 
 .mcbuy, .follow-me {
@@ -582,7 +582,7 @@ select[name="event_recur"] {
 	text-align: right;
 	margin: -10px 0 0;
 	padding: .5em;
-	background: rgba( 0,0,0,.05 );
+	background: inherit;
 	border-radius: 5px;
 }
 

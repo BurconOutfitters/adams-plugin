@@ -252,8 +252,8 @@ function mc_dates_consecutive( $current, $last_date ) {
 /**
  * Reverse Function to compare datetime in event objects
  *
- * @param object $b Event object.
- * @param object $a Event object.
+ * @param object $b Schedule object.
+ * @param object $a Schedule object.
  *
  * @return int (ternary value)
  */

@@ -13,16 +13,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-include( dirname( __FILE__ ) . '/includes/widgets/class-my-calendar-simple-search.php' );
-include( dirname( __FILE__ ) . '/includes/widgets/class-my-calendar-filters.php' );
-include( dirname( __FILE__ ) . '/includes/widgets/class-my-calendar-today-widget.php' );
-include( dirname( __FILE__ ) . '/includes/widgets/class-my-calendar-upcoming-widget.php' );
-include( dirname( __FILE__ ) . '/includes/widgets/class-my-calendar-mini-widget.php' );
+include_once plugin_dir_path( dirname( __FILE__ ) ) . 'schedule/includes/widgets/class-my-calendar-simple-search.php';
+include_once plugin_dir_path( dirname( __FILE__ ) ) . 'schedule/includes/widgets/class-my-calendar-filters.php';
+include_once plugin_dir_path( dirname( __FILE__ ) ) . 'schedule/includes/widgets/class-my-calendar-today-widget.php';
+include_once plugin_dir_path( dirname( __FILE__ ) ) . 'schedule/includes/widgets/class-my-calendar-upcoming-widget.php';
+include_once plugin_dir_path( dirname( __FILE__ ) ) . 'schedule/includes/widgets/class-my-calendar-mini-widget.php';
 
 /**
  * Generate the widget output for upcoming events.
  *
- * @param array $args Event selection arguments.
+ * @param array $args Schedule selection arguments.
  *
  * @return String HTML output list.
  */
@@ -257,7 +257,7 @@ function my_calendar_upcoming_events( $args ) {
 /**
  * For a set of grouped events, get the total time spanned by the group of events.
  *
- * @param int $group_id Event Group ID.
+ * @param int $group_id Schedule Group ID.
  *
  * @return array beginning and ending dates
  */
@@ -466,9 +466,9 @@ function mc_produce_upcoming_events( $events, $template, $type = 'list', $order 
 }
 
 /**
- * Process the Today's Events widget.
+ * Process the Today's Schedules widget.
  *
- * @param array $args Event & output construction parameters.
+ * @param array $args Schedule & output construction parameters.
  *
  * @return string HTML.
  */

@@ -2,7 +2,7 @@
 /**
  * Manage event categories.
  *
- * @category Events
+ * @category Schedules
  * @package    Adams_Plugin
  * @author   Joe Dolson
  * @license  GPLv2 or later
@@ -845,7 +845,7 @@ function mc_category_select( $data = false, $option = true, $multiple = false, $
 /**
  * Get all categories for given event
  *
- * @param object  $event Event object.
+ * @param object  $event Schedule object.
  * @param boolean $ids Return objects or ids.
  *
  * @return array of values

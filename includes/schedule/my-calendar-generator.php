@@ -33,11 +33,11 @@ function mc_generate() {
 					break;
 				case 'upcoming':
 					$shortcode   = 'my_calendar_upcoming';
-					$templatekey = 'Upcoming Events Shortcode';
+					$templatekey = 'Upcoming Schedules Shortcode';
 					break;
 				case 'today':
 					$shortcode   = 'my_calendar_today';
-					$templatekey = "Today's Events Shortcode";
+					$templatekey = "Today's Schedules Shortcode";
 					break;
 				default:
 					$shortcode = 'my_calendar';
@@ -244,7 +244,7 @@ function mc_generator( $type ) {
 				<?php
 			}
 			if ( 'upcoming' == $type || 'today' == $type ) {
-				// Upcoming Events & Today's Events shortcodes.
+				// Upcoming Schedules & Today's Schedules shortcodes.
 				?>
 				<p>
 					<label for="fallback"><?php _e( 'Fallback Text', 'my-calendar' ); ?></label>
@@ -260,25 +260,25 @@ function mc_generator( $type ) {
 				// Upcoming events only.
 				?>
 				<p>
-					<label for="before"><?php _e( 'Events/Days Before Current Day', 'my-calendar' ); ?></label>
+					<label for="before"><?php _e( 'Schedules/Days Before Current Day', 'my-calendar' ); ?></label>
 					<input type="number" name="before" id="before" value="" />
 				</p>
 				<p>
-					<label for="after"><?php _e( 'Events/Days After Current Day', 'my-calendar' ); ?></label>
+					<label for="after"><?php _e( 'Schedules/Days After Current Day', 'my-calendar' ); ?></label>
 					<input type="number" name="after" id="after" value="" />
 				</p>
 				<p>
-					<label for="skip"><?php _e( 'Events/Days to Skip', 'my-calendar' ); ?></label>
+					<label for="skip"><?php _e( 'Schedules/Days to Skip', 'my-calendar' ); ?></label>
 					<input type="number" name="skip" id="skip" value="" />
 				</p>
 				<p>
-					<label for="show_today"><?php _e( "Show Today's Events", 'my-calendar' ); ?></label>
+					<label for="show_today"><?php _e( "Show Today's Schedules", 'my-calendar' ); ?></label>
 					<input type="checkbox" name="show_today" id="show_today" value="yes"/>
 				</p>
 				<p>
-					<label for="type"><?php _e( 'Type of Upcoming Events List', 'my-calendar' ); ?></label>
+					<label for="type"><?php _e( 'Type of Upcoming Schedules List', 'my-calendar' ); ?></label>
 					<select name="type" id="type">
-						<option value="event" selected="selected"><?php _e( 'Events', 'my-calendar' ); ?></option>
+						<option value="event" selected="selected"><?php _e( 'Schedules', 'my-calendar' ); ?></option>
 						<option value="year"><?php _e( 'Current Year', 'my-calendar' ); ?></option>
 						<option value="days"><?php _e( 'Days', 'my-calendar' ); ?></option>
 						<option value="custom"><?php _e( 'Custom Dates', 'my-calendar' ); ?></option>
@@ -306,7 +306,7 @@ function mc_generator( $type ) {
 					</p>
 				</div>
 				<p>
-					<label for="order"><?php _e( 'Event Order', 'my-calendar' ); ?></label>
+					<label for="order"><?php _e( 'Schedule Order', 'my-calendar' ); ?></label>
 					<select name="order" id="order">
 						<option value="asc" selected="selected"><?php _e( 'Ascending', 'my-calendar' ); ?></option>
 						<option value="desc"><?php _e( 'Descending', 'my-calendar' ); ?></option>

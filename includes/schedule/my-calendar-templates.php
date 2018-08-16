@@ -118,7 +118,7 @@ function mc_map_string( $event, $source = 'event' ) {
 /**
  * Clean up my errors from assigning location values as 'none'
  *
- * @param object $event Event Object or Location Object.
+ * @param object $event Schedule Object or Location Object.
  * @param string $source (event,location).
  *
  * @return object $event
@@ -312,7 +312,7 @@ function mc_hcard( $event, $address = 'true', $map = 'true', $source = 'event' )
 /**
  * Produces the array of event details used for drawing templates
  *
- * @param object $event Event object.
+ * @param object $event Schedule object.
  * @param string $context Context being executed in.
  *
  * @return array event data
@@ -534,7 +534,7 @@ function mc_create_tags( $event, $context = 'filters' ) {
 /**
  * Get the label for all day events.
  *
- * @param object $event Event object.
+ * @param object $event Schedule object.
  *
  * @return string.
  */
@@ -599,7 +599,7 @@ function mc_get_details_link( $event ) {
 /**
  * Get URI from settings
  *
- * @param object/string $event Event object or string for boolean result.
+ * @param object/string $event Schedule object or string for boolean result.
  * @param array         $args  Any arguments passed.
  *
  * @uses filter 'mc_get_uri'
@@ -747,7 +747,7 @@ function mc_duration( $event ) {
 /**
  * Get event link if not designated to expire & expired.
  *
- * @param object $event Event Object.
+ * @param object $event Schedule Object.
  *
  * @return string
  */
@@ -772,7 +772,7 @@ function mc_event_link( $event ) {
 /**
  * Test if event has already passed.
  *
- * @param object $event Event object.
+ * @param object $event Schedule object.
  *
  * @return boolean
  */
@@ -983,7 +983,7 @@ add_filter( 'mc_insert_author_data', 'mc_author_data', 10, 2 );
  * Include data about event author in event array.
  *
  * @param array  $e Array of event details.
- * @param object $event Event object.
+ * @param object $event Schedule object.
  *
  * @return array $e
  */
@@ -1022,7 +1022,7 @@ add_filter( 'mc_filter_shortcodes', 'mc_auto_excerpt', 10, 2 );
  * Custom excerpt for use in templates.
  *
  * @param array  $e Array of event details.
- * @param object $event Event object.
+ * @param object $event Schedule object.
  *
  * @return array $e
  */
@@ -1044,10 +1044,10 @@ function mc_auto_excerpt( $e, $event ) {
 
 add_filter( 'mc_filter_image_data', 'mc_image_data', 10, 2 );
 /**
- * Event image data.
+ * Schedule image data.
  *
  * @param array  $e Array of event details.
- * @param object $event Event object.
+ * @param object $event Schedule object.
  *
  * @return array $e
  */
@@ -1085,9 +1085,9 @@ function mc_image_data( $e, $event ) {
 }
 
 /**
- * Event recurrance string description.
+ * Schedule recurrance string description.
  *
- * @param object $event Event Object.
+ * @param object $event Schedule Object.
  * @param string $begin Date event begins.
  *
  * @return string

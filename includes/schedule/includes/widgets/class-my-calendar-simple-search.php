@@ -31,7 +31,7 @@ class My_Calendar_Simple_Search extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			false,
-			$name = __( 'Schedule: Simple Event Search', 'my-calendar' ),
+			$name = __( 'Schedule: Simple Schedule Search', 'my-calendar' ),
 			array(
 				'customize_selective_refresh' => true,
 				'description'                 => __( 'Search your events.', 'my-calendar' ),
@@ -40,7 +40,7 @@ class My_Calendar_Simple_Search extends WP_Widget {
 	}
 
 	/**
-	 * Build the Schedule Event Search widget output.
+	 * Build the Schedule Schedule Search widget output.
 	 *
 	 * @param array $args Widget arguments.
 	 * @param array $instance This instance settings.

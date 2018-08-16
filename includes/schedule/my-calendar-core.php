@@ -1,9 +1,9 @@
 <?php
 /**
- * Core functions of Schedule infrastructure - installation, upgrading, action links, etc.
+ * Core functions of My Calendar infrastructure - installation, upgrading, action links, etc.
  *
  * @category Core
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -246,7 +246,7 @@ function my_calendar_head() {
 			$all_styles = "
 <style type=\"text/css\">
 <!--
-/* Styles by Schedule - Joseph C Dolson http://www.joedolson.com/ */
+/* Styles by My Calendar - Joseph C Dolson http://www.joedolson.com/ */
 $category_styles
 .mc-event-visible {
 	display: block!important;
@@ -322,17 +322,17 @@ function my_calendar_write_js() {
 	}
 }
 
-add_action( 'in_plugin_update_message-my-calendar/my-calendar.php', 'mc_plugin_update_message' );
+// add_action( 'in_plugin_update_message-my-calendar/my-calendar.php', 'mc_plugin_update_message' );
 /**
  * Display notices from  WordPress.org about updated versions.
- */
+ *
 function mc_plugin_update_message() {
 	global $mc_version;
 	define( 'MC_PLUGIN_README_URL', 'http://svn.wp-plugins.org/my-calendar/trunk/readme.txt' );
 	$response = wp_remote_get(
 		MC_PLUGIN_README_URL,
 		array(
-			'user-agent' => 'WordPress/Schedule' . $mc_version . '; ' . get_bloginfo( 'url' ),
+			'user-agent' => 'WordPress/My Calendar' . $mc_version . '; ' . get_bloginfo( 'url' ),
 		)
 	);
 	if ( ! is_wp_error( $response ) || is_array( $response ) ) {
@@ -343,7 +343,7 @@ function mc_plugin_update_message() {
 }
 
 /**
- * Scripts for Schedule footer; ideally only on pages where Schedule exists
+ * Scripts for My Calendar footer; ideally only on pages where My Calendar exists
  */
 function mc_footer_js() {
 	global $wp_query;
@@ -440,7 +440,7 @@ function mc_footer_js() {
 }
 
 /**
- * Add stylesheets to Schedule admin screens
+ * Add stylesheets to My Calendar admin screens
  */
 function my_calendar_add_styles() {
 	global $current_screen;
@@ -600,7 +600,7 @@ function mc_add_roles( $add = false, $manage = false, $approve = false ) {
 }
 
 /**
- * Verify that Schedule tables exist
+ * Verify that My Calendar tables exist
  */
 function my_calendar_exists() {
 	global $wpdb;
@@ -608,7 +608,7 @@ function my_calendar_exists() {
 	foreach ( $tables as $table ) {
 		foreach ( $table as $value ) {
 			if ( my_calendar_table() == $value ) {
-				// if the table exists, then Schedule was already installed.
+				// if the table exists, then My Calendar was already installed.
 				return true;
 			}
 		}
@@ -618,7 +618,7 @@ function my_calendar_exists() {
 }
 
 /**
- * Check what version of Schedule is installed; install or upgrade if needed
+ * Check what version of My Calendar is installed; install or upgrade if needed
  */
 function my_calendar_check() {
 	// only execute this function for administrators.
@@ -778,7 +778,7 @@ function my_calendar_admin_bar() {
 		$url  = apply_filters( 'mc_add_events_url', admin_url( 'admin.php?page=my-calendar' ) );
 		$args = array(
 			'id'    => 'mc-add-event',
-			'title' => __( 'Add Event', 'my-calendar' ),
+			'title' => __( 'Add Schedule', 'my-calendar' ),
 			'href'  => $url,
 		);
 		$wp_admin_bar->add_node( $args );
@@ -804,7 +804,7 @@ function my_calendar_admin_bar() {
 		$url  = admin_url( 'admin.php?page=my-calendar-manage' );
 		$args = array(
 			'id'     => 'mc-manage-events',
-			'title'  => __( 'Events', 'my-calendar' ),
+			'title'  => __( 'Schedules', 'my-calendar' ),
 			'href'   => $url,
 			'parent' => 'mc-add-event',
 		);
@@ -845,7 +845,7 @@ function my_calendar_admin_bar() {
 /**
  * Send email notification about an event.
  *
- * @param object $event Event object.
+ * @param object $event Schedule object.
  */
 function my_calendar_send_email( $event ) {
 	$details = mc_create_tags( $event );
@@ -860,7 +860,7 @@ function my_calendar_send_email( $event ) {
 		$to        = apply_filters( 'mc_event_mail_to', get_option( 'mc_event_mail_to' ), $details );
 		$from      = ( '' == get_option( 'mc_event_mail_from' ) ) ? get_bloginfo( 'admin_email' ) : get_option( 'mc_event_mail_from' );
 		$from      = apply_filters( 'mc_event_mail_from', $from, $details );
-		$headers[] = 'From: ' . __( 'Event Notifications', 'my-calendar' ) . " <$from>";
+		$headers[] = 'From: ' . __( 'Schedule Notifications', 'my-calendar' ) . " <$from>";
 		$bcc       = apply_filters( 'mc_event_mail_bcc', get_option( 'mc_event_mail_bcc' ), $details );
 		if ( $bcc ) {
 			$bcc = explode( PHP_EOL, $bcc );
@@ -887,7 +887,7 @@ function my_calendar_send_email( $event ) {
  * Checks submitted events against akismet, if available
  *
  * @param string $event_url Provided URL.
- * @param string $description Event description.
+ * @param string $description Schedule description.
  * @param array  $post Posted details.
  *
  * @return boolean true if spam
@@ -966,7 +966,7 @@ function mc_update_count_cache() {
 
 add_action( 'admin_enqueue_scripts', 'mc_scripts' );
 /**
- * Enqueue Schedule admin scripts
+ * Enqueue My Calendar admin scripts
  */
 function mc_scripts() {
 	global $current_screen;
@@ -1069,7 +1069,7 @@ function mc_scripts() {
 
 add_action( 'wp_ajax_mc_post_lookup', 'mc_post_lookup' );
 /**
- * Add post lookup for assigning Schedule main page
+ * Add post lookup for assigning My Calendar main page
  */
 function mc_post_lookup() {
 	if ( isset( $_REQUEST['term'] ) ) {
@@ -1114,12 +1114,12 @@ function mc_ajax_delete_occurrence() {
 		if ( $result ) {
 			wp_send_json( array(
 				'success'  => 1,
-				'response' => __( 'Event instance has been deleted.', 'my-calendar' ),
+				'response' => __( 'Schedule instance has been deleted.', 'my-calendar' ),
 			) );
 		} else {
 			wp_send_json( array(
 				'success'  => 0,
-				'response' => __( 'Event instance was not deleted.', 'my-calendar' ),
+				'response' => __( 'Schedule instance was not deleted.', 'my-calendar' ),
 			) );
 		}
 	} else {
@@ -1281,7 +1281,7 @@ function mc_guess_calendar() {
 function mc_get_support_form() {
 	global $current_user, $wpdb;
 	$current_user = wp_get_current_user();
-	// send fields for Schedule.
+	// send fields for My Calendar.
 	$version       = get_option( 'mc_version' );
 	$mc_db_version = get_option( 'mc_db_version' );
 	$mc_uri        = mc_get_uri();
@@ -1329,7 +1329,7 @@ function mc_get_support_form() {
 	}
 	$data    = "
 ================ Installation Data ====================
-==Schedule:==
+==My Calendar:==
 Version: $version
 DB Version: $mc_db_version
 URI: $mc_uri
@@ -1369,7 +1369,7 @@ $plugins_string
 		$has_donated   = ( 'on' == $_POST['has_donated'] ) ? 'Donor' : 'No donation';
 		$has_purchased = ( $checked ) ? 'Purchaser' : 'No purchase';
 		$has_read_faq  = ( 'on' == $_POST['has_read_faq'] ) ? 'Read FAQ' : false;
-		$subject       = "Schedule support request. $has_donated; $has_purchased";
+		$subject       = "My Calendar support request. $has_donated; $has_purchased";
 		$message       = $request . "\n\n" . $data;
 		// Get the site domain and get rid of www. from pluggable.php.
 		$sitename = strtolower( $_SERVER['SERVER_NAME'] );
@@ -1424,7 +1424,7 @@ $plugins_string
 
 add_action( 'init', 'mc_register_actions' );
 /**
- * Register actions attached to Schedule events, usable to add additional actions during those events.
+ * Register actions attached to My Calendar events, usable to add additional actions during those events.
  */
 function mc_register_actions() {
 	add_filter( 'mc_event_registration', 'mc_standard_event_registration', 10, 4 );
@@ -1454,7 +1454,7 @@ function mc_load_permalinks() {
 	}
 	$opts = array( 'label_for' => 'mc_cpt_base' );
 	// Add a settings field to the permalink page.
-	add_settings_field( 'mc_cpt_base', __( 'Schedule Events base' ), 'mc_field_callback', 'permalink', 'optional', $opts );
+	add_settings_field( 'mc_cpt_base', __( 'My Calendar Schedules base' ), 'mc_field_callback', 'permalink', 'optional', $opts );
 }
 
 /**
@@ -1466,7 +1466,7 @@ function mc_field_callback() {
 }
 
 /**
- * Generate arguments for Schedule post type.
+ * Generate arguments for My Calendar post type.
  */
 function mc_post_type() {
 	$arguments = array(
@@ -1482,8 +1482,8 @@ function mc_post_type() {
 		'mc-events' => array(
 			__( 'event', 'my-calendar' ),
 			__( 'events', 'my-calendar' ),
-			__( 'Event', 'my-calendar' ),
-			__( 'Events', 'my-calendar' ),
+			__( 'Schedule', 'my-calendar' ),
+			__( 'Schedules', 'my-calendar' ),
 			$arguments,
 		),
 	);
@@ -1504,11 +1504,11 @@ function mc_posttypes() {
 				'name'               => $value[3],
 				'singular_name'      => $value[2],
 				'add_new'            => _x( 'Add New', 'Add new event', 'my-calendar' ),
-				'add_new_item'       => __( 'Create New Event', 'my-calendar' ),
-				'edit_item'          => __( 'Modify Event', 'my-calendar' ),
-				'new_item'           => __( 'New Event', 'my-calendar' ),
-				'view_item'          => __( 'View Event', 'my-calendar' ),
-				'search_items'       => __( 'Search Events', 'my-calendar' ),
+				'add_new_item'       => __( 'Create New Schedule', 'my-calendar' ),
+				'edit_item'          => __( 'Modify Schedule', 'my-calendar' ),
+				'new_item'           => __( 'New Schedule', 'my-calendar' ),
+				'view_item'          => __( 'View Schedule', 'my-calendar' ),
+				'search_items'       => __( 'Search Schedules', 'my-calendar' ),
 				'not_found'          => __( 'No event found', 'my-calendar' ),
 				'not_found_in_trash' => __( 'No events found in Trash', 'my-calendar' ),
 				'parent_item_colon'  => '',
@@ -1582,7 +1582,7 @@ function mc_posttypes_defaults( $post_content, $post ) {
 }
 
 /**
- * Register taxonomies on Schedule custom post types
+ * Register taxonomies on My Calendar custom post types
  */
 function mc_taxonomies() {
 	$types   = mc_post_type();
@@ -1596,7 +1596,7 @@ function mc_taxonomies() {
 				array( $key ),
 				array(
 					'hierarchical' => true,
-					'label'        => __( 'Event Categories', 'my-calendar' ),
+					'label'        => __( 'Schedule Categories', 'my-calendar' ),
 					'query_var'    => true,
 					'rewrite'      => array( 'slug' => apply_filters( 'mc_event_category_slug', 'mc-event-category' ) ),
 				)
@@ -1622,21 +1622,21 @@ function mc_posttypes_messages( $messages ) {
 			$messages[ $key ] = array(
 				0  => '', // Unused. Messages start at index 1.
 				// Translators: URL to view event.
-				1  => sprintf( __( 'Event updated. <a href="%s">View Event</a>' ), esc_url( get_permalink( $post_ID ) ) ),
+				1  => sprintf( __( 'Schedule updated. <a href="%s">View Schedule</a>' ), esc_url( get_permalink( $post_ID ) ) ),
 				2  => __( 'Custom field updated.' ),
 				3  => __( 'Custom field deleted.' ),
-				4  => __( 'Event updated.' ),
+				4  => __( 'Schedule updated.' ),
 				// Translators: %s: date and time of the revision.
-				5  => isset( $_GET['revision'] ) ? sprintf( __( 'Event restored to revision from %s' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+				5  => isset( $_GET['revision'] ) ? sprintf( __( 'Schedule restored to revision from %s' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
 				// Translators: URL to view event.
-				6  => sprintf( __( 'Event published. <a href="%s">View event</a>' ), esc_url( get_permalink( $post_ID ) ) ),
-				7  => sprintf( __( 'Event saved.' ) ),
+				6  => sprintf( __( 'Schedule published. <a href="%s">View event</a>' ), esc_url( get_permalink( $post_ID ) ) ),
+				7  => sprintf( __( 'Schedule saved.' ) ),
 				// Translators: URL to preview event.
-				8  => sprintf( __( 'Event submitted. <a target="_blank" href="%s">Preview event</a>' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+				8  => sprintf( __( 'Schedule submitted. <a target="_blank" href="%s">Preview event</a>' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
 				// Translators: Date event scheduled to be published, URL to preview event.
-				9  => sprintf( __( 'Event scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview event</a>' ), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
+				9  => sprintf( __( 'Schedule scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview event</a>' ), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
 				// Translators: URL to preview event.
-				10 => sprintf( __( 'Event draft updated. <a target="_blank" href="%s">Preview event</a>' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+				10 => sprintf( __( 'Schedule draft updated. <a target="_blank" href="%s">Preview event</a>' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
 			);
 		}
 	}
@@ -1663,11 +1663,11 @@ function mc_update_notice() {
 	if ( current_user_can( 'activate_plugins' ) && 0 == get_option( 'mc_update_notice' ) || ! get_option( 'mc_update_notice' ) ) {
 		$dismiss = admin_url( 'admin.php?page=my-calendar-behaviors&dismiss=update' );
 		// Translators: URL to scripts manager.
-		echo "<div class='updated'><p>" . sprintf( __( "<strong>Update notice:</strong> if you use custom JS with Schedule, you need to activate your custom scripts following this update. <a href='%s'>Dismiss Notice</a>", 'my-calendar' ), $dismiss ) . '</p></div>';
+		echo "<div class='updated'><p>" . sprintf( __( "<strong>Update notice:</strong> if you use custom JS with My Calendar, you need to activate your custom scripts following this update. <a href='%s'>Dismiss Notice</a>", 'my-calendar' ), $dismiss ) . '</p></div>';
 	}
 	if ( current_user_can( 'manage_options' ) && isset( $_GET['page'] ) && stripos( $_GET['page'], 'my-calendar' ) !== false ) {
 		if ( 'true' == get_option( 'mc_remote' ) ) {
-			mc_show_notice( __( 'Schedule is configured to retrieve events from a remote source.', 'my-calendar' ) . ' <a href="' . admin_url( 'admin.php?page=my-calendar-config' ) . '">' . __( 'Update Settings', 'my-calendar' ) . '</a>' );
+			mc_show_notice( __( 'My Calendar is configured to retrieve events from a remote source.', 'my-calendar' ) . ' <a href="' . admin_url( 'admin.php?page=my-calendar-config' ) . '">' . __( 'Update Settings', 'my-calendar' ) . '</a>' );
 		}
 	}
 }
@@ -1682,7 +1682,7 @@ add_filter( 'wp_privacy_personal_data_exporters', 'my_calendar_exporter', 10 );
  */
 function my_calendar_exporter( $exporters ) {
 	$exporters['my-calendar-exporter'] = array(
-		'exporter_friendly_name' => __( 'Schedule - Privacy Export', 'my-calendar' ),
+		'exporter_friendly_name' => __( 'My Calendar - Privacy Export', 'my-calendar' ),
 		'callback'               => 'my_calendar_privacy_export',
 	);
 
@@ -1757,7 +1757,7 @@ function my_calendar_privacy_export( $email_address, $page = 1 ) {
 			}
 			$export_items[] = array(
 				'group_id'    => 'my-calendar-export',
-				'group_label' => 'Schedule',
+				'group_label' => 'My Calendar',
 				'item_id'     => "event-$e",
 				'data'        => $event_export,
 			);
@@ -1780,7 +1780,7 @@ add_filter( 'wp_privacy_personal_data_erasers', 'my_calendar_eraser', 10 );
  */
 function my_calendar_eraser( $erasers ) {
 	$erasers['my-calendar-eraser'] = array(
-		'eraser_friendly_name' => __( 'Schedule - Eraser', 'my-calendar' ),
+		'eraser_friendly_name' => __( 'My Calendar - Eraser', 'my-calendar' ),
 		'callback'             => 'my_calendar_privacy_eraser',
 	);
 

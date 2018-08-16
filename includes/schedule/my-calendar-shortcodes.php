@@ -59,7 +59,7 @@ function my_calendar_insert( $atts, $content = null ) {
 }
 
 /**
- * Upcoming Events Schedule shortcode.
+ * Upcoming Schedules Schedule shortcode.
  *
  * @param array $atts Shortcode attributes.
  *
@@ -97,7 +97,7 @@ function my_calendar_insert_upcoming( $atts ) {
 }
 
 /**
- * Today's Events Schedule shortcode.
+ * Today's Schedules Schedule shortcode.
  *
  * @param array $atts Shortcode attributes.
  *
@@ -208,7 +208,7 @@ function my_calendar_filters( $atts ) {
 }
 
 /**
- * Single Event Schedule shortcode.
+ * Single Schedule Schedule shortcode.
  *
  * @param array $atts Shortcode attributes.
  *
@@ -244,7 +244,7 @@ function my_calendar_search( $atts ) {
 }
 
 /**
- * Current Event Schedule shortcode.
+ * Current Schedule Schedule shortcode.
  *
  * @param array $atts Shortcode attributes.
  *

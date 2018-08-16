@@ -1,6 +1,6 @@
 <?php
 /**
- * Schedule Today's Events Widget
+ * Schedule Today's Schedules Widget
  *
  * @category Widgets
  * @package    Adams_Plugin
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Schedule Today's Events class.
+ * Schedule Today's Schedules class.
  *
  * @category  Widgets
  * @package   Schedule
@@ -31,7 +31,7 @@ class My_Calendar_Today_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			false,
-			$name = __( 'Schedule: Today\'s Events', 'my-calendar' ),
+			$name = __( 'Schedule: Today\'s Schedules', 'my-calendar' ),
 			array(
 				'customize_selective_refresh' => true,
 				'description'                 => __( 'A list of events today.', 'my-calendar' ),
@@ -40,7 +40,7 @@ class My_Calendar_Today_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Build the Schedule Today's Events widget output.
+	 * Build the Schedule Today's Schedules widget output.
 	 *
 	 * @param array $args Widget arguments.
 	 * @param array $instance This instance settings.
@@ -162,7 +162,7 @@ class My_Calendar_Today_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Update the Schedule Today's Events Widget settings.
+	 * Update the Schedule Today's Schedules Widget settings.
 	 *
 	 * @param object $new Widget settings new data.
 	 * @param object $instance Widget settings instance.

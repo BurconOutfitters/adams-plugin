@@ -2,7 +2,7 @@
 /**
  * Plugin activation class.
  *
- * This file must not be namespaced.
+ * This file must not be//  //  namespaced.
  *
  * @package    Adams_Plugin
  * @subpackage Includes

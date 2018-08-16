@@ -1,6 +1,6 @@
 <?php
 /**
- * Schedule Upcoming Events Widget
+ * Schedule Upcoming Schedules Widget
  *
  * @category Widgets
  * @package    Adams_Plugin
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Schedule Upcoming Events class.
+ * Schedule Upcoming Schedules class.
  *
  * @category  Widgets
  * @package   Schedule
@@ -31,7 +31,7 @@ class My_Calendar_Upcoming_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			false,
-			$name = __( 'Schedule: Upcoming Events', 'my-calendar' ),
+			$name = __( 'Schedule: Upcoming Schedules', 'my-calendar' ),
 			array(
 				'customize_selective_refresh' => true,
 				'description'                 => __( 'List recent and future events.', 'my-calendar' ),
@@ -40,7 +40,7 @@ class My_Calendar_Upcoming_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Build the Schedule Upcoming Events widget output.
+	 * Build the Schedule Upcoming Schedules widget output.
 	 *
 	 * @param array $args Widget arguments.
 	 * @param array $instance This instance settings.
@@ -174,7 +174,7 @@ class My_Calendar_Upcoming_Widget extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'my_calendar_upcoming_type' ); ?>"><?php _e( 'Display upcoming events by:', 'my-calendar' ); ?></label>
 			<select id="<?php echo $this->get_field_id( 'my_calendar_upcoming_type' ); ?>" name="<?php echo $this->get_field_name( 'my_calendar_upcoming_type' ); ?>">
-				<option value="events" <?php echo ( 'events' == $type ) ? 'selected="selected"' : ''; ?>><?php _e( 'Events (e.g. 2 past, 3 future)', 'my-calendar' ); ?></option>
+				<option value="events" <?php echo ( 'events' == $type ) ? 'selected="selected"' : ''; ?>><?php _e( 'Schedules (e.g. 2 past, 3 future)', 'my-calendar' ); ?></option>
 				<option value="days" <?php echo ( 'days' == $type ) ? 'selected="selected"' : ''; ?>><?php _e( 'Dates (e.g. 4 days past, 5 forward)', 'my-calendar' ); ?></option>
 				<option value="month" <?php echo ( 'month' == $type ) ? 'selected="selected"' : ''; ?>><?php _e( 'Show current month', 'my-calendar' ); ?></option>
 				<option value="month+1" <?php echo ( 'month+1' == $type ) ? 'selected="selected"' : ''; ?>><?php _e( 'Show next month', 'my-calendar' ); ?></option>
@@ -212,7 +212,7 @@ class My_Calendar_Upcoming_Widget extends WP_Widget {
 			<input type="text" id="<?php echo $this->get_field_id( 'my_calendar_upcoming_skip' ); ?>" name="<?php echo $this->get_field_name( 'my_calendar_upcoming_skip' ); ?>" value="<?php echo $skip; ?>"/>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'my_calendar_upcoming_order' ); ?>"><?php _e( 'Events sort order:', 'my-calendar' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'my_calendar_upcoming_order' ); ?>"><?php _e( 'Schedules sort order:', 'my-calendar' ); ?></label>
 			<select id="<?php echo $this->get_field_id( 'my_calendar_upcoming_order' ); ?>" name="<?php echo $this->get_field_name( 'my_calendar_upcoming_order' ); ?>">
 				<option value="asc" <?php echo ( 'asc' == $order ) ? 'selected="selected"' : ''; ?>><?php _e( 'Ascending (near to far)', 'my-calendar' ); ?></option>
 				<option value="desc" <?php echo ( 'desc' == $order ) ? 'selected="selected"' : ''; ?>><?php _e( 'Descending (far to near)', 'my-calendar' ); ?></option>

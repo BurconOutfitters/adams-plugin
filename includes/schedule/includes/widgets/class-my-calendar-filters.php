@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Schedule Event Filters class.
+ * Schedule Schedule Filters class.
  *
  * @category  Widgets
  * @package   Schedule
@@ -31,7 +31,7 @@ class My_Calendar_Filters extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			false,
-			$name = __( 'Schedule: Event Filters', 'my-calendar' ),
+			$name = __( 'Schedule: Schedule Filters', 'my-calendar' ),
 			array(
 				'customize_selective_refresh' => true,
 				'description'                 => __( 'Filter displayed events.', 'my-calendar' ),
@@ -40,7 +40,7 @@ class My_Calendar_Filters extends WP_Widget {
 	}
 
 	/**
-	 * Build the Schedule Event filters widget output.
+	 * Build the Schedule Schedule filters widget output.
 	 *
 	 * @param array $args Widget arguments.
 	 * @param array $instance This instance settings.
@@ -114,7 +114,7 @@ class My_Calendar_Filters extends WP_Widget {
 	}
 
 	/**
-	 * Update the Schedule Event Filters Widget settings.
+	 * Update the Schedule Schedule Filters Widget settings.
 	 *
 	 * @param object $new Widget settings new data.
 	 * @param object $instance Widget settings instance.

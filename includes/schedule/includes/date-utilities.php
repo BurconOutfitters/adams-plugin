@@ -363,7 +363,7 @@ function mc_name_days( $format ) {
 /**
  * Handles all cases for exiting processing early: private events, drafts, etc.
  *
- * @param object $event Event object.
+ * @param object $event Schedule object.
  * @param string $process_date Current date being articulated.
  *
  * @return boolean true if early exit is qualified.

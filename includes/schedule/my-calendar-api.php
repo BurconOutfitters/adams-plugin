@@ -2,7 +2,7 @@
 /**
  * Schedule API - get events outside of Schedule UI
  *
- * @category Events
+ * @category Schedules
  * @package    Adams_Plugin
  * @author   Joe Dolson
  * @license  GPLv2 or later
@@ -146,7 +146,7 @@ function mc_export_vcal() {
 /**
  * Send iCal event to browser
  *
- * @param integer $event_id Event ID.
+ * @param integer $event_id Schedule ID.
  *
  * @return string headers & text for iCal event.
  */
@@ -165,12 +165,12 @@ function my_calendar_send_vcal( $event_id ) {
 /**
  * Generate iCal formatted event for one event
  *
- * @param integer $event_id Event ID.
+ * @param integer $event_id Schedule ID.
  *
  * @return string text for iCal
  */
 function mc_generate_vcal( $event_id = false ) {
-	global $mc_version;
+	
 	$output = '';
 	$mc_id  = ( isset( $_GET['vcal'] ) ) ? (int) str_replace( 'mc_', '', $_GET['vcal'] ) : $event_id;
 	if ( $mc_id ) {
@@ -190,7 +190,7 @@ function mc_generate_vcal( $event_id = false ) {
 		$template = "BEGIN:VCALENDAR
 VERSION:2.0
 METHOD:PUBLISH
-PRODID:-//Accessible Web Design//Schedule//http://www.joedolson.com//v$mc_version//EN';
+PRODID:-//Accessible Web Design//Schedule//http://www.joedolson.com';
 BEGIN:VEVENT
 UID:{dateid}-{id}
 LOCATION:{ical_location}
@@ -285,7 +285,7 @@ function mc_format_rss( $events ) {
 		<channel>
 		  <title>' . get_bloginfo( 'name' ) . ' Calendar</title>
 		  <link>' . home_url() . '</link>
-		  <description>' . get_bloginfo( 'description' ) . ': Schedule Events</description>
+		  <description>' . get_bloginfo( 'description' ) . ': Schedule Schedules</description>
 		  <language>' . get_bloginfo( 'language' ) . '</language>
 		  <managingEditor>' . get_bloginfo( 'admin_email' ) . ' (' . get_bloginfo( 'name' ) . ' Admin)</managingEditor>
 		  <generator>Schedule WordPress Plugin http://www.joedolson.com/my-calendar/</generator>
@@ -490,14 +490,14 @@ function my_calendar_ical() {
  * @return array Parts of iCal events.
  */
 function mc_ical_template() {
-	global $mc_version;
+
 	$tz_id = get_option( 'timezone_string' );
 	$off   = ( get_option( 'gmt_offset' ) * -1 );
 	$etc   = 'Etc/GMT' . ( ( 0 > $off ) ? $off : '+' . $off );
 	$tz_id = ( $tz_id ) ? $tz_id : $etc;
 
 	// Translators: Blogname.
-	$events_from = sprintf( __( 'Events from %s', 'my-calendar' ), get_bloginfo( 'blogname' ) );
+	$events_from = sprintf( __( 'Schedules from %s', 'my-calendar' ), get_bloginfo( 'blogname' ) );
 	$ttl         = apply_filters( 'ical_x_published_ttl', 'PT24H' );
 	// establish template.
 	$template = "
@@ -516,7 +516,7 @@ END:VEVENT";
 	// add ICAL headers.
 	$head = 'BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Schedule//http://www.joedolson.com//v' . $mc_version . '//EN
+PRODID:-//Schedule//http://www.joedolson.com
 METHOD:PUBLISH
 CALSCALE:GREGORIAN
 X-WR-CALNAME:' . get_bloginfo( 'blogname' ) . '

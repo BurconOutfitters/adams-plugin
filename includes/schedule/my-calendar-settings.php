@@ -166,7 +166,7 @@ function my_calendar_import() {
 			$cats_results = $wpdb->query( $wpdb->prepare( $catsql, $id, $name, $color ) ); // WPCS: unprepared SQL ok.
 		}
 		$message   = ( false !== $cats_results ) ? __( 'Categories imported successfully.', 'my-calendar' ) : __( 'Categories not imported.', 'my-calendar' );
-		$e_message = ( false !== $events_results ) ? __( 'Events imported successfully.', 'my-calendar' ) : __( 'Events not imported.', 'my-calendar' );
+		$e_message = ( false !== $events_results ) ? __( 'Schedules imported successfully.', 'my-calendar' ) : __( 'Schedules not imported.', 'my-calendar' );
 		$return    = "<div id='message' class='updated fade'><ul><li>$message</li><li>$e_message</li></ul></div>";
 		echo $return;
 		if ( false !== $cats_results && false !== $events_results ) {
@@ -193,7 +193,7 @@ function my_calendar_settings() {
 			mc_upgrade_db();
 			echo '<li>' . __( 'Generating event occurrences.', 'my-calendar' ) . '</li>';
 			mc_migrate_db();
-			echo '<li>' . __( 'Event generation completed.', 'my-calendar' ) . '</li>';
+			echo '<li>' . __( 'Schedule generation completed.', 'my-calendar' ) . '</li>';
 			echo '</ol></div>';
 		}
 	}
@@ -231,9 +231,9 @@ function my_calendar_settings() {
 	if ( isset( $_POST['mc_permissions'] ) ) {
 		$perms = $_POST['mc_caps'];
 		$caps  = array(
-			'mc_add_events'     => __( 'Add Events', 'my-calendar' ),
-			'mc_approve_events' => __( 'Approve Events', 'my-calendar' ),
-			'mc_manage_events'  => __( 'Manage Events', 'my-calendar' ),
+			'mc_add_events'     => __( 'Add Schedules', 'my-calendar' ),
+			'mc_approve_events' => __( 'Approve Schedules', 'my-calendar' ),
+			'mc_manage_events'  => __( 'Manage Schedules', 'my-calendar' ),
 			'mc_edit_cats'      => __( 'Edit Categories', 'my-calendar' ),
 			'mc_edit_locations' => __( 'Edit Locations', 'my-calendar' ),
 			'mc_edit_styles'    => __( 'Edit Styles', 'my-calendar' ),
@@ -309,7 +309,7 @@ function my_calendar_settings() {
 		if ( ( isset( $_POST['mc_use_permalinks'] ) && 'true' == get_option( 'mc_use_permalinks' ) ) && 'true' != $permalinks ) {
 			$url = admin_url( 'options-permalink.php#mc_cpt_base' );
 			// Translators: URL to permalink settings page.
-			$note = ' ' . sprintf( __( 'You activated Schedule permalinks. Go to <a href="%s">permalink settings</a> to set the base URL for Schedule Events.', 'my-calendar' ), $url );
+			$note = ' ' . sprintf( __( 'You activated Schedule permalinks. Go to <a href="%s">permalink settings</a> to set the base URL for Schedule Schedules.', 'my-calendar' ), $url );
 		} else {
 			$note = '';
 		}
@@ -531,8 +531,8 @@ function mc_remote_db() {
 								<li><?php mc_settings_field( 'mc_drop_tables', __( 'Drop MySQL tables on uninstall', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
 								<li>
 								<?php
-								mc_settings_field( 'mc_default_sort', __( 'Default Sort order for Admin Events List', 'my-calendar' ), array(
-									'1' => __( 'Event ID', 'my-calendar' ),
+								mc_settings_field( 'mc_default_sort', __( 'Default Sort order for Admin Schedules List', 'my-calendar' ), array(
+									'1' => __( 'Schedule ID', 'my-calendar' ),
 									'2' => __( 'Title', 'my-calendar' ),
 									'3' => __( 'Description', 'my-calendar' ),
 									'4' => __( 'Start Date', 'my-calendar' ),
@@ -588,11 +588,11 @@ function mc_remote_db() {
 							<li><?php mc_settings_field( 'mc_next_events', __( 'Next events link', 'my-calendar' ), __( 'Next', 'my-calendar' ), __( 'Use <code>{date}</code> to display date in navigation.', 'my-calendar' ) ); ?></li>
 							<li><?php mc_settings_field( 'mc_week_caption', __( 'Week view caption:', 'my-calendar' ), '', __( 'Available tag: <code>{date format=""}</code>', 'my-calendar' ) ); ?></li>
 							<li><?php mc_settings_field( 'mc_caption', __( 'Extended caption:', 'my-calendar' ), '', __( 'Follows month/year in list views.', 'my-calendar' ) ); ?></li>
-							<li><?php mc_settings_field( 'mc_title_template', __( 'Event title (Grid)', 'my-calendar' ), $mc_title_template, "<a href='" . admin_url( 'admin.php?page=my-calendar-help#templates' ) . "'>" . __( 'Templating Help', 'my-calendar' ) . '</a>' ); ?></li>
-							<li><?php mc_settings_field( 'mc_title_template_solo', __( 'Event title (Single)', 'my-calendar' ), $mc_title_template_solo, "<a href='" . admin_url( 'admin.php?page=my-calendar-help#templates' ) . "'>" . __( 'Templating Help', 'my-calendar' ) . '</a>' ); ?></li>
-							<li><?php mc_settings_field( 'mc_title_template_list', __( 'Event title (List)', 'my-calendar' ), $mc_title_template_list, "<a href='" . admin_url( 'admin.php?page=my-calendar-help#templates' ) . "'>" . __( 'Templating Help', 'my-calendar' ) . '</a>' ); ?></li>
-							<li><?php mc_settings_field( 'mc_details_label', __( 'Event details link text', 'my-calendar' ), $mc_details_label, __( 'Tags: <code>{title}</code>, <code>{location}</code>, <code>{color}</code>, <code>{icon}</code>, <code>{date}</code>, <code>{time}</code>.', 'my-calendar' ) ); ?></li>
-							<li><?php mc_settings_field( 'mc_link_label', __( 'Event URL link text', 'my-calendar' ), $mc_link_label, "<a href='" . admin_url( 'admin.php?page=my-calendar-help#templates' ) . "'>" . __( 'Templating Help', 'my-calendar' ) . '</a>' ); ?></li>
+							<li><?php mc_settings_field( 'mc_title_template', __( 'Schedule title (Grid)', 'my-calendar' ), $mc_title_template, "<a href='" . admin_url( 'admin.php?page=my-calendar-help#templates' ) . "'>" . __( 'Templating Help', 'my-calendar' ) . '</a>' ); ?></li>
+							<li><?php mc_settings_field( 'mc_title_template_solo', __( 'Schedule title (Single)', 'my-calendar' ), $mc_title_template_solo, "<a href='" . admin_url( 'admin.php?page=my-calendar-help#templates' ) . "'>" . __( 'Templating Help', 'my-calendar' ) . '</a>' ); ?></li>
+							<li><?php mc_settings_field( 'mc_title_template_list', __( 'Schedule title (List)', 'my-calendar' ), $mc_title_template_list, "<a href='" . admin_url( 'admin.php?page=my-calendar-help#templates' ) . "'>" . __( 'Templating Help', 'my-calendar' ) . '</a>' ); ?></li>
+							<li><?php mc_settings_field( 'mc_details_label', __( 'Schedule details link text', 'my-calendar' ), $mc_details_label, __( 'Tags: <code>{title}</code>, <code>{location}</code>, <code>{color}</code>, <code>{icon}</code>, <code>{date}</code>, <code>{time}</code>.', 'my-calendar' ) ); ?></li>
+							<li><?php mc_settings_field( 'mc_link_label', __( 'Schedule URL link text', 'my-calendar' ), $mc_link_label, "<a href='" . admin_url( 'admin.php?page=my-calendar-help#templates' ) . "'>" . __( 'Templating Help', 'my-calendar' ) . '</a>' ); ?></li>
 							<li>
 							<?php
 							// Translators: Current title template (code).
@@ -649,7 +649,7 @@ function mc_remote_db() {
 								$note = '';
 							}
 							?>
-							<li><?php mc_settings_field( 'mc_use_permalinks', __( 'Use Pretty Permalinks for Events', 'my-calendar' ), '', $note, array(), 'checkbox-single' ); ?></li>
+							<li><?php mc_settings_field( 'mc_use_permalinks', __( 'Use Pretty Permalinks for Schedules', 'my-calendar' ), '', $note, array(), 'checkbox-single' ); ?></li>
 							<li><?php mc_settings_field( 'mc_open_uri', __( 'Open calendar links to event details', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
 							<li><?php mc_settings_field( 'mc_mini_uri', __( 'Target <abbr title="Uniform resource locator">URL</abbr> for mini calendar date links:', 'my-calendar' ), '', '', array( 'size' => '60' ), 'url' ); ?></li>
 							<?php
@@ -732,7 +732,7 @@ function mc_remote_db() {
 					</fieldset>
 
 					<fieldset>
-						<legend><?php _e( 'Single Event Details', 'my-calendar' ); ?></legend>
+						<legend><?php _e( 'Single Schedule Details', 'my-calendar' ); ?></legend>
 						<p><?php _e( 'Custom templates override these settings.', 'my-calendar' ); ?>
 						<ul class="checkboxes">
 							<li><?php mc_settings_field( 'mc_display_author', __( 'Author\'s name', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
@@ -741,7 +741,7 @@ function mc_remote_db() {
 							<li><?php mc_settings_field( 'mc_show_map', __( 'Link to Google Map', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
 							<li><?php mc_settings_field( 'mc_gmap', __( 'Google Map (single view only)', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
 							<li class="mc_gmap_api_key"><?php mc_settings_field( 'mc_gmap_api_key', __( 'Google Maps API Key', 'my-calendar' ) ); ?></li>
-							<li><?php mc_settings_field( 'mc_show_address', __( 'Event Address', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
+							<li><?php mc_settings_field( 'mc_show_address', __( 'Schedule Address', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
 							<li><?php mc_settings_field( 'mc_short', __( 'Short description', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
 							<li><?php mc_settings_field( 'mc_desc', __( 'Full description', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
 							<li><?php mc_settings_field( 'mc_image', __( 'Image', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
@@ -795,18 +795,18 @@ function mc_remote_db() {
 							$output        = '';
 							$input_options = get_option( 'mc_input_options' );
 							$input_labels  = array(
-								'event_location_dropdown' => __( 'Event Location Dropdown Menu', 'my-calendar' ),
-								'event_short'             => __( 'Event Short Description field', 'my-calendar' ),
-								'event_desc'              => __( 'Event Description Field', 'my-calendar' ),
-								'event_category'          => __( 'Event Category field', 'my-calendar' ),
-								'event_image'             => __( 'Event Image field', 'my-calendar' ),
-								'event_link'              => __( 'Event Link field', 'my-calendar' ),
-								'event_recurs'            => __( 'Event Recurrence Options', 'my-calendar' ),
-								'event_open'              => __( 'Event Registration options', 'my-calendar' ),
-								'event_location'          => __( 'Event Location fields', 'my-calendar' ),
+								'event_location_dropdown' => __( 'Schedule Location Dropdown Menu', 'my-calendar' ),
+								'event_short'             => __( 'Schedule Short Description field', 'my-calendar' ),
+								'event_desc'              => __( 'Schedule Description Field', 'my-calendar' ),
+								'event_category'          => __( 'Schedule Category field', 'my-calendar' ),
+								'event_image'             => __( 'Schedule Image field', 'my-calendar' ),
+								'event_link'              => __( 'Schedule Link field', 'my-calendar' ),
+								'event_recurs'            => __( 'Schedule Recurrence Options', 'my-calendar' ),
+								'event_open'              => __( 'Schedule Registration options', 'my-calendar' ),
+								'event_location'          => __( 'Schedule Location fields', 'my-calendar' ),
 								'event_specials'          => __( 'Set Special Scheduling options', 'my-calendar' ),
-								'event_access'            => __( 'Event Accessibility', 'my-calendar' ),
-								'event_host'              => __( 'Event Host', 'my-calendar' ),
+								'event_access'            => __( 'Schedule Accessibility', 'my-calendar' ),
+								'event_host'              => __( 'Schedule Host', 'my-calendar' ),
 							);
 
 							// If input options isn't an array, assume that plugin wasn't upgraded, and reset to default.
@@ -839,9 +839,9 @@ function mc_remote_db() {
 						</ul>
 					</fieldset>
 					<fieldset>
-						<legend><?php _e( 'Event Scheduling Defaults', 'my-calendar' ); ?></legend>
+						<legend><?php _e( 'Schedule Scheduling Defaults', 'my-calendar' ); ?></legend>
 						<ul>
-							<li><?php mc_settings_field( 'mc_event_link_expires', __( 'Event links expire after event passes.', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
+							<li><?php mc_settings_field( 'mc_event_link_expires', __( 'Schedule links expire after event passes.', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
 							<li><?php mc_settings_field( 'mc_no_fifth_week', __( 'If a recurring event falls on a date that doesn\'t exist (like the 5th Wednesday in February), move it back one week.', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
 							<li><?php mc_settings_field( 'mc_skip_holidays', __( 'If an event coincides with an event in the designated "Holiday" category, do not show the event.', 'my-calendar' ), '', '', array(), 'checkbox-single' ); ?></li>
 						</ul>
@@ -919,9 +919,9 @@ function mc_remote_db() {
 		$role_container = '';
 		$roles          = $wp_roles->get_names();
 		$caps           = array(
-			'mc_add_events'     => __( 'Add Events', 'my-calendar' ),
-			'mc_approve_events' => __( 'Approve Events', 'my-calendar' ),
-			'mc_manage_events'  => __( 'Manage Events', 'my-calendar' ),
+			'mc_add_events'     => __( 'Add Schedules', 'my-calendar' ),
+			'mc_approve_events' => __( 'Approve Schedules', 'my-calendar' ),
+			'mc_manage_events'  => __( 'Manage Schedules', 'my-calendar' ),
 			'mc_edit_cats'      => __( 'Edit Categories', 'my-calendar' ),
 			'mc_edit_locations' => __( 'Edit Locations', 'my-calendar' ),
 			'mc_edit_styles'    => __( 'Edit Styles', 'my-calendar' ),
@@ -980,7 +980,7 @@ function mc_remote_db() {
 							<li><?php mc_settings_field( 'mc_event_mail_subject', __( 'Email subject', 'my-calendar' ), get_bloginfo( 'name' ) . ': ' . __( 'New event added', 'my-calendar' ), '', array( 'size' => 60 ) ); ?></li>
 							<li>
 	<?php
-	mc_settings_field( 'mc_event_mail_message', __( 'Message Body', 'my-calendar' ), __( 'New Event:', 'my-calendar' ) . "\n{title}: {date}, {time} - {event_status}", "<br /><a href='" . admin_url( 'admin.php?page=my-calendar-help#templates' ) . "'>" . __( 'Templating Help', 'my-calendar' ) . '</a>', array(
+	mc_settings_field( 'mc_event_mail_message', __( 'Message Body', 'my-calendar' ), __( 'New Schedule:', 'my-calendar' ) . "\n{title}: {date}, {time} - {event_status}", "<br /><a href='" . admin_url( 'admin.php?page=my-calendar-help#templates' ) . "'>" . __( 'Templating Help', 'my-calendar' ) . '</a>', array(
 		'cols' => 60,
 		'rows' => 6,
 	), 'textarea' );
