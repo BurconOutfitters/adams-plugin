@@ -1,9 +1,9 @@
 <?php
 /**
- * Manage Schedule styles.
+ * Manage My Calendar styles.
  *
  * @category Core
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -111,7 +111,7 @@ function my_calendar_style_edit() {
 	}
 	?>
 	<div class="wrap my-calendar-admin">
-	<h1><?php _e( 'Schedule Styles', 'my-calendar' ); ?></h1>
+	<h1><?php _e( 'My Calendar Styles', 'my-calendar' ); ?></h1>
 	<div class="postbox-container jcd-wide">
 		<div class="metabox-holder">
 			<div class="ui-sortable meta-box-sortables">
@@ -130,7 +130,7 @@ function my_calendar_style_edit() {
 							?>
 							<fieldset>
 								<p>
-									<label for="mc_css_file"><?php _e( 'Select Schedule Theme', 'my-calendar' ); ?></label>
+									<label for="mc_css_file"><?php _e( 'Select My Calendar Theme', 'my-calendar' ); ?></label>
 									<select name="mc_css_file" id="mc_css_file">
 							<?php
 							if ( ! empty( $files ) ) {
@@ -177,7 +177,7 @@ function my_calendar_style_edit() {
 								<p>
 									<input type="checkbox" id="reset_styles" name="reset_styles" <?php echo ( mc_is_custom_style( get_option( 'mc_css_file' ) ) ) ? "disabled='disabled'" : ''; ?> /> <label for="reset_styles"><?php _e( 'Reset to default', 'my-calendar' ); ?></label>
 									<input type="checkbox" id="use_styles" name="use_styles" <?php mc_is_checked( 'mc_use_styles', 'true' ); ?> />
-									<label for="use_styles"><?php _e( 'Disable Schedule Stylesheet', 'my-calendar' ); ?></label>
+									<label for="use_styles"><?php _e( 'Disable My Calendar Stylesheet', 'my-calendar' ); ?></label>
 								</p>
 								<p>
 								<?php
@@ -186,7 +186,7 @@ function my_calendar_style_edit() {
 								} else {
 									$disabled = ( $edit_files || get_option( 'mc_use_styles' ) == 'true' ) ? '' : ' disabled="disabled"';
 									?>
-									<label for="style"><?php _e( 'Edit the stylesheet for Schedule', 'my-calendar' ); ?></label><br/><textarea <?php echo $disabled; ?> class="style-editor" id="style" name="style" rows="30" cols="80"><?php echo $my_calendar_style; ?></textarea>
+									<label for="style"><?php _e( 'Edit the stylesheet for My Calendar', 'my-calendar' ); ?></label><br/><textarea <?php echo $disabled; ?> class="style-editor" id="style" name="style" rows="30" cols="80"><?php echo $my_calendar_style; ?></textarea>
 									<?php
 								}
 								?>
@@ -227,19 +227,19 @@ function my_calendar_style_edit() {
 							if ( isset( $_GET['diff'] ) ) {
 								echo '<div class="wrap my-calendar-admin" id="diff">';
 								echo mc_text_diff( $left_string, $right_string, array(
-									'title'       => __( 'Comparing Your Style with latest installed version of Schedule', 'my-calendar' ),
+									'title'       => __( 'Comparing Your Style with latest installed version of My Calendar', 'my-calendar' ),
 									'title_right' => __( 'Latest (from plugin)', 'my-calendar' ),
 									'title_left'  => __( 'Current (in use)', 'my-calendar' ),
 								) );
 								echo '</div>';
 							} elseif ( trim( $left_string ) != trim( $right_string ) ) {
 								echo '<div class="wrap my-calendar-admin">';
-								mc_show_notice( __( 'There have been updates to the stylesheet.', 'my-calendar' ) . ' <a href="' . admin_url( 'admin.php?page=my-calendar-styles&amp;diff#diff' ) . '">' . __( 'Compare Your Stylesheet with latest installed version of Schedule.', 'my-calendar' ) . '</a>' );
+								mc_show_notice( __( 'There have been updates to the stylesheet.', 'my-calendar' ) . ' <a href="' . admin_url( 'admin.php?page=my-calendar-styles&amp;diff#diff' ) . '">' . __( 'Compare Your Stylesheet with latest installed version of My Calendar.', 'my-calendar' ) . '</a>' );
 								echo '</div>';
 							} else {
 								echo '
 						<div class="wrap my-calendar-admin">
-							<p>' . __( 'Your stylesheet matches that included with Schedule.', 'my-calendar' ) . '</p>
+							<p>' . __( 'Your stylesheet matches that included with My Calendar.', 'my-calendar' ) . '</p>
 						</div>';
 							}
 						}
@@ -250,7 +250,8 @@ function my_calendar_style_edit() {
 			</div>
 		</div>
 	</div>
-</div>
+	<?php mc_show_sidebar(); ?>
+	</div>
 	<?php
 }
 

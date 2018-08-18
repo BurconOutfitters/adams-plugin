@@ -21,7 +21,7 @@ if ( ! defined( 'WPINC' ) ) {
 		'<p>%1s %2s <a href="%3s" target="_blank">%4s</a> %5s</p>',
 		esc_html( ADAMS_CHILD_NAME ),
 		esc_html__( 'needs the', 'adams-plugin' ),
-		esc_url( 'https://github.com/ControlledChaos/controlled-chaos-plugin' ),
+		esc_url( 'https://github.com/BurconOutfitters/burcon-plugin' ),
 		esc_html( ADAMS_PARENT_NAME ),
 		esc_html__( 'to be installed and activated' )
 	); ?>

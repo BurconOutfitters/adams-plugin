@@ -3,7 +3,7 @@
  * Upgrade Database.
  *
  * @category Core
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Check whether the Schedule database is up to date
+ * Check whether the My Calendar database is up to date
  */
 function my_calendar_check_db() {
 	if ( 'true' == get_option( 'mc_remote' ) && function_exists( 'mc_remote_db' ) ) {
@@ -33,7 +33,7 @@ function my_calendar_check_db() {
 		mc_upgrade_db();
 		?>
 		<div class='upgrade-db updated'>
-			<p><?php _e( 'Schedule Database is updated.', 'my-calendar' ); ?></p>
+			<p><?php _e( 'My Calendar Database is updated.', 'my-calendar' ); ?></p>
 		</div>
 		<?php
 	} elseif ( $needs_update ) {
@@ -41,7 +41,7 @@ function my_calendar_check_db() {
 			?>
 			<div class='upgrade-db error'>
 				<p>
-					<?php _e( 'The Schedule database needs to be updated.', 'my-calendar' ); ?>
+					<?php _e( 'The My Calendar database needs to be updated.', 'my-calendar' ); ?>
 				</p>
 				<form method="post" action="<?php echo admin_url( 'admin.php?page=my-calendar-config' ); ?>">
 					<div>
@@ -58,7 +58,7 @@ function my_calendar_check_db() {
 			?>
 			<div class='upgrade-db error'>
 			<p>
-				<?php _e( 'The Schedule database needs to be updated.', 'my-calendar' ); ?>
+				<?php _e( 'The My Calendar database needs to be updated.', 'my-calendar' ); ?>
 				<a href="<?php echo admin_url( 'admin.php?page=my-calendar-config' ); ?>"><?php _e( 'Update now', 'my-calendar' ); ?></a>
 			</p>
 			</div>

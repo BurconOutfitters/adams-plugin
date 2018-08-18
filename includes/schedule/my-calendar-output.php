@@ -3,7 +3,7 @@
  * Output the calendar.
  *
  * @category Calendar
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -34,9 +34,9 @@ function mc_get_template( $template ) {
 }
 
 /**
- * HTML output for event time
+ * HTML output for schedule time
  *
- * @param object $event Current event.
+ * @param object $event Current schedule.
  * @param string $type Type of view.
  *
  * @return string HTML output.
@@ -49,7 +49,7 @@ function mc_time_html( $event, $type ) {
 		$mult_format = ( '' != $mult_format ) ? $mult_format : 'F j-%d, Y';
 		$date_format = str_replace( '%d', date( 'j', strtotime( $event->occur_end ) ), $mult_format );
 	}
-	// If this event crosses years or months, use original date format & show both dates.
+	// If this schedule crosses years or months, use original date format & show both dates.
 	if ( date( 'Y', strtotime( $event->occur_end ) ) != date( 'Y', strtotime( $event->occur_begin ) ) || date( 'm', strtotime( $event->occur_end ) ) != date( 'm', strtotime( $event->occur_begin ) ) ) {
 		$current = date_i18n( $orig_format, strtotime( $event->occur_begin ) ) . ' &ndash; ' . date_i18n( $orig_format, strtotime( $event->occur_end ) );
 	} else {
@@ -123,7 +123,7 @@ function mc_category_icon( $event, $type = 'html' ) {
 
 add_filter( 'the_title', 'mc_category_icon_title', 10, 2 );
 /**
- * Add category icon into title on individual event pages.
+ * Add category icon into title on individual schedule pages.
  *
  * @param string $title Original title.
  * @param int    $post_id Post ID.
@@ -150,12 +150,12 @@ function mc_category_icon_title( $title, $post_id = null ) {
 }
 
 /**
- * Generate the set of events for a given day
+ * Generate the set of schedules for a given day
  *
- * @param array  $events Array of event objects.
+ * @param array  $events Array of schedule objects.
  * @param array  $params calendar parameters.
  * @param string $process_date String formatted date being displayed.
- * @param string $template Template to use for drawing individual events.
+ * @param string $template Template to use for drawing individual schedules.
  *
  * @return string Generated HTML.
  */
@@ -211,13 +211,13 @@ function my_calendar_draw_events( $events, $params, $process_date, $template = '
 
 
 /**
- * Draw a single event
+ * Draw a single schedule
  *
  * @param object $event Schedule object.
  * @param string $type Type of view being drawn.
  * @param string $process_date Current date being displayed.
  * @param string $time Time view being drawn.
- * @param string $template Template to use to draw event.
+ * @param string $template Template to use to draw schedule.
  *
  * @return string Generated HTML.
  */
@@ -432,7 +432,7 @@ function my_calendar_draw_event( $event, $type = 'calendar', $process_date, $tim
 		}
 
 		$img_class  = ( '' != $img ) ? ' has-image' : ' no-image';
-		$container  = "<div id='$uid-$day_id-$type-details' class='details$img_class' role='alert' aria-labelledby='$uid-title' itemscope itemtype='http://schema.org/Schedule'>\n";
+		$container  = "<div id='$uid-$day_id-$type-details' class='details$img_class' role='alert' aria-labelledby='$uid-title' itemscope itemtype='http://schema.org/Event'>\n";
 		$container .= "<meta itemprop='name' content='" . strip_tags( $event->event_title ) . "' />";
 		$container  = apply_filters( 'mc_before_event', $container, $event, $type, $time );
 		$details    = $header . $container . apply_filters( 'mc_inner_content', $details, $event, $type, $time );
@@ -449,7 +449,7 @@ function my_calendar_draw_event( $event, $type = 'calendar', $process_date, $tim
 /**
  * Generate the details when using a custom template
  *
- * @param array  $data event tags.
+ * @param array  $data schedule tags.
  * @param string $template File name, custom template, etc.
  * @param string $type Type of view.
  *
@@ -496,10 +496,10 @@ function mc_get_details( $data, $template, $type ) {
 }
 
 /**
- * Get image for an event
+ * Get image for an schedule
  *
  * @param object $event Schedule object.
- * @param array  $data event tags.
+ * @param array  $data schedule tags.
  *
  * @return string HTML output
  */
@@ -529,10 +529,10 @@ function mc_get_event_image( $event, $data ) {
 }
 
 /**
- * Generate classes for a given event
+ * Generate classes for a given schedule
  *
  * @param object $event Schedule Object.
- * @param string $uid Unique ID for event.
+ * @param string $uid Unique ID for schedule.
  * @param string $type Type of view being shown.
  *
  * @return string classes
@@ -608,7 +608,7 @@ function mc_category_class( $object, $prefix ) {
 }
 
 /**
- * Whether to show details on this event.
+ * Whether to show details on this schedule.
  *
  * @param string $time Current time span.
  * @param string $type Current view.
@@ -937,7 +937,7 @@ function mc_date_array( $timestamp, $period ) {
 /**
  * Create list of classes for a given date.
  *
- * @param array                $events array of event objects.
+ * @param array                $events array of schedule objects.
  * @param mixed string/boolean $date current date if a date is being processed.
  *
  * @return string of classes
@@ -974,9 +974,9 @@ function mc_events_class( $events, $date = false ) {
 }
 
 /**
- * List first selected event + event count
+ * List first selected schedule + schedule count
  *
- * @param array $events Array of event objects.
+ * @param array $events Array of schedule objects.
  *
  * @return string
  */
@@ -988,11 +988,11 @@ function mc_list_title( $events ) {
 	if ( 0 === $count ) {
 		$cstate = $event_title;
 	} elseif ( 1 == $count ) {
-		// Translators: %s Title of event.
-		$cstate = sprintf( __( '%s<span class="mc-list-extended"> and 1 other event</span>', 'my-calendar' ), $event_title );
+		// Translators: %s Title of schedule.
+		$cstate = sprintf( __( '%s<span class="mc-list-extended"> and 1 other schedule</span>', 'my-calendar' ), $event_title );
 	} else {
-		// Translators: %s Title of event, %d number of other events.
-		$cstate = sprintf( __( '%1$s<span class="mc-list-extended"> and %2$d other events</span>', 'my-calendar' ), $event_title, $count );
+		// Translators: %s Title of schedule, %d number of other schedules.
+		$cstate = sprintf( __( '%1$s<span class="mc-list-extended"> and %2$d other schedules</span>', 'my-calendar' ), $event_title, $count );
 	}
 	$title = apply_filters( 'mc_list_event_title_hint', $cstate, $now, $events );
 
@@ -1000,7 +1000,7 @@ function mc_list_title( $events ) {
 }
 
 /**
- * List all events viewable in this context
+ * List all schedules viewable in this context
  *
  * @param array $events Array of event objects.
  *
@@ -1033,7 +1033,7 @@ function mc_list_titles( $events ) {
  */
 function mc_search_results( $query ) {
 	$before = apply_filters( 'mc_past_search_results', 0, 'basic' );
-	$after  = apply_filters( 'mc_future_search_results', 10, 'basic' ); // Return only future events, nearest 10.
+	$after  = apply_filters( 'mc_future_search_results', 10, 'basic' ); // Return only future schedules, nearest 10.
 	if ( is_string( $query ) ) {
 		$search = mc_prepare_search_query( $query );
 		$term   = $query;
@@ -1113,7 +1113,7 @@ function mc_show_search_results( $content ) {
 
 add_action( 'template_redirect', 'mc_hidden_event' );
 /**
- * If an event is hidden from the current user, redirect to 404.
+ * If an schedule is hidden from the current user, redirect to 404.
  */
 function mc_hidden_event() {
 	$do_redirect = false;
@@ -1160,13 +1160,13 @@ function mc_hidden_event() {
 }
 
 /**
- * Filter titles on event pages
+ * Filter titles on schedule pages
  *
  * @param string $title Schedule title.
  * @param string $sep Defined separator.
  * @param string $seplocation Location of separator in relation to title.
  *
- * @return string New event title
+ * @return string New schedule title
  */
 function mc_event_filter( $title, $sep = ' | ', $seplocation = 'right' ) {
 	if ( isset( $_GET['mc_id'] ) && is_numeric( $_GET['mc_id'] ) ) {
@@ -1215,11 +1215,11 @@ function mc_valid_id( $mc_id ) {
 
 add_filter( 'the_content', 'mc_show_event_template', 100, 1 );
 /**
- * Filter post content to process event templates
+ * Filter post content to process schedule templates
  *
  * @param string $content Original post content.
  *
- * @return string New content using Schedule event templates
+ * @return string New content using My Calendar schedule templates
  */
 function mc_show_event_template( $content ) {
 	global $post;
@@ -1269,13 +1269,13 @@ function mc_show_event_template( $content ) {
 }
 
 /**
- * Get all events related to an event ID (group IDs)
+ * Get all schedules related to an schedule ID (group IDs)
  *
  * @param int    $id Schedule group ID.
  * @param int    $this_id Schedule ID.
  * @param string $template Display template.
  *
- * @return string list of related events
+ * @return string list of related schedules
  */
 function mc_list_related( $id, $this_id, $template = '{date}, {time}' ) {
 	if ( ! $id ) {
@@ -1285,7 +1285,7 @@ function mc_list_related( $id, $this_id, $template = '{date}, {time}' ) {
 	$count   = count( $results );
 	$output  = '';
 	$classes = '';
-	// If a large number of events, skip this.
+	// If a large number of schedules, skip this.
 	if ( $count > apply_filters( 'mc_related_event_limit', 50 ) ) {
 		// filter to return an subset of related events.
 		return apply_filters( 'mc_related_events', '', $results );
@@ -1311,14 +1311,14 @@ function mc_list_related( $id, $this_id, $template = '{date}, {time}' ) {
 			}
 		}
 	} else {
-		$output = '<li>' . __( 'No related events', 'my-calendar' ) . '</li>';
+		$output = '<li>' . __( 'No related schedules', 'my-calendar' ) . '</li>';
 	}
 
 	return $output;
 }
 
 /**
- * Determine whether event is published.
+ * Determine whether schedule is published.
  *
  * @param object $event Schedule object.
  *
@@ -1333,7 +1333,7 @@ function mc_event_published( $event ) {
 }
 
 /**
- * Check whether an event should be hidden (privacy)
+ * Check whether an schedule should be hidden (privacy)
  *
  * @param object $event Schedule object.
  *
@@ -1496,7 +1496,7 @@ function my_calendar( $args ) {
 	$date_format = apply_filters( 'mc_date_format', $date_format, $params['format'], $params['time'] );
 
 	if ( isset( $_GET['mc_id'] ) && 'widget' != $source ) {
-		// single event, main calendar only.
+		// single schedule, main calendar only.
 		$mc_id = ( is_numeric( $_GET['mc_id'] ) ) ? $_GET['mc_id'] : false;
 		if ( $mc_id ) {
 			$body .= mc_get_event( $mc_id, 'html' );
@@ -1660,8 +1660,8 @@ function my_calendar( $args ) {
 
 			$show_all = apply_filters( 'mc_all_list_dates', false, $args );
 			if ( $no_events && 'list' == $params['format'] && false == $show_all ) {
-				// If there are no events in list format, just display that info.
-				$no_events = ( '' == $content ) ? __( 'There are no events scheduled during this period.', 'my-calendar' ) : $content;
+				// If there are no schedules in list format, just display that info.
+				$no_events = ( '' == $content ) ? __( 'There are no schedules scheduled during this period.', 'my-calendar' ) : $content;
 				$body     .= "<li class='mc-events no-events'>$no_events</li>";
 			} else {
 				$start             = strtotime( $from );
@@ -1678,7 +1678,7 @@ function my_calendar( $args ) {
 						$week_header     = date_i18n( $week_format, $start );
 						$thisday_heading = ( 'week' == $params['time'] ) ? "<small>$week_header</small>" : date( 'j', $start );
 
-						// Generate event classes & attributes.
+						// Generate schedule classes & attributes.
 						$events_class = mc_events_class( $events, $date_is );
 						$monthclass   = ( date( 'n', $start ) == $date['month'] || 'month' != $params['time'] ) ? '' : 'nextmonth';
 						$dateclass    = mc_dateclass( $start );
@@ -1737,7 +1737,7 @@ function my_calendar( $args ) {
 								}
 							}
 						} else {
-							// If there are no events on this date within current params.
+							// If there are no schedules on this date within current params.
 							if ( 'list' != $params['format'] ) {
 								$weekend_class = ( $is_weekend ) ? 'weekend' : '';
 								$body         .= "<$td $ariacurrent class='no-events $dateclass $weekend_class $monthclass $events_class day-with-date'><span class='mc-date no-events'><span aria-hidden='true'>$thisday_heading</span><span class='screen-reader-text'>" . date_i18n( $date_format, strtotime( $date_is ) ) . "</span></span></$td>\n";
@@ -1823,7 +1823,7 @@ function mc_get_from_to( $show_months, $params, $date ) {
 }
 
 /**
- * Create navigation elements used in Schedule main view
+ * Create navigation elements used in My Calendar main view
  *
  * @param array  $params Calendar parameters (modified).
  * @param int    $cat Original category from calendar args.
@@ -1996,7 +1996,7 @@ function mc_generate_calendar_nav( $params, $cat, $start_of_week, $show_months, 
 /**
  * Arguments to show the week number in calendar views.
  *
- * @param array  $events array of event objects.
+ * @param array  $events array of schedule objects.
  * @param array  $args Calendar arguments.
  * @param string $format current view format.
  * @param string $td HTML element in use for cells.
@@ -2024,7 +2024,7 @@ function mc_show_week_number( $events, $args, $format, $td, $start ) {
  *
  * @param string $start link date.
  * @param int    $category current category.
- * @param array  $events array of event objects.
+ * @param array  $events array of schedule objects.
  * @param array  $args calendar view parameters.
  * @param string $date view date.
  *
@@ -2222,7 +2222,7 @@ function mc_run_shortcodes( $content ) {
 }
 
 /**
- * Set up button wrapping event title
+ * Set up button wrapping schedule title
  *
  * @param string $title Schedule title.
  *
@@ -2747,7 +2747,7 @@ function mc_access_list( $show = 'list', $group = 'single', $target_url = '' ) {
 }
 
 /**
- * Build a URL for Schedule views.
+ * Build a URL for My Calendar views.
  *
  * @param array  $add keys and values to add to URL.
  * @param array  $subtract keys to subtract from URL.
@@ -2800,7 +2800,7 @@ function mc_build_url( $add, $subtract, $root = '' ) {
 }
 
 /**
- * Default Schedule search form.
+ * Default My Calendar search form.
  *
  * @param string $type Type of search.
  * @param string $url URL to post query to.
@@ -3029,7 +3029,7 @@ function my_calendar_locations_list( $show = 'list', $datatype = 'name', $group 
 
 add_action( 'mc_save_event', 'mc_refresh_cache', 10, 4 );
 /**
- * Execute a refresh of the Schedule primary URL cache if caching plug-in installed.
+ * Execute a refresh of the My Calendar primary URL cache if caching plug-in installed.
  *
  * @param string $action Type of action performed.
  * @param array  $data Data passed to filter.

@@ -1,9 +1,9 @@
 <?php
 /**
- * Schedule API - get events outside of Schedule UI
+ * Schedules API - get schedules outside of Schedule UI
  *
  * @category Schedules
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -50,7 +50,7 @@ function my_calendar_api() {
 			}
 			die;
 		} else {
-			_e( 'The Schedule API is not enabled.', 'my-calendar' );
+			_e( 'The My Calendar API is not enabled.', 'my-calendar' );
 		}
 	}
 }
@@ -58,7 +58,7 @@ function my_calendar_api() {
 /**
  * Check which format the API should return
  *
- * @param array  $data Array of event objects.
+ * @param array  $data Array of schedule objects.
  * @param string $format Format to return.
  */
 function mc_format_api( $data, $format ) {
@@ -76,18 +76,18 @@ function mc_format_api( $data, $format ) {
 }
 
 /**
- * JSON formatted events
+ * JSON formatted schedules
  *
- * @param array $data array of event objects.
+ * @param array $data array of schedule objects.
  */
 function mc_api_format_json( $data ) {
 	echo json_encode( $data );
 }
 
 /**
- * CSV formatted events
+ * CSV formatted schedules
  *
- * @param array $data array of event objects.
+ * @param array $data array of schedule objects.
  */
 function mc_api_format_csv( $data ) {
 	$keyed = false;
@@ -120,9 +120,9 @@ function mc_api_format_csv( $data ) {
 }
 
 /**
- * RSS formatted events
+ * RSS formatted schedules
  *
- * @param array $data array of event objects.
+ * @param array $data array of schedule objects.
  */
 function mc_api_format_rss( $data ) {
 	$output = mc_format_rss( $data );
@@ -133,7 +133,7 @@ function mc_api_format_rss( $data ) {
 }
 
 /**
- * Export single event as iCal file
+ * Export single schedule as iCal file
  */
 function mc_export_vcal() {
 	if ( isset( $_GET['vcal'] ) ) {
@@ -144,11 +144,11 @@ function mc_export_vcal() {
 }
 
 /**
- * Send iCal event to browser
+ * Send iCal schedule to browser
  *
  * @param integer $event_id Schedule ID.
  *
- * @return string headers & text for iCal event.
+ * @return string headers & text for iCal schedule.
  */
 function my_calendar_send_vcal( $event_id ) {
 	$sitename = sanitize_title( get_bloginfo( 'name' ) );
@@ -163,14 +163,14 @@ function my_calendar_send_vcal( $event_id ) {
 }
 
 /**
- * Generate iCal formatted event for one event
+ * Generate iCal formatted schedule for one schedule
  *
  * @param integer $event_id Schedule ID.
  *
  * @return string text for iCal
  */
 function mc_generate_vcal( $event_id = false ) {
-	
+	global $mc_version;
 	$output = '';
 	$mc_id  = ( isset( $_GET['vcal'] ) ) ? (int) str_replace( 'mc_', '', $_GET['vcal'] ) : $event_id;
 	if ( $mc_id ) {
@@ -190,7 +190,7 @@ function mc_generate_vcal( $event_id = false ) {
 		$template = "BEGIN:VCALENDAR
 VERSION:2.0
 METHOD:PUBLISH
-PRODID:-//Accessible Web Design//Schedule//http://www.joedolson.com';
+PRODID:-//Accessible Web Design//My Calendar//http://www.joedolson.com//v$mc_version//EN';
 BEGIN:VEVENT
 UID:{dateid}-{id}
 LOCATION:{ical_location}
@@ -239,7 +239,7 @@ function my_calendar_rss( $events = array() ) {
 /**
  * Format RSS for feed.
  *
- * @param array $events group of event objects.
+ * @param array $events group of schedule objects.
  *
  * @return string RSS/XML.
  */
@@ -285,10 +285,10 @@ function mc_format_rss( $events ) {
 		<channel>
 		  <title>' . get_bloginfo( 'name' ) . ' Calendar</title>
 		  <link>' . home_url() . '</link>
-		  <description>' . get_bloginfo( 'description' ) . ': Schedule Schedules</description>
+		  <description>' . get_bloginfo( 'description' ) . ': Schedules</description>
 		  <language>' . get_bloginfo( 'language' ) . '</language>
 		  <managingEditor>' . get_bloginfo( 'admin_email' ) . ' (' . get_bloginfo( 'name' ) . ' Admin)</managingEditor>
-		  <generator>Schedule WordPress Plugin http://www.joedolson.com/my-calendar/</generator>
+		  <generator>My Calendar WordPress Plugin http://www.joedolson.com/my-calendar/</generator>
 		  <lastBuildDate>' . mysql2date( 'D, d M Y H:i:s +0000', current_time( 'timestamp' ) ) . '</lastBuildDate>
 		  <atom:link href="' . htmlentities( esc_url( add_query_arg( $_GET, get_feed_link( 'my-calendar-rss' ) ) ) ) . '" rel="self" type="application/rss+xml" />' . PHP_EOL;
 		foreach ( $events as $date ) {
@@ -338,12 +338,12 @@ function mc_strip_to_xml( $value ) {
 }
 
 /**
- * Generate an iCal subscription export with most recently added events by category.
+ * Generate an iCal subscription export with most recently added schedules by category.
  *
  * @param string $source Google or outlook.
  */
 function mc_ics_subscribe( $source ) {
-	// get event category.
+	// get schedule category.
 	if ( isset( $_GET['mcat'] ) ) {
 		$cat_id = (int) $_GET['mcat'];
 	} else {
@@ -406,7 +406,7 @@ function mc_ics_subscribe_outlook() {
 }
 
 /**
- * Generate ICS export of current period of events
+ * Generate ICS export of current period of schedules
  */
 function my_calendar_ical() {
 	$p  = ( isset( $_GET['span'] ) ) ? 'year' : false;
@@ -485,12 +485,12 @@ function my_calendar_ical() {
 }
 
 /**
- * Templates for iCal event formats.
+ * Templates for iCal schedule formats.
  *
- * @return array Parts of iCal events.
+ * @return array Parts of iCal schedules.
  */
 function mc_ical_template() {
-
+	global $mc_version;
 	$tz_id = get_option( 'timezone_string' );
 	$off   = ( get_option( 'gmt_offset' ) * -1 );
 	$etc   = 'Etc/GMT' . ( ( 0 > $off ) ? $off : '+' . $off );
@@ -516,7 +516,7 @@ END:VEVENT";
 	// add ICAL headers.
 	$head = 'BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Schedule//http://www.joedolson.com
+PRODID:-//My Calendar//http://www.joedolson.com//v' . $mc_version . '//EN
 METHOD:PUBLISH
 CALSCALE:GREGORIAN
 X-WR-CALNAME:' . get_bloginfo( 'blogname' ) . '
@@ -533,7 +533,7 @@ X-WR-CALDESC:' . $events_from;
 }
 
 /**
- * Generate alert parameters for an iCal event.
+ * Generate alert parameters for an iCal schedule.
  *
  * @param array $alarm Parameters for describing an alarm.
  *

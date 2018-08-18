@@ -1,9 +1,9 @@
 <?php
 /**
- * Get event data. Queries to fetch events and create or modify objects.
+ * Get schedule data. Queries to fetch schedules and create or modify objects.
  *
  * @category Schedules
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @param object $object Schedule object.
  *
- * @return object $object Modifed event.
+ * @return object $object Modifed schedule.
  */
 function mc_event_object( $object ) {
 	if ( is_object( $object ) ) {
@@ -34,13 +34,13 @@ function mc_event_object( $object ) {
 }
 
 /**
- * Grab all events for the requested dates from calendar
+ * Grab all schedules for the requested dates from calendar
  *
  * This function needs to be able to react to URL parameters for most factors, with the arguments being the default shown.
  *
- * @param array $args parameters to use for selecting events.
+ * @param array $args parameters to use for selecting schedules.
  *
- * @return array qualified events
+ * @return array qualified schedules
  */
 function my_calendar_get_events( $args ) {
 	$from     = isset( $args['from'] ) ? $args['from'] : '';
@@ -146,11 +146,11 @@ ORDER BY " . apply_filters( 'mc_primary_sort', 'occur_begin' ) . ', ' . apply_fi
 }
 
 /**
- * Fetch events for upcoming events list. Not date based; fetches the nearest events regardless of date.
+ * Fetch schedules for upcoming schedules list. Not date based; fetches the nearest schedules regardless of date.
  *
- * @param array $args array of event limit parameters.
+ * @param array $args array of schedule limit parameters.
  *
- * @return array Set of matched events.
+ * @return array Set of matched schedules.
  */
 function mc_get_all_events( $args ) {
 	$category = isset( $args['category'] ) ? $args['category'] : 'default';
@@ -255,11 +255,11 @@ function mc_get_all_events( $args ) {
 /**
  * Fetch only the defined holiday category
  *
- * @param int     $before Number of events before.
- * @param int     $after Number of events after.
- * @param boolean $today Whether to include today's events.
+ * @param int     $before Number of schedules before.
+ * @param int     $after Number of schedules after.
+ * @param boolean $today Whether to include today's schedules.
  *
- * @return array events
+ * @return array schedules
  */
 function mc_get_all_holidays( $before, $after, $today ) {
 	if ( ! get_option( 'mc_skip_holidays_category' ) ) {
@@ -278,11 +278,11 @@ function mc_get_all_holidays( $before, $after, $today ) {
 }
 
 /**
- * Get events for use in RSS feeds. Fetches most recently added events.
+ * Get schedules for use in RSS feeds. Fetches most recently added schedules.
  *
  * @param integer $cat_id Category ID.
  *
- * @return array of event objects
+ * @return array of schedule objects
  */
 function mc_get_rss_events( $cat_id = false ) {
 	global $wpdb;
@@ -321,11 +321,11 @@ function mc_get_rss_events( $cat_id = false ) {
 }
 
 /**
- * Fetch results of an event search.
+ * Fetch results of an schedule search.
  *
  * @param mixed array/string $search mixed array (PRO) or string (Simple).
  *
- * @return array of event objects
+ * @return array of schedule objects
  */
 function mc_get_search_results( $search ) {
 	global $wpdb;
@@ -335,9 +335,9 @@ function mc_get_search_results( $search ) {
 		$mcdb = mc_remote_db();
 	}
 	$before = apply_filters( 'mc_past_search_results', 0 );
-	$after  = apply_filters( 'mc_future_search_results', 15 ); // return only future events, nearest 10.
+	$after  = apply_filters( 'mc_future_search_results', 15 ); // return only future schedules, nearest 10.
 	if ( is_array( $search ) ) {
-		// If from & to are set, we need to use a date-based event query.
+		// If from & to are set, we need to use a date-based schedule query.
 		$from     = $search['from'];
 		$to       = $search['to'];
 		$category = ( isset( $search['category'] ) ) ? $search['category'] : null;
@@ -361,7 +361,7 @@ function mc_get_search_results( $search ) {
 		$args        = apply_filters( 'mc_search_attributes', $args, $search );
 		$event_array = my_calendar_events( $args );
 	} else {
-		// If not, we use relational event queries.
+		// If not, we use relational schedule queries.
 		$args = array(
 			'before' => $before,
 			'after'  => $after,
@@ -384,10 +384,10 @@ function mc_get_search_results( $search ) {
 }
 
 /**
- * Get event basic info
+ * Get schedule basic info
  *
  * @param int     $id Schedule ID in my_calendar db.
- * @param boolean $rebuild Get core data only if doing an event rebuild.
+ * @param boolean $rebuild Get core data only if doing an schedule rebuild.
  *
  * @return Schedule object
  */
@@ -413,7 +413,7 @@ function mc_get_event_core( $id, $rebuild = false ) {
 }
 
 /**
- * Fetches the first fully-realized event object with all parameters even if the specific instance ID isn't available.
+ * Fetches the first fully-realized schedule object with all parameters even if the specific instance ID isn't available.
  *
  * @param int $id Schedule core ID.
  *
@@ -432,7 +432,7 @@ function mc_get_first_event( $id ) {
 }
 
 /**
- * Fetch the instance of an event closest to today.
+ * Fetch the instance of an schedule closest to today.
  *
  * @param int $id Schedule core ID.
  *
@@ -451,7 +451,7 @@ function mc_get_nearest_event( $id ) {
 }
 
 /**
- * Returns the event object for a specific instance of an event.
+ * Returns the schedule object for a specific instance of an schedule.
  *
  * @param int    $id  Schedule instance ID.
  * @param string $type  'object' or 'html'.
@@ -504,13 +504,13 @@ function mc_get_data( $field, $id ) {
 
 
 /**
- * Fetch all events according to date parameters and supported limits.
+ * Fetch all schedules according to date parameters and supported limits.
  *
  * @since 2.3.0
  *
- * @param array $args array of Schedule display & limit parameters.
+ * @param array $args array of My Calendar display & limit parameters.
  *
- * @return array Array of event objects with dates as keys.
+ * @return array Array of schedule objects with dates as keys.
  */
 function my_calendar_events( $args ) {
 	$args        = apply_filters( 'my_calendar_events_args', $args );
@@ -522,7 +522,7 @@ function my_calendar_events( $args ) {
 	$args['holidays'] = 'holidays';
 	$holidays         = my_calendar_get_events( $args );
 	$holiday_array    = mc_set_date_array( $holidays );
-	// Get events into an easily parseable set, keyed by date.
+	// Get schedules into an easily parseable set, keyed by date.
 	if ( is_array( $events ) && ! empty( $events ) ) {
 		$event_array = mc_set_date_array( $events );
 		if ( is_array( $holidays ) && count( $holidays ) > 0 ) {
@@ -534,11 +534,11 @@ function my_calendar_events( $args ) {
 }
 
 /**
- * Get one event currently happening.
+ * Get one schedule currently happening.
  *
  * @param mixed   $category string/integer category ID or 'default'.
  * @param string  $template display Template.
- * @param integer $site Site ID if fetching events from a different multisite instance.
+ * @param integer $site Site ID if fetching schedules from a different multisite instance.
  *
  * @return string output HTML
  */
@@ -606,11 +606,11 @@ function my_calendar_events_now( $category = 'default', $template = '<strong>{li
 }
 
 /**
- *  Get all occurrences associated with an event.
+ *  Get all occurrences associated with an schedule.
  *
  * @param int $id Schedule ID.
  *
- * @return array of objects with instance and event IDs.
+ * @return array of objects with instance and schedule IDs.
  */
 function mc_get_occurrences( $id ) {
 	global $wpdb;
@@ -624,11 +624,11 @@ function mc_get_occurrences( $id ) {
 }
 
 /**
- * Get all events with a grouped relationship with the current event.
+ * Get all schedules with a grouped relationship with the current schedule.
  *
  * @param int $id Schedule ID.
  *
- * @return array Array event IDs of related events
+ * @return array Array schedule IDs of related schedules
  */
 function mc_get_related( $id ) {
 	global $wpdb;
@@ -655,12 +655,12 @@ function mc_is_preview() {
 }
 
 /**
- * Remove non-holiday events from data if a holiday is present.
+ * Remove non-holiday schedules from data if a holiday is present.
  *
- * @param array $events Array of event objects.
- * @param array $holidays Array of event objects.
+ * @param array $events Array of schedule objects.
+ * @param array $holidays Array of schedule objects.
  *
- * @return array Array of event objects with conflicts removed.
+ * @return array Array of schedule objects with conflicts removed.
  */
 function mc_holiday_limit( $events, $holidays ) {
 	foreach ( array_keys( $events ) as $key ) {
@@ -679,7 +679,7 @@ function mc_holiday_limit( $events, $holidays ) {
 /**
  * For date-based views, manipulate array to be organized by dates
  *
- * @param array $events Array of event objects returned by query.
+ * @param array $events Array of schedule objects returned by query.
  *
  * @return array $events indexed by date
  */
@@ -707,7 +707,7 @@ function mc_set_date_array( $events ) {
 }
 
 /**
- * Get post associated with a given Schedule event
+ * Get post associated with a given My Calendar schedule
  *
  * @param int $event_id Schedule ID.
  *

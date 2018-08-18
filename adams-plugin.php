@@ -64,7 +64,7 @@ if ( ! defined( 'ADAMS_PARENT_PREFIX' ) ) {
  * @return string Returns the parent plugin name.
  */
 if ( ! defined( 'ADAMS_PARENT_NAME' ) ) {
-	define( 'ADAMS_PARENT_NAME', 'Controlled Chaos Plugin' );
+	define( 'ADAMS_PARENT_NAME', 'Burcon Outfitters plugin' );
 }
 
 /**
@@ -76,7 +76,7 @@ if ( ! defined( 'ADAMS_PARENT_NAME' ) ) {
  * @return string Returns the child plugin name.
  */
 if ( ! defined( 'ADAMS_CHILD_NAME' ) ) {
-	define( 'ADAMS_CHILD_NAME', 'Controlled Chaos Addon' );
+	define( 'ADAMS_CHILD_NAME', 'Adams\' Pack Station plugin' );
 }
 
 /**
@@ -91,7 +91,7 @@ if ( ! defined( 'ADAMS_CHILD_NAME' ) ) {
  */
 if ( ! is_plugin_active( ADAMS_PARENT ) ) {
 
-	// add_action( 'admin_notices', 'adams_parent_notice' );
+	add_action( 'admin_notices', 'adams_parent_notice' );
 
 }
 
@@ -116,7 +116,7 @@ function adams_parent_notice() {
  * @todo   Activate check when Burcon plugin is ready.
  */
 if ( ! is_plugin_active( ADAMS_PARENT ) ) {
-	// return;
+	return;
 }
 
 /**

@@ -1,12 +1,12 @@
 <?php
 /**
- * Schedule Mini Calendar Widget
+ * Schedule mini calendar widget.
  *
- * @category Widgets
  * @package    Adams_Plugin
- * @author   Joe Dolson
- * @license  GPLv2 or later
- * @link     https://www.joedolson.com/my-calendar/
+ * @subpackage Includes
+ *
+ * @since      1.0.0
+ * @author     Greg Sweet <greg@ccdzine.com>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,16 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Schedule Mini Calendar widget class.
+ * Schedule mini calendar widget.
  *
- * @category  Widgets
- * @package   Schedule
- * @author    Joe Dolson
- * @copyright 2009
- * @license   GPLv2 or later
- * @version   1.0
+ * @since  1.0.0
+ * @access public
  */
-class My_Calendar_Mini_Widget extends WP_Widget {
+class Schedule_Mini_Widget extends WP_Widget {
 
 	/**
 	 * Contructor.
@@ -31,10 +27,10 @@ class My_Calendar_Mini_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			false,
-			$name = __( 'Schedule: Mini Calendar', 'my-calendar' ),
+			$name = __( 'Schedule Mini Calendar', 'adams-plugin' ),
 			array(
 				'customize_selective_refresh' => true,
-				'description'                 => __( 'Show events in a compact grid.', 'my-calendar' ),
+				'description'                 => __( 'Show schedules in a compact grid.', 'adams-plugin' ),
 			)
 		);
 	}
@@ -129,85 +125,85 @@ class My_Calendar_Mini_Widget extends WP_Widget {
 		$author          = ( isset( $instance['author'] ) ) ? $instance['author'] : '';
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'my_calendar_mini_title' ); ?>"><?php _e( 'Title', 'my-calendar' ); ?></label><br/>
+			<label for="<?php echo $this->get_field_id( 'my_calendar_mini_title' ); ?>"><?php _e( 'Title', 'adams-plugin' ); ?></label><br/>
 			<input class="widefat" type="text" id="<?php echo $this->get_field_id( 'my_calendar_mini_title' ); ?>" name="<?php echo $this->get_field_name( 'my_calendar_mini_title' ); ?>" value="<?php echo esc_attr( $title ); ?>"/>
 		</p>
 		<?php
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'site' ); ?>"><?php _e( 'Blog ID', 'my-calendar' ); ?></label><br/>
+			<label for="<?php echo $this->get_field_id( 'site' ); ?>"><?php _e( 'Blog ID', 'adams-plugin' ); ?></label><br/>
 			<input class="widefat" type="text" id="<?php echo $this->get_field_id( 'site' ); ?>" name="<?php echo $this->get_field_name( 'site' ); ?>" value="<?php echo esc_attr( $site ); ?>"/>
 		</p>
 			<?php
 		}
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'mc_link' ); ?>"><?php _e( 'Widget Title Link', 'my-calendar' ); ?></label><br/>
+			<label for="<?php echo $this->get_field_id( 'mc_link' ); ?>"><?php _e( 'Widget Title Link', 'adams-plugin' ); ?></label><br/>
 			<input class="widefat" type="text" id="<?php echo $this->get_field_id( 'mc_link' ); ?>" name="<?php echo $this->get_field_name( 'mc_link' ); ?>" value="<?php echo esc_url( $widget_link ); ?>"/>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'my_calendar_mini_category' ); ?>"><?php _e( 'Category or categories to display:', 'my-calendar' ); ?></label><br/>
+			<label for="<?php echo $this->get_field_id( 'my_calendar_mini_category' ); ?>"><?php _e( 'Category or categories to display:', 'adams-plugin' ); ?></label><br/>
 			<input class="widefat" type="text" id="<?php echo $this->get_field_id( 'my_calendar_mini_category' ); ?>" name="<?php echo $this->get_field_name( 'my_calendar_mini_category' ); ?>" value="<?php echo esc_attr( $widget_category ); ?>"/>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'above' ); ?>"><?php _e( 'Navigation above calendar', 'my-calendar' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'above' ); ?>"><?php _e( 'Navigation above calendar', 'adams-plugin' ); ?></label>
 			<input type="text" class="widefat" name="<?php echo $this->get_field_name( 'above' ); ?>" id="<?php echo $this->get_field_id( 'above' ); ?>" value="<?php echo ( '' == $above ) ? 'nav,jump,print' : esc_attr( $above ); ?>" aria-describedby='<?php echo $this->get_field_id( 'below' ); ?>-navigation-fields' />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'below' ); ?>"><?php _e( 'Navigation below calendar', 'my-calendar' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'below' ); ?>"><?php _e( 'Navigation below calendar', 'adams-plugin' ); ?></label>
 			<input type="text" class="widefat" name="<?php echo $this->get_field_name( 'below' ); ?>" id="<?php echo $this->get_field_id( 'below' ); ?>" value="<?php echo ( '' == $below ) ? 'key' : esc_attr( $below ); ?>" aria-describedby='<?php echo $this->get_field_id( 'below' ); ?>-navigation-fields' />
 		</p>
 		<p id='<?php echo $this->get_field_id( 'below' ); ?>-navigation-fields'>
-			<?php _e( 'Navigation options:', 'my-calendar' ); ?> <code>nav,jump,print,key,feeds,exports,none</code>
+			<?php _e( 'Navigation options:', 'adams-plugin' ); ?> <code>nav,jump,print,key,feeds,exports,none</code>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'author' ); ?>"><?php _e( 'Limit by Author', 'my-calendar' ); ?></label><br/>
+			<label for="<?php echo $this->get_field_id( 'author' ); ?>"><?php _e( 'Limit by Author', 'adams-plugin' ); ?></label><br/>
 			<select name="<?php echo $this->get_field_name( 'author' ); ?>" id="<?php echo $this->get_field_id( 'author' ); ?>" multiple="multiple" class="widefat">
-				<option value="all"><?php _e( 'All authors', 'my-calendar' ); ?></option>
+				<option value="all"><?php _e( 'All authors', 'adams-plugin' ); ?></option>
 				<?php echo mc_selected_users( $author ); ?>
 			</select>
 		</p>
 		<p>
 			<label
-				for="<?php echo $this->get_field_id( 'host' ); ?>"><?php _e( 'Limit by Host', 'my-calendar' ); ?></label><br/>
+				for="<?php echo $this->get_field_id( 'host' ); ?>"><?php _e( 'Limit by Host', 'adams-plugin' ); ?></label><br/>
 			<select name="<?php echo $this->get_field_name( 'host' ); ?>" id="<?php echo $this->get_field_id( 'host' ); ?>" multiple="multiple" class="widefat">
-				<option value="all"><?php _e( 'All hosts', 'my-calendar' ); ?></option>
+				<option value="all"><?php _e( 'All hosts', 'adams-plugin' ); ?></option>
 				<?php echo mc_selected_users( $host ); ?>
 			</select>
 		</p>
 		<p>
 			<label
-				for="<?php echo $this->get_field_id( 'ltype' ); ?>"><?php _e( 'Location (Type)', 'my-calendar' ); ?></label><br/>
+				for="<?php echo $this->get_field_id( 'ltype' ); ?>"><?php _e( 'Location (Type)', 'adams-plugin' ); ?></label><br/>
 			<select name="<?php echo $this->get_field_name( 'ltype' ); ?>" id="<?php echo $this->get_field_id( 'ltype' ); ?>" class="widefat">
-				<option value=''><?php _e( 'All locations', 'my-calendar' ); ?></option>
-				<option value='event_label' <?php selected( $ltype, 'event_label' ); ?>><?php _e( 'Location Name', 'my-calendar' ); ?></option>
-				<option value='event_city' <?php selected( $ltype, 'event_city' ); ?>><?php _e( 'City', 'my-calendar' ); ?></option>
-				<option value='event_state' <?php selected( $ltype, 'event_state' ); ?>><?php _e( 'State', 'my-calendar' ); ?></option>
-				<option value='event_postcode' <?php selected( $ltype, 'event_postcode' ); ?>><?php _e( 'Postal Code', 'my-calendar' ); ?></option>
-				<option value='event_country' <?php selected( $ltype, 'event_country' ); ?>><?php _e( 'Country', 'my-calendar' ); ?></option>
-				<option value='event_region' <?php selected( $ltype, 'event_region' ); ?>><?php _e( 'Region', 'my-calendar' ); ?></option>
+				<option value=''><?php _e( 'All locations', 'adams-plugin' ); ?></option>
+				<option value='event_label' <?php selected( $ltype, 'event_label' ); ?>><?php _e( 'Location Name', 'adams-plugin' ); ?></option>
+				<option value='event_city' <?php selected( $ltype, 'event_city' ); ?>><?php _e( 'City', 'adams-plugin' ); ?></option>
+				<option value='event_state' <?php selected( $ltype, 'event_state' ); ?>><?php _e( 'State', 'adams-plugin' ); ?></option>
+				<option value='event_postcode' <?php selected( $ltype, 'event_postcode' ); ?>><?php _e( 'Postal Code', 'adams-plugin' ); ?></option>
+				<option value='event_country' <?php selected( $ltype, 'event_country' ); ?>><?php _e( 'Country', 'adams-plugin' ); ?></option>
+				<option value='event_region' <?php selected( $ltype, 'event_region' ); ?>><?php _e( 'Region', 'adams-plugin' ); ?></option>
 			</select>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'lvalue' ); ?>"><?php _e( 'Location (Value)', 'my-calendar' ); ?></label><br/>
+			<label for="<?php echo $this->get_field_id( 'lvalue' ); ?>"><?php _e( 'Location (Value)', 'adams-plugin' ); ?></label><br/>
 			<input type="text" class="widefat" name="<?php echo $this->get_field_name( 'lvalue' ); ?>" id="<?php echo $this->get_field_id( 'lvalue' ); ?>" value="<?php echo esc_attr( $lvalue ); ?>" />
 		</p>
 		<p>
 			<label
-				for="<?php echo $this->get_field_id( 'my_calendar_mini_time' ); ?>"><?php _e( 'Mini-Calendar Timespan:', 'my-calendar' ); ?></label>
+				for="<?php echo $this->get_field_id( 'my_calendar_mini_time' ); ?>"><?php _e( 'Mini-Calendar Timespan:', 'adams-plugin' ); ?></label>
 			<select id="<?php echo $this->get_field_id( 'my_calendar_mini_time' ); ?>" name="<?php echo $this->get_field_name( 'my_calendar_mini_time' ); ?>">
 				<option
-					value="month"<?php echo ( 'month' == $widget_time ) ? ' selected="selected"' : ''; ?>><?php _e( 'Month', 'my-calendar' ); ?></option>
+					value="month"<?php echo ( 'month' == $widget_time ) ? ' selected="selected"' : ''; ?>><?php _e( 'Month', 'adams-plugin' ); ?></option>
 				<option
-					value="month+1"<?php echo ( 'month+1' == $widget_time ) ? ' selected="selected"' : ''; ?>><?php _e( 'Next Month', 'my-calendar' ); ?></option>
+					value="month+1"<?php echo ( 'month+1' == $widget_time ) ? ' selected="selected"' : ''; ?>><?php _e( 'Next Month', 'adams-plugin' ); ?></option>
 				<option
-					value="week"<?php echo ( 'week' == $widget_time ) ? ' selected="selected"' : ''; ?>><?php _e( 'Week', 'my-calendar' ); ?></option>
+					value="week"<?php echo ( 'week' == $widget_time ) ? ' selected="selected"' : ''; ?>><?php _e( 'Week', 'adams-plugin' ); ?></option>
 			</select>
 		</p>
 		<p>
 			<label
-				for="<?php echo $this->get_field_id( 'months' ); ?>"><?php _e( 'Months to show in list view', 'my-calendar' ); ?></label>
+				for="<?php echo $this->get_field_id( 'months' ); ?>"><?php _e( 'Months to show in list view', 'adams-plugin' ); ?></label>
 			<input type="number" max="12" step="1" min="1" class="widefat" name="<?php echo $this->get_field_name( 'months' ); ?>" id="<?php echo $this->get_field_id( 'months' ); ?>" value="<?php echo ( '' == $months ) ? '' : esc_attr( $months ); ?>" />
 		</p>
 		<?php

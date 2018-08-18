@@ -1,9 +1,9 @@
 <?php
 /**
- * Uninstall Schedule.
+ * Uninstall My Calendar.
  *
  * @category Core
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/

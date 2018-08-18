@@ -3,7 +3,7 @@
  * Installation process. Create tables, default options, etc.
  *
  * @category Core
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -306,7 +306,7 @@ function mc_default_settings() {
 	$has_uri = mc_guess_calendar();
 	if ( false == $has_uri['response'] ) {
 		// if mc_guess_calendar returns a string, no valid URI was found.
-		$slug = sanitize_title( __( 'Schedule', 'my-calendar' ) );
+		$slug = sanitize_title( __( 'My Calendar', 'my-calendar' ) );
 		mc_generate_calendar_page( $slug );
 	}
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -329,7 +329,7 @@ function mc_generate_calendar_page( $slug ) {
 	$current_user = wp_get_current_user();
 	if ( ! get_page_by_path( $slug ) ) {
 		$page      = array(
-			'post_title'   => __( 'Schedule', 'my-calendar' ),
+			'post_title'   => __( 'My Calendar', 'my-calendar' ),
 			'post_status'  => 'publish',
 			'post_type'    => 'page',
 			'post_author'  => $current_user->ID,
@@ -353,7 +353,7 @@ function mc_generate_calendar_page( $slug ) {
 }
 
 /**
- * Recreates event occurrences if event occurrences being recreated
+ * Recreates schedule occurrences if schedule occurrences being recreated
  */
 function mc_migrate_db() {
 	global $wpdb;
@@ -389,7 +389,7 @@ function mc_migrate_db() {
 }
 
 /**
- * If an event has time values that are no longer valid in current versions of Schedule, modify to usable values.
+ * If an event has time values that are no longer valid in current versions of My Calendar, modify to usable values.
  *
  * @param int    $id event ID.
  * @param string $time New end time.
@@ -497,11 +497,11 @@ function mc_transition_db() {
 						'location_latitude'  => $event['event_latitude'],
 						'location_zoom'      => $event['event_zoom'],
 						'location_phone'     => $event['event_phone'],
-						'location_access'    => '', // No events in this transition will have access data.
+						'location_access'    => '', // No schedules in this transition will have access data.
 					);
 					mc_insert_location( $add );
 				}
-				// Could add delete routine to allow user to select what location to use for events using a given location.
+				// Could add delete routine to allow user to select what location to use for schedules using a given location.
 			}
 		}
 	}
@@ -516,7 +516,7 @@ function mc_check_imports() {
 		if ( function_exists( 'check_calendar' ) ) {
 			$output .= "
 			<div id='message' class='updated'>
-				<p>" . __( 'Schedule has identified that you have the Calendar plugin by Kieran O\'Shea installed. You can import those events and categories into the Schedule database. Would you like to import these events?', 'my-calendar' ) . '</p>
+				<p>" . __( 'My Calendar has identified that you have the Calendar plugin by Kieran O\'Shea installed. You can import those schedules and categories into the My Calendar database. Would you like to import these schedules?', 'my-calendar' ) . '</p>
 				<form method="post" action="' . admin_url( 'admin.php?page=my-calendar-config' ) . '">
 					<div>
 						<input type="hidden" name="_wpnonce" value="' . wp_create_nonce( 'my-calendar-nonce' ) . '" />
@@ -526,7 +526,7 @@ function mc_check_imports() {
 						<input type="submit" value="' . __( 'Import from Calendar', 'my-calendar' ) . '" name="import-calendar" class="button-primary"/>
 					</div>
 				</form>
-				<p>' . __( 'Although it is possible that this import could fail to import your events correctly, it should not have any impact on your existing Calendar database.', 'my-calendar' ) . '</p>
+				<p>' . __( 'Although it is possible that this import could fail to import your schedules correctly, it should not have any impact on your existing Calendar database.', 'my-calendar' ) . '</p>
 			</div>';
 		}
 	}
@@ -534,7 +534,7 @@ function mc_check_imports() {
 	echo $output;
 }
 /**
- * Transition event categories to category relationships
+ * Transition schedule categories to category relationships
  *
  * @since 3.0.0
  */

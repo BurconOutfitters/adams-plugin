@@ -1,9 +1,9 @@
 <?php
 /**
- * Schedule Simple Search Widget
+ * My Calendar Simple Search Widget
  *
  * @category Widgets
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -14,10 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Schedule Simple Search class.
+ * My Calendar Simple Search class.
  *
  * @category  Widgets
- * @package   Schedule
+ * @package   My Calendar
  * @author    Joe Dolson
  * @copyright 2009
  * @license   GPLv2 or later
@@ -31,16 +31,16 @@ class My_Calendar_Simple_Search extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			false,
-			$name = __( 'Schedule: Simple Schedule Search', 'my-calendar' ),
+			$name = __( 'Schedule Search', 'my-calendar' ),
 			array(
 				'customize_selective_refresh' => true,
-				'description'                 => __( 'Search your events.', 'my-calendar' ),
+				'description'                 => __( 'Search your schedules.', 'my-calendar' ),
 			)
 		);
 	}
 
 	/**
-	 * Build the Schedule Schedule Search widget output.
+	 * Build the Schedule Search widget output.
 	 *
 	 * @param array $args Widget arguments.
 	 * @param array $instance This instance settings.
@@ -82,7 +82,7 @@ class My_Calendar_Simple_Search extends WP_Widget {
 	}
 
 	/**
-	 * Update the Schedule Search Widget settings.
+	 * Update the My Calendar Search Widget settings.
 	 *
 	 * @param object $new Widget settings new data.
 	 * @param object $instance Widget settings instance.

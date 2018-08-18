@@ -3,7 +3,7 @@
  * Update & Add Locations
  *
  * @category Locations
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -378,7 +378,7 @@ function mc_location_controls() {
  *
  * @param boolean $has_data Whether currently have data.
  * @param object  $data event or location data.
- * @param string  $context whether currently in an event or a location context.
+ * @param string  $context whether currently in an schedule or a location context.
  *
  * @return string HTML form fields
  */

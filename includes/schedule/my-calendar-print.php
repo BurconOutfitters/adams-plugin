@@ -3,7 +3,7 @@
  * Output the print view.
  *
  * @category Calendar
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -47,7 +47,7 @@ function my_calendar_print() {
 <meta charset="' . get_bloginfo( 'charset' ) . '" />
 <meta name="viewport" content="width=device-width" />
 <title>' . get_bloginfo( 'name' ) . ' - ' . __( 'Calendar: Print View', 'my-calendar' ) . '</title>
-<meta name="generator" content="Schedule for WordPress" />
+<meta name="generator" content="My Calendar for WordPress" />
 <meta name="robots" content="noindex,nofollow" />
 <!-- Copy mc-print.css to your theme directory if you wish to replace the default print styles -->
 <link rel="stylesheet" href="' . $stylesheet . '" type="text/css" media="screen,print" />' . do_action( 'mc_print_view_head', '' ) . '

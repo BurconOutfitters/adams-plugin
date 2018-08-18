@@ -3,7 +3,7 @@
  * Shortcodes.
  *
  * @category Calendar
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Primary Schedule shortcode.
+ * Primary My Calendar shortcode.
  *
  * @param array  $atts Shortcode attributes.
  * @param string $content Contained content.
@@ -59,7 +59,7 @@ function my_calendar_insert( $atts, $content = null ) {
 }
 
 /**
- * Upcoming Schedules Schedule shortcode.
+ * Upcoming Schedules shortcode.
  *
  * @param array $atts Shortcode attributes.
  *
@@ -97,7 +97,7 @@ function my_calendar_insert_upcoming( $atts ) {
 }
 
 /**
- * Today's Schedules Schedule shortcode.
+ * Today's Schedules shortcode.
  *
  * @param array $atts Shortcode attributes.
  *
@@ -126,7 +126,7 @@ function my_calendar_insert_today( $atts ) {
 }
 
 /**
- * Locations List Schedule shortcode.
+ * Locations List My Calendar shortcode.
  *
  * @param array $atts Shortcode attributes.
  *
@@ -142,7 +142,7 @@ function my_calendar_show_locations_list( $atts ) {
 }
 
 /**
- * Location Filter Schedule shortcode.
+ * Location Filter My Calendar shortcode.
  *
  * @param array $atts Shortcode attributes.
  *
@@ -159,7 +159,7 @@ function my_calendar_locations( $atts ) {
 }
 
 /**
- * Category filter Schedule shortcode.
+ * Category filter My Calendar shortcode.
  *
  * @param array $atts Shortcode attributes.
  *
@@ -175,7 +175,7 @@ function my_calendar_categories( $atts ) {
 }
 
 /**
- * Accessibility Filter Schedule shortcode.
+ * Accessibility Filter My Calendar shortcode.
  *
  * @param array $atts Shortcode attributes.
  *
@@ -191,7 +191,7 @@ function my_calendar_access( $atts ) {
 }
 
 /**
- * All Filters Schedule shortcode.
+ * All Filters My Calendar shortcode.
  *
  * @param array $atts Shortcode attributes.
  *
@@ -208,11 +208,11 @@ function my_calendar_filters( $atts ) {
 }
 
 /**
- * Single Schedule Schedule shortcode.
+ * Single Schedule shortcode.
  *
  * @param array $atts Shortcode attributes.
  *
- * @return string event.
+ * @return string schedule.
  */
 function my_calendar_show_event( $atts ) {
 	$args = shortcode_atts( array(
@@ -228,7 +228,7 @@ function my_calendar_show_event( $atts ) {
 }
 
 /**
- * Search Form Schedule shortcode.
+ * Search Form My Calendar shortcode.
  *
  * @param array $atts Shortcode attributes.
  *
@@ -244,7 +244,7 @@ function my_calendar_search( $atts ) {
 }
 
 /**
- * Current Schedule Schedule shortcode.
+ * Current Schedule shortcode.
  *
  * @param array $atts Shortcode attributes.
  *

@@ -3,7 +3,7 @@
  * Date Utilities file
  *
  * @category Utilities
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -113,10 +113,10 @@ function my_calendar_date_equal( $early, $late ) {
 }
 
 /**
- * Function to compare time in event objects for sorting
+ * Function to compare time in schedule objects for sorting
  *
- * @param object $a event object.
- * @param object $b event object.
+ * @param object $a schedule object.
+ * @param object $b schedule object.
  *
  * @return int (ternary value)
  */
@@ -130,10 +130,10 @@ function mc_time_cmp( $a, $b ) {
 }
 
 /**
- * Function to compare datetime in event objects & sort by string
+ * Function to compare datetime in schedule objects & sort by string
  *
- * @param object $a event object.
- * @param object $b event object.
+ * @param object $a schedule object.
+ * @param object $b schedule object.
  *
  * @return integer (ternary value)
  */
@@ -152,10 +152,10 @@ function mc_datetime_cmp( $a, $b ) {
 }
 
 /**
- * Compare two event dates with time precision
+ * Compare two schedule dates with time precision
  *
- * @param object $a event object.
- * @param object $b event object.
+ * @param object $a schedule object.
+ * @param object $b schedule object.
  *
  * @return integer (ternary value)
  */
@@ -361,7 +361,7 @@ function mc_name_days( $format ) {
 }
 
 /**
- * Handles all cases for exiting processing early: private events, drafts, etc.
+ * Handles all cases for exiting processing early: private schedules, drafts, etc.
  *
  * @param object $event Schedule object.
  * @param string $process_date Current date being articulated.
@@ -378,8 +378,8 @@ function mc_exit_early( $event, $process_date ) {
 	$today     = date( 'Y-m-d', strtotime( $event->occur_begin ) );
 	$current   = date( 'Y-m-d', strtotime( $process_date ) );
 	$end       = date( 'Y-m-d', strtotime( $event->occur_end ) );
-	// if event ends at midnight today (e.g., very first thing of the day), exit without re-drawing.
-	// or if event started yesterday & has event_hide_end checked.
+	// if schedule ends at midnight today (e.g., very first thing of the day), exit without re-drawing.
+	// or if schedule started yesterday & has event_hide_end checked.
 	$ends_at_midnight = ( '00:00:00' == $event->event_endtime && $end == $process_date && $current != $today ) ? true : false;
 
 	// hides events if hiding end time & not first day.

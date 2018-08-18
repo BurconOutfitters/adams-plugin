@@ -1,8 +1,12 @@
 <?php
 /**
- * Database reference file.
+ * Database reference file
  *
- * @package    Adams_Plugin
+ * @category Utilities
+ * @package  My Calendar
+ * @author   Joe Dolson
+ * @license  GPLv2 or later
+ * @link     https://www.joedolson.com/my-calendar/
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Schedule main table
+ * My Calendar main table
  *
  * @param mixed int/boolean $site Site ID in multisite.
  *
@@ -21,7 +25,7 @@ function my_calendar_table( $site = false ) {
 }
 
 /**
- * Schedule event table
+ * Scedule table
  *
  * @param mixed int/boolean $site Site ID in multisite.
  *
@@ -32,7 +36,7 @@ function my_calendar_event_table( $site = false ) {
 }
 
 /**
- * Schedule category table
+ * My Calendar category table
  *
  * @param mixed int/boolean $site Site ID in multisite.
  *
@@ -43,7 +47,7 @@ function my_calendar_categories_table( $site = false ) {
 }
 
 /**
- * Schedule category relationships table
+ * My Calendar category relationships table
  *
  * @param mixed int/boolean $site Site ID in multisite.
  *
@@ -54,7 +58,7 @@ function my_calendar_category_relationships_table( $site = false ) {
 }
 
 /**
- * Schedule locations table
+ * My Calendar locations table
  *
  * @param mixed int/boolean $site Site ID in multisite.
  *

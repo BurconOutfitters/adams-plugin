@@ -1,9 +1,9 @@
 <?php
 /**
- * Generate limits to event queries.
+ * Generate limits to schedule queries.
  *
  * @category Schedules
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -211,7 +211,7 @@ function mc_select_host( $host, $type = 'event' ) {
 
 
 /**
- * Function to limit event query by location.
+ * Function to limit schedule query by location.
  *
  * @param string               $ltype {location type}.
  * @param mixed string/integer $lvalue {location value}.
@@ -271,7 +271,7 @@ function mc_select_location( $ltype = '', $lvalue = '' ) {
 }
 
 /**
- * Get events based on accessibility features available
+ * Get schedules based on accessibility features available
  *
  * @param string $access type of accessibility feature.
  *

@@ -4,13 +4,13 @@
  * but are kept in case 3rd party code is using the function independently.
  *
  * @category Utilities
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
  */
 
-// Define the table constants used in Schedule in case anybody is still using them.
+// Define the table constants used in My Calendar in case anybody is still using them.
 // These were eliminated some time ago.
 if ( is_multisite() && get_site_option( 'mc_multisite_show' ) == 1 ) {
 	define( 'MY_CALENDAR_TABLE', $wpdb->base_prefix . 'my_calendar' );
@@ -25,7 +25,7 @@ if ( is_multisite() && get_site_option( 'mc_multisite_show' ) == 1 ) {
 }
 
 if ( is_multisite() ) {
-	// Define the tables used in Schedule.
+	// Define the tables used in My Calendar.
 	define( 'MY_CALENDAR_GLOBAL_TABLE', $wpdb->base_prefix . 'my_calendar' );
 	define( 'MY_CALENDAR_GLOBAL_EVENT_TABLE', $wpdb->base_prefix . 'my_calendar_events' );
 	define( 'MY_CALENDAR_GLOBAL_CATEGORIES_TABLE', $wpdb->base_prefix . 'my_calendar_categories' );
@@ -132,6 +132,16 @@ function mc_remove_cache( $cache ) {
 }
 
 /**
+ * Old support box function
+ *
+ * @see mc_show_sidebar()
+ * @deprecated
+ */
+function jd_show_support_box() {
+	mc_show_sidebar();
+}
+
+/**
  * Odd toggle. Unknown when last used.
  *
  * @param int $int Any integer.
@@ -187,7 +197,7 @@ if ( ! function_exists( 'is_ssl' ) ) {
 	/**
 	 * Try to check whether site is running in an HTTPS environment.
 	 *
-	 * Currently used only in Schedule PRO; exists in both for back compat
+	 * Currently used only in My Calendar PRO; exists in both for back compat
 	 */
 	function is_ssl() {
 		if ( isset( $_SERVER['HTTPS'] ) ) {

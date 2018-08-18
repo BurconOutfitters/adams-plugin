@@ -3,7 +3,7 @@
  * Manage Locations
  *
  * @category Locations
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -46,7 +46,8 @@ function my_calendar_manage_locations() {
 			</div>
 		</div>
 	</div>
-</div>
+		<?php mc_show_sidebar(); ?>
+	</div>
 	<?php
 }
 
@@ -77,7 +78,7 @@ function mc_mass_delete_locations() {
 		$prepared = implode( ',', $prepare );
 		$result   = $wpdb->query( $wpdb->prepare( 'DELETE FROM ' . my_calendar_locations_table() . " WHERE location_id IN ($prepared)", $deleted ) ); // WPCS: unprepared SQL OK, PreparedSQLPlaceholders replacement count ok.
 		if ( 0 !== $result && false !== $result ) {
-			// Argument: array of event IDs.
+			// Argument: array of schedule IDs.
 			do_action( 'mc_mass_delete_locations', $deleted );
 			// Translators: Number of locations deleted, number selected.
 			$message = mc_show_notice( sprintf( __( '%1$d locations deleted successfully out of %2$d selected', 'my-calendar' ), $i, $total ), false );

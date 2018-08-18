@@ -1,9 +1,9 @@
 <?php
 /**
- * Manage Schedule events groups
+ * Manage My Calendar schedules groups
  *
  * @category Schedules
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Generate the Grouped event editing form
+ * Generate the Grouped schedule editing form
  */
 function my_calendar_group_edit() {
 	global $wpdb;
@@ -56,13 +56,13 @@ function my_calendar_group_edit() {
 					$formats = array( '%d' );
 					$result  = $wpdb->update( my_calendar_table(), $update, array( 'event_id' => $event_id ), $formats, '%d' );
 					// Translators: Calendar URL.
-					$url = sprintf( __( 'View <a href="%s">your calendar</a>.', 'adams-plugin' ), mc_get_uri() );
+					$url = sprintf( __( 'View <a href="%s">your calendar</a>.', 'my-calendar' ), mc_get_uri() );
 					if ( false === $result ) {
-						$message = mc_show_error( __( 'Schedule not updated.', 'adams-plugin' ) . " $url", false );
+						$message = mc_show_error( __( 'Schedule not updated.', 'my-calendar' ) . " $url", false );
 					} elseif ( 0 === $result ) {
-						$message = mc_show_notice( "#$event_id: " . __( 'Nothing was changed in that update.', 'adams-plugin' ) . "  $url", false );
+						$message = mc_show_notice( "#$event_id: " . __( 'Nothing was changed in that update.', 'my-calendar' ) . "  $url", false );
 					} else {
-						$message = mc_show_notice( "#$event_id: " . __( 'Schedule updated successfully', 'adams-plugin' ) . ". $url", false );
+						$message = mc_show_notice( "#$event_id: " . __( 'Schedule updated successfully', 'my-calendar' ) . ". $url", false );
 					}
 				}
 				break;
@@ -77,11 +77,11 @@ function my_calendar_group_edit() {
 						$result   = $wpdb->update( my_calendar_table(), $update, array( 'event_id' => $event_id ), $formats, '%d' );
 
 						if ( false === $result ) {
-							$message = mc_show_error( __( 'Schedule not grouped.', 'adams-plugin' ), false );
+							$message = mc_show_error( __( 'Schedule not grouped.', 'my-calendar' ), false );
 						} elseif ( 0 === $result ) {
-							$message = mc_show_notice( "#$event_id: " . __( 'Nothing was changed in that update.', 'adams-plugin' ), false );
+							$message = mc_show_notice( "#$event_id: " . __( 'Nothing was changed in that update.', 'my-calendar' ), false );
 						} else {
-							$message = mc_show_notice( "#$event_id: " . __( 'Schedule grouped successfully', 'adams-plugin' ), false );
+							$message = mc_show_notice( "#$event_id: " . __( 'Schedule grouped successfully', 'my-calendar' ), false );
 						}
 					}
 				}
@@ -94,46 +94,48 @@ function my_calendar_group_edit() {
 	<?php
 	my_calendar_check_db();
 	if ( 'edit' == $action ) {
-		echo '<h1>' . __( 'Edit Schedule Group', 'adams-plugin' ) . '</h1>';
+		echo '<h1>' . __( 'Edit Schedule Group', 'my-calendar' ) . '</h1>';
 		if ( empty( $event_id ) || empty( $group_id ) ) {
-			mc_show_error( __( 'You must provide an event group id in order to edit it', 'adams-plugin' ) );
+			mc_show_error( __( 'You must provide an schedule group id in order to edit it', 'my-calendar' ) );
 		} else {
 			mc_edit_groups( 'edit', $event_id, $group_id );
 		}
 	} else {
 		?>
-		<h1><?php _e( 'Manage Schedule Groups', 'adams-plugin' ); ?></h1>
+		<h1><?php _e( 'Manage Schedule Groups', 'my-calendar' ); ?></h1>
 		<p>
-			<?php _e( 'When you choose a group of events to edit, the form will be pre-filled with the content from the event you started from. You will also see a set of checkboxes to choose which events you want to apply these changes to.', 'adams-plugin' ); ?>
+			<?php _e( 'When you choose a group of schedules to edit, the form will be pre-filled with the content from the schedule you started from. You will also see a set of checkboxes to choose which schedules you want to apply these changes to.', 'my-calendar' ); ?>
 		</p>
 
 		<div class="postbox-container jcd-wide">
 		<div class="metabox-holder">
 			<div class="ui-sortable meta-box-sortables">
 				<div class="postbox">
-					<h2><?php _e( 'Manage Schedule Groups', 'adams-plugin' ); ?></h2>
+					<h2><?php _e( 'Manage Schedule Groups', 'my-calendar' ); ?></h2>
 
 					<div class="inside">
-						<p><?php _e( 'Select an event group to edit.', 'adams-plugin' ); ?></p>
+						<p><?php _e( 'Select an schedule group to edit.', 'my-calendar' ); ?></p>
 					</div>
 				</div>
 			</div>
 			<div class="ui-sortable meta-box-sortables">
 				<div class="postbox">
-					<h2><?php _e( 'Create/Modify Groups', 'adams-plugin' ); ?></h2>
+					<h2><?php _e( 'Create/Modify Groups', 'my-calendar' ); ?></h2>
 					<?php mc_list_groups(); ?>
 				</div>
 			</div>
 		</div>
 		</div>
 		<?php
-	} ?>
+	}
+	mc_show_sidebar();
+	?>
 	</div>
 	<?php
 }
 
 /**
- * Save data within a group of events.
+ * Save data within a group of schedules.
  *
  * @param string $action Type of action: add, edit.
  * @param array  $output Data and status of data check.
@@ -158,19 +160,19 @@ function my_calendar_save_group( $action, $output, $event_id = false ) {
 
 			$result = $wpdb->update( my_calendar_table(), $update, array( 'event_id' => $event_id ), $formats, '%d' );
 			// Translators: Calendar URL.
-			$url = sprintf( __( 'View <a href="%s">your calendar</a>.', 'adams-plugin' ), mc_get_uri() );
+			$url = sprintf( __( 'View <a href="%s">your calendar</a>.', 'my-calendar' ), mc_get_uri() );
 			// Same as action on basic save.
 			do_action( 'mc_save_event', 'edit', $update, $event_id, $result );
 			do_action( 'mc_save_grouped_events', $result, $event_id, $update );
 			if ( false === $result ) {
-				$message = mc_show_error( "#$event_id; " . __( 'Your event was not updated.', 'adams-plugin' ) . " $url", false );
+				$message = mc_show_error( "#$event_id; " . __( 'Your schedule was not updated.', 'my-calendar' ) . " $url", false );
 			} elseif ( 0 === $result ) {
-				$message = mc_show_notice( "#$event_id: " . __( 'Nothing was changed in that update.', 'adams-plugin' ) . " $url", false );
+				$message = mc_show_notice( "#$event_id: " . __( 'Nothing was changed in that update.', 'my-calendar' ) . " $url", false );
 			} else {
-				$message = mc_show_notice( "#$event_id: " . __( 'Schedule updated successfully', 'adams-plugin' ) . ". $url", false );
+				$message = mc_show_notice( "#$event_id: " . __( 'Schedule updated successfully', 'my-calendar' ) . ". $url", false );
 			}
 		} else {
-			$message = mc_show_error( "#$event_id: " . __( 'You do not have sufficient permissions to edit that event.', 'adams-plugin' ), false );
+			$message = mc_show_error( "#$event_id: " . __( 'You do not have sufficient permissions to edit that schedule.', 'my-calendar' ), false );
 		}
 	}
 	$message = $message . "\n" . $output[3];
@@ -179,7 +181,7 @@ function my_calendar_save_group( $action, $output, $event_id = false ) {
 }
 
 /**
- * Get event data for a group. Sourced from the passed event ID.
+ * Get schedule data for a group. Sourced from the passed schedule ID.
  *
  * @param int $event_id Schedule ID.
  *
@@ -189,15 +191,15 @@ function mc_group_data( $event_id = false ) {
 	global $wpdb, $submission;
 	if ( false !== $event_id ) {
 		if ( intval( $event_id ) != $event_id ) {
-			return mc_show_error( __( 'Sorry! That\'s an invalid event key.', 'adams-plugin' ), false );
+			return mc_show_error( __( 'Sorry! That\'s an invalid schedule key.', 'my-calendar' ), false );
 		} else {
 			$data = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . my_calendar_table() . ' WHERE event_id=%d LIMIT 1', $event_id ) ); // WPCS: unprepared SQL OK.
 			if ( empty( $data ) ) {
-				return mc_show_error( __( "Sorry! We couldn't find an event with that ID.", 'adams-plugin' ), false );
+				return mc_show_error( __( "Sorry! We couldn't find a schedule with that ID.", 'my-calendar' ), false );
 			}
 			$data = $data[0];
 		}
-		// Recover users entries if they exist; in other words if editing an event went wrong.
+		// Recover users entries if they exist; in other words if editing an schedule went wrong.
 		if ( ! empty( $submission ) ) {
 			$data = $submission;
 		}
@@ -210,7 +212,7 @@ function mc_group_data( $event_id = false ) {
 }
 
 /**
- * Compare events within a group to see if they currently have the same information.
+ * Compare schedules within a group to see if they currently have the same information.
  *
  * @param int    $group_id Group ID.
  * @param string $field Column name of field to compare. Optional.
@@ -251,14 +253,14 @@ function mc_group_form( $group_id, $type = 'break' ) {
 	$nonce    = wp_create_nonce( 'my-calendar-nonce' );
 	$results  = $wpdb->get_results( $wpdb->prepare( 'SELECT event_id, event_begin, event_time FROM  ' . my_calendar_table() . ' WHERE event_group_id = %d', $group_id ) ); // WPCS: unprepared SQL OK.
 	if ( 'apply' == $type ) {
-		$warning = ( ! mc_compare_group_members( $group_id ) ) ? '<p class="warning">' . __( '<strong>NOTE:</strong> The group editable fields for the events in this group do not match', 'adams-plugin' ) . '</p>' : '<p class="matched">' . __( 'The group editable fields for the events in this group match.', 'adams-plugin' ) . '</p>';
+		$warning = ( ! mc_compare_group_members( $group_id ) ) ? '<p class="warning">' . __( '<strong>NOTE:</strong> The group editable fields for the schedules in this group do not match', 'my-calendar' ) . '</p>' : '<p class="matched">' . __( 'The group editable fields for the schedules in this group match.', 'my-calendar' ) . '</p>';
 	} else {
 		$warning = '';
 	}
 	$class   = ( 'break' == $type ) ? 'break' : 'apply';
 	$group   = "<div class='group $class'>";
 	$group  .= $warning;
-	$group  .= ( 'apply' == $type ) ? '<fieldset><legend>' . __( 'Apply these changes to:', 'adams-plugin' ) . '</legend>' : '';
+	$group  .= ( 'apply' == $type ) ? '<fieldset><legend>' . __( 'Apply these changes to:', 'my-calendar' ) . '</legend>' : '';
 	$group  .= ( 'break' == $type ) ? "<form method='post' action='" . admin_url( "admin.php?page=my-calendar-groups&amp;mode=edit&amp;event_id=$event_id&amp;group_id=$group_id" ) . "'>
 	<div><input type='hidden' value='" . esc_attr( $group_id ) . "' name='group_id' /><input type='hidden' value='" . esc_attr( $type ) . "' name='event_action' /><input type='hidden' name='_wpnonce' value='$nonce' />
 	</div>" : '';
@@ -269,16 +271,16 @@ function mc_group_form( $group_id, $type = 'break' ) {
 		$time   = date_i18n( 'g:i a', strtotime( $result->event_time ) );
 		$group .= "<li><input type='checkbox' name='$type" . "[]' value='$result->event_id' id='$type$result->event_id'$checked /> <label for='break$result->event_id'><a href='#event$result->event_id'>#$result->event_id</a>: $date; $time</label></li>\n";
 	}
-	$group .= "<li><input type='checkbox' class='selectall' id='$type'$checked /> <label for='$type'><b>" . __( 'Check/Uncheck all', 'adams-plugin' ) . "</b></label></li>\n</ul>";
+	$group .= "<li><input type='checkbox' class='selectall' id='$type'$checked /> <label for='$type'><b>" . __( 'Check/Uncheck all', 'my-calendar' ) . "</b></label></li>\n</ul>";
 	$group .= ( 'apply' == $type ) ? '</fieldset>' : '';
-	$group .= ( 'break' == $type ) ? "<p><input type='submit' class='button' value='" . __( 'Remove checked events from this group', 'adams-plugin' ) . "' /></p></form>" : '';
+	$group .= ( 'break' == $type ) ? "<p><input type='submit' class='button' value='" . __( 'Remove checked schedules from this group', 'my-calendar' ) . "' /></p></form>" : '';
 	$group .= '</div>';
 
 	return $group;
 }
 
 /**
- * The event edit form for the manage events admin page
+ * The schedule edit form for the manage schedules admin page
  *
  * @param string $mode Editing mode.
  * @param int    $event_id Schedule ID.
@@ -296,7 +298,7 @@ function mc_edit_groups( $mode = 'edit', $event_id = false, $group_id = false ) 
 	if ( false != $group_id ) {
 		$group = mc_group_form( $group_id, 'break' );
 	} else {
-		$message .= __( 'You must provide a group ID to edit groups', 'adams-plugin' );
+		$message .= __( 'You must provide a group ID to edit groups', 'my-calendar' );
 	}
 	mc_show_error( $message );
 	echo $group;
@@ -346,19 +348,19 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 	</div>
 	<div class="ui-sortable meta-box-sortables">
 		<div class="postbox">
-			<h2><?php _e( 'Manage Schedule Groups', 'adams-plugin' ); ?></h2>
+			<h2><?php _e( 'Manage Schedule Groups', 'my-calendar' ); ?></h2>
 
 			<div class="inside">
 				<div class="mc-controls">
 					<ul>
-						<li><input type="submit" name="save" class="button-primary" value="<?php _e( 'Edit Schedule Group', 'adams-plugin' ); ?>"/></li>
+						<li><input type="submit" name="save" class="button-primary" value="<?php _e( 'Edit Schedule Group', 'my-calendar' ); ?>"/></li>
 					</ul>
 				</div>
 				<p>
-					<label for="e_title"><?php _e( 'Name of the employee or volunteer', 'adams-plugin' ); ?> <span><?php _e( '(required)', 'adams-plugin' ); ?></span>
+					<label for="e_title"><?php _e( 'Schedule Title', 'my-calendar' ); ?> <span><?php _e( '(required)', 'my-calendar' ); ?></span>
 					<?php
 					if ( ! mc_compare_group_members( $group_id, 'event_title' ) ) {
-							echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+							echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 					}
 					?>
 					</label><br/>
@@ -379,9 +381,9 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 						<input type="checkbox" value="1" id="e_span" name="event_span" <?php echo $span_checked; ?> />
 						<label for="e_span">
 						<?php
-						_e( 'Selected dates are a single multi-day event.', 'adams-plugin' );
+						_e( 'Selected dates are a single multi-day schedule.', 'my-calendar' );
 						if ( ! mc_compare_group_members( $group_id, 'event_span' ) ) {
-							echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+							echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 						}
 						?>
 						</label>
@@ -397,9 +399,9 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 					<div id="group_description">
 						<label for="content">
 						<?php
-						_e( 'Schedule Description (<abbr title="hypertext markup language">HTML</abbr> allowed)', 'adams-plugin' );
+						_e( 'Schedule Description (<abbr title="hypertext markup language">HTML</abbr> allowed)', 'my-calendar' );
 						if ( ! mc_compare_group_members( $group_id, 'event_desc' ) ) {
-							echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+							echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 						}
 						?>
 						</label><br/>
@@ -412,9 +414,9 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 					<p>
 						<label for="e_short">
 						<?php
-						_e( 'Schedule Short Description (<abbr title="hypertext markup language">HTML</abbr> allowed)', 'adams-plugin' );
+						_e( 'Schedule Short Description (<abbr title="hypertext markup language">HTML</abbr> allowed)', 'my-calendar' );
 						if ( ! mc_compare_group_members( $group_id, 'event_short' ) ) {
-							echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+							echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 						}
 						?>
 						</label><br/>
@@ -435,13 +437,13 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 						<input type="hidden" name="event_image_id" value="" class="textfield" id="e_image_id"/>
 						<label for="e_image">
 						<?php
-						_e( 'Add an image:', 'adams-plugin' );
+						_e( 'Add an image:', 'my-calendar' );
 						if ( ! mc_compare_group_members( $group_id, 'event_image' ) ) {
-							echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+							echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 						}
 						?>
 						</label>
-						<input type="text" name="event_image" id="e_image" size="60" value="<?php echo esc_url( $image ); ?>" placeholder="http://yourdomain.com/image.jpg"/> <button type='button' class="button textfield-field"><?php _e( 'Upload', 'adams-plugin' ); ?></button>
+						<input type="text" name="event_image" id="e_image" size="60" value="<?php echo esc_url( $image ); ?>" placeholder="http://yourdomain.com/image.jpg"/> <button type='button' class="button textfield-field"><?php _e( 'Upload', 'my-calendar' ); ?></button>
 					</div>
 					<?php
 				} else {
@@ -460,9 +462,9 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 				<p>
 					<label for="e_host">
 					<?php
-					_e( 'Schedule Host', 'adams-plugin' );
+					_e( 'Schedule Host', 'my-calendar' );
 					if ( ! mc_compare_group_members( $group_id, 'event_host' ) ) {
-						echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+						echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 					}
 					?>
 					</label>
@@ -487,14 +489,14 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 				if ( 'on' == $mc_input['event_category'] || $input_all ) {
 					$match = '';
 					if ( ! mc_compare_group_members( $group_id, 'event_category' ) ) {
-						$match = ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+						$match = ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 					}
 
 					if ( 'true' != get_option( 'mc_multiple_categories' ) ) {
 						$select = mc_category_select( $data, true, false );
 						$return = '<p class="mc_category"><label for="event_category">' . __( 'Category', 'my-calendar-submissions' ) . $match . '</label><select class="widefat" name="event_category" id="e_category">' . $select . '</select></p>';
 					} else {
-						$return = '<fieldset><legend>' . __( 'Categories', 'adams-plugin' ) . $match . '</legend><ul class="checkboxes">' . mc_category_select( $data, true, true ) . '</ul></fieldset>';
+						$return = '<fieldset><legend>' . __( 'Categories', 'my-calendar' ) . $match . '</legend><ul class="checkboxes">' . mc_category_select( $data, true, true ) . '</ul></fieldset>';
 					}
 
 					echo $return;
@@ -517,15 +519,15 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 					<p>
 						<label for="e_link">
 						<?php
-						_e( 'Schedule Link (Optional)', 'adams-plugin' );
+						_e( 'Schedule Link (Optional)', 'my-calendar' );
 						if ( ! mc_compare_group_members( $group_id, 'event_link' ) ) {
-							echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+							echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 						}
 						?>
 						</label>
 						<input type="text" id="e_link" name="event_link" size="40" value="<?php echo ( ! empty( $data ) ) ? esc_url( $data->event_link ) : ''; ?>" />
 						<input type="checkbox" value="1" id="e_link_expires" name="event_link_expires"<?php echo $exp_checked; ?> />
-						<label for="e_link_expires"><?php _e( 'Link will expire after event.', 'adams-plugin' ); ?></label>
+						<label for="e_link_expires"><?php _e( 'Link will expire after event.', 'my-calendar' ); ?></label>
 					</p>
 					<?php
 				}
@@ -538,11 +540,11 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 		?>
 	<div class="ui-sortable meta-box-sortables">
 		<div class="postbox">
-			<h2><?php _e( 'Schedule Registration Options', 'adams-plugin' ); ?></h2>
+			<h2><?php _e( 'Schedule Registration Options', 'my-calendar' ); ?></h2>
 
 			<div class="inside">
 				<fieldset>
-					<legend><?php _e( 'Schedule Registration Status', 'adams-plugin' ); ?></legend>
+					<legend><?php _e( 'Schedule Registration Status', 'my-calendar' ); ?></legend>
 					<?php echo apply_filters( 'mc_event_registration', '', $has_data, $data, 'admin' ); ?>
 				</fieldset>
 			</div>
@@ -561,11 +563,11 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 		?>
 	<div class="ui-sortable meta-box-sortables">
 		<div class="postbox">
-			<h2><?php _e( 'Schedule Location', 'adams-plugin' ); ?></h2>
+			<h2><?php _e( 'Schedule Location', 'my-calendar' ); ?></h2>
 
 			<div class="inside location_form">
 				<fieldset>
-					<legend><?php _e( 'Schedule Location', 'adams-plugin' ); ?></legend>
+					<legend><?php _e( 'Schedule Location', 'my-calendar' ); ?></legend>
 		<?php
 	}
 	if ( 'on' == $mc_input['event_location_dropdown'] || $input_all ) {
@@ -573,7 +575,7 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 		if ( ! empty( $locations ) ) {
 			?>
 		<p>
-			<label for="location_preset"><?php _e( 'Choose a preset location:', 'adams-plugin' ); ?></label>
+			<label for="location_preset"><?php _e( 'Choose a preset location:', 'my-calendar' ); ?></label>
 			<select name="location_preset" id="location_preset">
 				<option value="none">--</option>
 				<?php
@@ -588,7 +590,7 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 			?>
 		<input type="hidden" name="location_preset" value="none"/>
 		<p>
-			<a href="<?php echo admin_url( 'admin.php?page=my-calendar-locations' ); ?>"><?php _e( 'Add recurring locations for later use.', 'adams-plugin' ); ?></a>
+			<a href="<?php echo admin_url( 'admin.php?page=my-calendar-locations' ); ?>"><?php _e( 'Add recurring locations for later use.', 'my-calendar' ); ?></a>
 		</p>
 			<?php
 		}
@@ -600,9 +602,9 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 	<p>
 		<label for="e_label">
 		<?php
-		_e( 'Name of Location (e.g. <em>Joe\'s Bar and Grill</em>)', 'adams-plugin' );
+		_e( 'Name of Location (e.g. <em>Joe\'s Bar and Grill</em>)', 'my-calendar' );
 		if ( ! mc_compare_group_members( $group_id, 'event_label' ) ) {
-			echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+			echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 		}
 		?>
 		</label><br/>
@@ -611,9 +613,9 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 	<p>
 		<label for="e_street">
 		<?php
-		_e( 'Street Address', 'adams-plugin' );
+		_e( 'Street Address', 'my-calendar' );
 		if ( ! mc_compare_group_members( $group_id, 'event_street' ) ) {
-			echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+			echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 		}
 		?>
 		</label>
@@ -622,9 +624,9 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 	<p>
 		<label for="e_street2">
 		<?php
-		_e( 'Street Address (2)', 'adams-plugin' );
+		_e( 'Street Address (2)', 'my-calendar' );
 		if ( ! mc_compare_group_members( $group_id, 'event_street2' ) ) {
-			echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+			echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 		}
 		?>
 		</label>
@@ -633,18 +635,18 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 	<p>
 		<label for="e_city">
 		<?php
-		_e( 'City', 'adams-plugin' );
+		_e( 'City', 'my-calendar' );
 		if ( ! mc_compare_group_members( $group_id, 'event_city' ) ) {
-			echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+			echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 		}
 		?>
 		</label>
 		<input type="text" id="e_city" name="event_city" size="40" value="<?php echo ( ! empty( $data ) ) ? esc_attr( stripslashes( $data->event_city ) ) : ''; ?>" />
 		<label for="e_state">
 		<?php
-		_e( 'State/Province', 'adams-plugin' );
+		_e( 'State/Province', 'my-calendar' );
 		if ( ! mc_compare_group_members( $group_id, 'event_state' ) ) {
-			echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+			echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 		}
 		?>
 		</label>
@@ -653,18 +655,18 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 	<p>
 		<label for="e_postcode">
 		<?php
-		_e( 'Postal Code', 'adams-plugin' );
+		_e( 'Postal Code', 'my-calendar' );
 		if ( ! mc_compare_group_members( $group_id, 'event_postcode' ) ) {
-			echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+			echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 		}
 		?>
 		</label>
 		<input type="text" id="e_postcode" name="event_postcode" size="10" value="<?php echo ( ! empty( $data ) ) ? esc_attr( stripslashes( $data->event_postcode ) ) : ''; ?>" />
 		<label for="e_region">
 		<?php
-		_e( 'Region', 'adams-plugin' );
+		_e( 'Region', 'my-calendar' );
 		if ( ! mc_compare_group_members( $group_id, 'event_region' ) ) {
-			echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+			echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 		}
 		?>
 		</label>
@@ -673,9 +675,9 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 	<p>
 		<label for="e_country">
 		<?php
-		_e( 'Country', 'adams-plugin' );
+		_e( 'Country', 'my-calendar' );
 		if ( ! mc_compare_group_members( $group_id, 'event_country' ) ) {
-			echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+			echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 		}
 		?>
 		</label>
@@ -684,28 +686,28 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 	<p>
 		<label for="e_zoom">
 		<?php
-		_e( 'Initial Zoom', 'adams-plugin' );
+		_e( 'Initial Zoom', 'my-calendar' );
 		if ( ! mc_compare_group_members( $group_id, 'event_zoom' ) ) {
-			echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+			echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 		}
 		$zoom = ( ! empty( $data ) ) ? $data->event_zoom : '';
 		?>
 		</label>
 		<select name="event_zoom" id="e_zoom">
-			<option value="16"<?php selected( $zoom, 16 ); ?>><?php _e( 'Neighborhood', 'adams-plugin' ); ?></option>
-			<option value="14"<?php selected( $zoom, 14 ); ?>><?php _e( 'Small City', 'adams-plugin' ); ?></option>
-			<option value="12"<?php selected( $zoom, 12 ); ?>><?php _e( 'Large City', 'adams-plugin' ); ?></option>
-			<option value="10"<?php selected( $zoom, 10 ); ?>><?php _e( 'Greater Metro Area', 'adams-plugin' ); ?></option>
-			<option value="8"<?php selected( $zoom, 8 ); ?>><?php _e( 'State', 'adams-plugin' ); ?></option>
-			<option value="6"<?php selected( $zoom, 6 ); ?>><?php _e( 'Region', 'adams-plugin' ); ?></option>
+			<option value="16"<?php selected( $zoom, 16 ); ?>><?php _e( 'Neighborhood', 'my-calendar' ); ?></option>
+			<option value="14"<?php selected( $zoom, 14 ); ?>><?php _e( 'Small City', 'my-calendar' ); ?></option>
+			<option value="12"<?php selected( $zoom, 12 ); ?>><?php _e( 'Large City', 'my-calendar' ); ?></option>
+			<option value="10"<?php selected( $zoom, 10 ); ?>><?php _e( 'Greater Metro Area', 'my-calendar' ); ?></option>
+			<option value="8"<?php selected( $zoom, 8 ); ?>><?php _e( 'State', 'my-calendar' ); ?></option>
+			<option value="6"<?php selected( $zoom, 6 ); ?>><?php _e( 'Region', 'my-calendar' ); ?></option>
 		</select>
 	</p>
 	<p>
 		<label for="e_phone">
 		<?php
-		_e( 'Phone', 'adams-plugin' );
+		_e( 'Phone', 'my-calendar' );
 		if ( ! mc_compare_group_members( $group_id, 'event_phone' ) ) {
-			echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+			echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 		}
 		?>
 		</label>
@@ -714,35 +716,35 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 	<p>
 		<label for="e_url">
 		<?php
-		_e( 'Location URL', 'adams-plugin' );
+		_e( 'Location URL', 'my-calendar' );
 		if ( ! mc_compare_group_members( $group_id, 'event_url' ) ) {
-			echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+			echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 		}
 		?>
 		</label>
 		<input type="text" id="e_url" name="event_url" size="40" value="<?php echo ( ! empty( $data ) ) ? esc_attr( stripslashes( $data->event_url ) ) : ''; ?>" />
 	</p>
 	<fieldset>
-		<legend><?php _e( 'GPS Coordinates (optional)', 'adams-plugin' ); ?></legend>
+		<legend><?php _e( 'GPS Coordinates (optional)', 'my-calendar' ); ?></legend>
 		<p>
 			<label for="e_latitude">
 			<?php
-			_e( 'Latitude', 'adams-plugin' );
+			_e( 'Latitude', 'my-calendar' );
 			if ( ! mc_compare_group_members( $group_id, 'event_latitude' ) ) {
-				echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+				echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 			}
 			if ( ! mc_compare_group_members( $group_id, 'event_longitude' ) ) {
-				echo ' <span class="nomatch">' . __( 'Fields do not match', 'adams-plugin' ) . '</span>';
+				echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';
 			}
 			?>
 			</label>
 			<input type="text" id="e_latitude" name="event_latitude" size="10" value="<?php echo ( ! empty( $data ) ) ? esc_attr( stripslashes( $data->event_latitude ) ) : ''; ?>" />
-			<label for="e_longitude"><?php _e( 'Longitude', 'adams-plugin' ); ?></label>
+			<label for="e_longitude"><?php _e( 'Longitude', 'my-calendar' ); ?></label>
 			<input type="text" id="e_longitude" name="event_longitude" size="10" value="<?php echo ( ! empty( $data ) ) ? esc_attr( stripslashes( $data->event_longitude ) ) : ''; ?>" />
 		</p>
 	</fieldset>
 	<fieldset>
-		<legend><?php _e( 'Location Accessibility', 'adams-plugin' ); ?></legend>
+		<legend><?php _e( 'Location Accessibility', 'my-calendar' ); ?></legend>
 		<ul class='checkboxes'>
 			<?php
 			$access      = apply_filters( 'mc_venue_accessibility', mc_location_access() );
@@ -876,7 +878,7 @@ function mc_check_group_data( $action, $post ) {
 	// A title is required, and can't be more than 255 characters.
 	$title_length = strlen( $title );
 	if ( ! ( $title_length >= 1 && $title_length <= 255 ) ) {
-		$title = __( 'Untitled Schedule', 'adams-plugin' );
+		$title = __( 'Untitled Schedule', 'my-calendar' );
 	}
 	$proceed = true;
 	$submit  = array(
@@ -924,7 +926,7 @@ function mc_check_group_data( $action, $post ) {
 
 
 /**
- * Used on the manage events admin page to display a list of events
+ * Used on the manage schedules admin page to display a list of schedules
  */
 function mc_list_groups() {
 	global $wpdb;
@@ -1001,24 +1003,24 @@ function mc_list_groups() {
 	<div class='inside'>
 		<ul class="links">
 			<li>
-				<a <?php echo ( isset( $_GET['limit'] ) && 'grouped' == $_GET['limit'] ) ? ' class="active-link"' : ''; ?> href="<?php echo admin_url( 'admin.php?page=my-calendar-groups&amp;limit=grouped#my-calendar-admin-table' ); ?>"><?php _e( 'Grouped Schedules', 'adams-plugin' ); ?></a>
+				<a <?php echo ( isset( $_GET['limit'] ) && 'grouped' == $_GET['limit'] ) ? ' class="active-link"' : ''; ?> href="<?php echo admin_url( 'admin.php?page=my-calendar-groups&amp;limit=grouped#my-calendar-admin-table' ); ?>"><?php _e( 'Grouped Schedules', 'my-calendar' ); ?></a>
 			</li>
 			<li>
-				<a <?php echo ( isset( $_GET['limit'] ) && 'ungrouped' == $_GET['limit'] ) ? ' class="active-link"' : ''; ?> href="<?php echo admin_url( 'admin.php?page=my-calendar-groups&amp;limit=ungrouped#my-calendar-admin-table' ); ?>"><?php _e( 'Ungrouped Schedules', 'adams-plugin' ); ?></a>
+				<a <?php echo ( isset( $_GET['limit'] ) && 'ungrouped' == $_GET['limit'] ) ? ' class="active-link"' : ''; ?> href="<?php echo admin_url( 'admin.php?page=my-calendar-groups&amp;limit=ungrouped#my-calendar-admin-table' ); ?>"><?php _e( 'Ungrouped Schedules', 'my-calendar' ); ?></a>
 			</li>
 			<li>
-				<a <?php echo ( isset( $_GET['limit'] ) && 'all' == $_GET['limit'] || ! isset( $_GET['limit'] ) ) ? ' class="active-link"' : ''; ?> href="<?php echo admin_url( 'admin.php?page=my-calendar-groups#my-calendar-admin-table' ); ?>"><?php _e( 'All', 'adams-plugin' ); ?></a>
+				<a <?php echo ( isset( $_GET['limit'] ) && 'all' == $_GET['limit'] || ! isset( $_GET['limit'] ) ) ? ' class="active-link"' : ''; ?> href="<?php echo admin_url( 'admin.php?page=my-calendar-groups#my-calendar-admin-table' ); ?>"><?php _e( 'All', 'my-calendar' ); ?></a>
 			</li>
 		</ul>
-	<p><?php _e( 'Check a set of events to group them for mass editing.', 'adams-plugin' ); ?></p>
+	<p><?php _e( 'Check a set of schedules to group them for mass editing.', 'my-calendar' ); ?></p>
 	<?php
 	$num_pages = ceil( $items / $items_per_page );
 	if ( $num_pages > 1 ) {
 		$page_links = paginate_links( array(
 			'base'      => add_query_arg( 'paged', '%#%' ),
 			'format'    => '',
-			'prev_text' => __( '&laquo; Previous<span class="screen-reader-text"> Schedules</span>', 'adams-plugin' ),
-			'next_text' => __( 'Next<span class="screen-reader-text"> Schedules</span> &raquo;', 'adams-plugin' ),
+			'prev_text' => __( '&laquo; Previous<span class="screen-reader-text"> Schedules</span>', 'my-calendar' ),
+			'next_text' => __( 'Next<span class="screen-reader-text"> Schedules</span> &raquo;', 'my-calendar' ),
 			'total'     => $num_pages,
 			'current'   => $current,
 			'mid_size'  => 1,
@@ -1033,31 +1035,31 @@ function mc_list_groups() {
 				<input type="hidden" name="event_action" value="group"/>
 			</div>
 			<p style="position:relative;display:inline-block;">
-				<input type="submit" class="button-primary group" value="<?php _e( 'Group checked events for mass editing', 'adams-plugin' ); ?>" />
+				<input type="submit" class="button-primary group" value="<?php _e( 'Group checked schedules for mass editing', 'my-calendar' ); ?>" />
 			</p>
 			<table class="widefat wp-list-table" id="my-calendar-admin-table">
 				<thead>
 				<tr>
 					<th scope="col" style="width: 50px;">
-						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=1$sorting" ); ?>"><?php _e( 'ID', 'adams-plugin' ); ?></a>
+						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=1$sorting" ); ?>"><?php _e( 'ID', 'my-calendar' ); ?></a>
 					</th>
 					<th scope="col">
-						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=8$sorting" ); ?>"><?php _e( 'Group', 'adams-plugin' ); ?></a>
+						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=8$sorting" ); ?>"><?php _e( 'Group', 'my-calendar' ); ?></a>
 					</th>
 					<th scope="col">
-						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=2$sorting" ); ?>"><?php _e( 'Title', 'adams-plugin' ); ?></a>
+						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=2$sorting" ); ?>"><?php _e( 'Title', 'my-calendar' ); ?></a>
 					</th>
 					<th scope="col">
-						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=7$sorting" ); ?>"><?php _e( 'Where', 'adams-plugin' ); ?></a>
+						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=7$sorting" ); ?>"><?php _e( 'Where', 'my-calendar' ); ?></a>
 					</th>
 					<th scope="col">
-						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=4$sorting" ); ?>"><?php _e( 'Date/Time', 'adams-plugin' ); ?></a>
+						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=4$sorting" ); ?>"><?php _e( 'Date/Time', 'my-calendar' ); ?></a>
 					</th>
 					<th scope="col">
-						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=5$sorting" ); ?>"><?php _e( 'Author', 'adams-plugin' ); ?></a>
+						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=5$sorting" ); ?>"><?php _e( 'Author', 'my-calendar' ); ?></a>
 					</th>
 					<th scope="col">
-						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=6$sorting" ); ?>"><?php _e( 'Category', 'adams-plugin' ); ?></a>
+						<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;sort=6$sorting" ); ?>"><?php _e( 'Category', 'my-calendar' ); ?></a>
 					</th>
 				</tr>
 				</thead>
@@ -1109,17 +1111,17 @@ function mc_list_groups() {
 							<?php
 							if ( $can_edit ) {
 								?>
-								<a href="<?php echo admin_url( "admin.php?page=my-calendar&amp;mode=edit&amp;event_id=$event->event_id" ); ?>" class='edit' aria-describedby='event_<?php echo $event->event_id; ?>'><?php _e( 'Edit Schedule', 'adams-plugin' ); ?></a> |
+								<a href="<?php echo admin_url( "admin.php?page=my-calendar&amp;mode=edit&amp;event_id=$event->event_id" ); ?>" class='edit' aria-describedby='event_<?php echo $event->event_id; ?>'><?php _e( 'Edit Schedule', 'my-calendar' ); ?></a> |
 								<?php
 								if ( mc_event_is_grouped( $event->event_group_id ) ) {
 									?>
-									<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;mode=edit&amp;event_id=$event->event_id&amp;group_id=$event->event_group_id" ); ?>" class='edit group'><?php _e( 'Edit Group', 'adams-plugin' ); ?></a>
+									<a href="<?php echo admin_url( "admin.php?page=my-calendar-groups&amp;mode=edit&amp;event_id=$event->event_id&amp;group_id=$event->event_group_id" ); ?>" class='edit group'><?php _e( 'Edit Group', 'my-calendar' ); ?></a>
 									<?php
 								} else {
-									echo '<em>' . __( 'Ungrouped', 'adams-plugin' ) . '</em>';
+									echo '<em>' . __( 'Ungrouped', 'my-calendar' ) . '</em>';
 								}
 							} else {
-								_e( 'Not editable.', 'adams-plugin' );
+								_e( 'Not editable.', 'my-calendar' );
 							}
 							?>
 						</div>
@@ -1163,7 +1165,7 @@ function mc_list_groups() {
 			</table>
 		<div class="mc-controls footer">
 			<p>
-				<input type="submit" class="button-secondary group" value="<?php _e( 'Group checked events for mass editing', 'adams-plugin' ); ?>"/>
+				<input type="submit" class="button-secondary group" value="<?php _e( 'Group checked schedules for mass editing', 'my-calendar' ); ?>"/>
 			</p>
 		</div>
 		</form>
@@ -1171,7 +1173,7 @@ function mc_list_groups() {
 		<?php
 	} else {
 		?>
-		<div class="inside"><p><?php _e( 'There are no events in the database!', 'adams-plugin' ); ?></p></div>
+		<div class="inside"><p><?php _e( 'There are no schedules in the database!', 'my-calendar' ); ?></p></div>
 		<?php
 	}
 }

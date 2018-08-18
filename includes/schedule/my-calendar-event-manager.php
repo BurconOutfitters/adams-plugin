@@ -1,9 +1,9 @@
 <?php
 /**
- * Schedule Manager. Creation & Editing of events.
+ * Schedule Manager. Creation & Editing of schedules.
  *
  * @category Schedules
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -14,16 +14,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Handle post generation, updating, and processing after event is saved
+ * Handle post generation, updating, and processing after schedule is saved
  *
  * @param string $action edit, copy, add.
- * @param array  $data saved event data.
- * @param int    $event_id Schedule event ID.
+ * @param array  $data saved schedule data.
+ * @param int    $event_id My Calendar event ID.
  *
  * @return int post ID
  */
 function mc_event_post( $action, $data, $event_id ) {
-	// if the event save was successful.
+	// if the schedule save was successful.
 	if ( 'add' == $action || 'copy' == $action ) {
 		$post_id = mc_create_event_post( $data, $event_id );
 	} elseif ( 'edit' == $action ) {
@@ -102,15 +102,15 @@ function mc_event_post( $action, $data, $event_id ) {
 
 add_action( 'mc_update_event_post', 'mc_add_post_meta_data', 10, 4 );
 /**
- * Add post meta data to an event post.
+ * Add post meta data to an schedule post.
  *
  * @param int   $post_id Post ID.
  * @param array $post Post object.
- * @param array $data Schedule POST data or event data.
+ * @param array $data Schedule POST data or schedule data.
  * @param int   $event_id Schedule ID.
  */
 function mc_add_post_meta_data( $post_id, $post, $data, $event_id ) {
-	// access features for the event.
+	// access features for the schedule.
 	$description = isset( $data['event_desc'] ) ? $data['event_desc'] : '';
 	$image       = isset( $data['event_image'] ) ? esc_url_raw( $data['event_image'] ) : '';
 
@@ -129,9 +129,9 @@ function mc_add_post_meta_data( $post_id, $post, $data, $event_id ) {
 }
 
 /**
- * Create a post for Schedule event data on save
+ * Create a post for My Calendar schedule data on save
  *
- * @param array $data Saved event data.
+ * @param array $data Saved schedule data.
  * @param int   $event_id Newly-saved event ID.
  *
  * @return int newly created post ID
@@ -187,9 +187,9 @@ function mc_create_event_post( $data, $event_id ) {
 }
 
 /**
- * Delete event posts when event is deleted
+ * Delete schedule posts when schedule is deleted
  *
- * @param array $deleted Array of event IDs.
+ * @param array $deleted Array of schedule IDs.
  */
 function mc_event_delete_posts( $deleted ) {
 	foreach ( $deleted as $delete ) {
@@ -206,7 +206,7 @@ function mc_event_delete_posts( $deleted ) {
 }
 
 /**
- * Update a single field in an event.
+ * Update a single field in an schedule.
  *
  * @param string               $field database column.
  * @param mixed                $data value to be saved.
@@ -338,34 +338,34 @@ function mc_bulk_message( $results, $action ) {
 
 	switch ( $action ) {
 		case 'delete':
-			// Translators: Number of events deleted, number selected.
-			$success = __( '%1$d events deleted successfully out of %2$d selected', 'adams-plugin' );
-			$error   = __( 'Your events have not been deleted. Please investigate.', 'adams-plugin' );
+			// Translators: Number of schedules deleted, number selected.
+			$success = __( '%1$d schedules deleted successfully out of %2$d selected', 'my-calendar' );
+			$error   = __( 'Your schedules have not been deleted. Please investigate.', 'my-calendar' );
 			break;
 		case 'trash':
-			// Translators: Number of events trashed, number of events selected.
-			$success = __( '%1$d events trashed successfully out of %2$d selected', 'adams-plugin' );
-			$error   = __( 'Your events have not been trashed. Please investigate.', 'adams-plugin' );
+			// Translators: Number of schedules trashed, number of schedules selected.
+			$success = __( '%1$d schedules trashed successfully out of %2$d selected', 'my-calendar' );
+			$error   = __( 'Your schedules have not been trashed. Please investigate.', 'my-calendar' );
 			break;
 		case 'approve':
-			// Translators: Number of events approved, number of events selected.
-			$success = __( '%1$d events approved out of %2$d selected', 'adams-plugin' );
-			$error   = __( 'Your events have not been approved. Please investigate.', 'adams-plugin' );
+			// Translators: Number of schedules approved, number of schedules selected.
+			$success = __( '%1$d schedules approved out of %2$d selected', 'my-calendar' );
+			$error   = __( 'Your schedules have not been approved. Please investigate.', 'my-calendar' );
 			break;
 		case 'archive':
-			// Translators: Number of events arcnived, number of events selected.
-			$success = __( '%1$d events archived successfully out of %2$d selected', 'adams-plugin' );
-			$error   = __( 'Your events have not been archived. Please investigate.', 'adams-plugin' );
+			// Translators: Number of schedules arcnived, number of schedules selected.
+			$success = __( '%1$d schedules archived successfully out of %2$d selected', 'my-calendar' );
+			$error   = __( 'Your schedules have not been archived. Please investigate.', 'my-calendar' );
 			break;
 		case 'unarchive':
-			// Translators: Number of events removed from archive, number of events selected.
-			$success = __( '%1$d events removed from archive successfully out of %2$d selected', 'adams-plugin' );
-			$error   = __( 'Your events have not been removed from the archive. Please investigate.', 'adams-plugin' );
+			// Translators: Number of schedules removed from archive, number of schedules selected.
+			$success = __( '%1$d schedules removed from archive successfully out of %2$d selected', 'my-calendar' );
+			$error   = __( 'Your schedules have not been removed from the archive. Please investigate.', 'my-calendar' );
 			break;
 		case 'unspam':
-			// Translators: Number of events removed from archive, number of events selected.
-			$success = __( '%1$d events successfully unmarked as spam out of %2$d selected', 'adams-plugin' );
-			$error   = __( 'Your events have not unmarked as spam. Please investigate.', 'adams-plugin' );
+			// Translators: Number of schedules removed from archive, number of schedules selected.
+			$success = __( '%1$d schedules successfully unmarked as spam out of %2$d selected', 'my-calendar' );
+			$error   = __( 'Your schedules have not unmarked as spam. Please investigate.', 'my-calendar' );
 			break;
 	}
 
@@ -423,7 +423,7 @@ function mc_show_notice( $message, $echo = true ) {
 }
 
 /**
- * Generate form for listing events that are editable by current user
+ * Generate form for listing schedules that are editable by current user
  */
 function my_calendar_manage() {
 	my_calendar_check();
@@ -441,7 +441,7 @@ function my_calendar_manage() {
 			} ?>
 			<div class="error">
 				<form action="<?php echo admin_url( 'admin.php?page=my-calendar-manage' ); ?>" method="post">
-					<p><strong><?php _e( 'Delete Schedule', 'adams-plugin' ); ?>:</strong> <?php _e( 'Are you sure you want to delete this event?', 'adams-plugin' ); ?>
+					<p><strong><?php _e( 'Delete Schedule', 'my-calendar' ); ?>:</strong> <?php _e( 'Are you sure you want to delete this event?', 'my-calendar' ); ?>
 						<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'my-calendar-nonce' ); ?>"/>
 						<input type="hidden" value="delete" name="event_action" />
 						<?php
@@ -459,15 +459,15 @@ function my_calendar_manage() {
 						<input type="hidden" name="event_id" value="<?php echo $event_id; ?>"/>
 						<?php
 							$event_info = ' &quot;' . stripslashes( $result[0]['event_title'] ) . "&quot; $instance_date";
-							// Translators: Title & date of event to delete.
-							$delete_text = sprintf( __( 'Delete %s', 'adams-plugin' ), $event_info );
+							// Translators: Title & date of schedule to delete.
+							$delete_text = sprintf( __( 'Delete %s', 'my-calendar' ), $event_info );
 						?>
 						<input type="submit" name="submit" class="button-secondary delete" value="<?php echo esc_attr( $delete_text ); ?>"/>
 				</form>
 			</div>
 			<?php
 		} else {
-			mc_show_error( __( 'You do not have permission to delete that event.', 'adams-plugin' ) );
+			mc_show_error( __( 'You do not have permission to delete that schedule.', 'my-calendar' ) );
 		}
 	}
 
@@ -478,7 +478,7 @@ function my_calendar_manage() {
 			$wpdb->get_results( $wpdb->prepare( 'UPDATE ' . my_calendar_table() . ' SET event_approved = 1 WHERE event_id=%d', $event_id ) ); // WPCS: unprepared SQL OK.
 			mc_update_count_cache();
 		} else {
-			mc_show_error( __( 'You do not have permission to approve that event.', 'adams-plugin' ) );
+			mc_show_error( __( 'You do not have permission to approve that schedule.', 'my-calendar' ) );
 		}
 	}
 
@@ -489,7 +489,7 @@ function my_calendar_manage() {
 			$wpdb->get_results( $wpdb->prepare( 'UPDATE ' . my_calendar_table() . ' SET event_approved = 2 WHERE event_id=%d', $event_id ) ); // WPCS: unprepared SQL OK.
 			mc_update_count_cache();
 		} else {
-			mc_show_error( __( 'You do not have permission to trash that event.', 'adams-plugin' ) );
+			mc_show_error( __( 'You do not have permission to trash that schedule.', 'my-calendar' ) );
 		}
 	}
 
@@ -530,19 +530,28 @@ function my_calendar_manage() {
 	}
 	?>
 	<div class='wrap my-calendar-admin'>
-		<h1 id="mc-manage" class="wp-heading-inline"><?php _e( 'Manage Schedules', 'adams-plugin' ); ?></h1>
-		<a href="<?php echo admin_url( 'admin.php?page=my-calendar' ); ?>" class="page-title-action"><?php _e( 'Add New', 'adams-plugin' ); ?></a>
+		<h1 id="mc-manage" class="wp-heading-inline"><?php _e( 'Manage Schedules', 'my-calendar' ); ?></h1>
+		<a href="<?php echo admin_url( 'admin.php?page=my-calendar' ); ?>" class="page-title-action"><?php _e( 'Add New', 'my-calendar' ); ?></a>
 		<hr class="wp-header-end">
 
 		<div class="postbox-container jcd-wide">
 			<div class="metabox-holder">
-				<h2><?php _e( 'All Schedules', 'adams-plugin' ); ?></h2>
-				<?php mc_list_events(); ?>
+				<div class="ui-sortable meta-box-sortables">
+					<div class="postbox">
+						<h2><?php _e( 'My Schedules', 'my-calendar' ); ?></h2>
+
+						<div class="inside">
+							<?php mc_list_events(); ?>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
 		<?php
-		$problems = mc_list_problems(); ?>
+		$problems = mc_list_problems();
+		mc_show_sidebar( '', $problems );
+		?>
 	</div>
 	<?php
 }
@@ -589,7 +598,7 @@ function my_calendar_edit() {
 		}
 		if ( isset( $_POST['ref'] ) ) {
 			$url = esc_url( urldecode( $_POST['ref'] ) );
-			echo "<p class='return'><a href='$url'>" . __( 'Return to Calendar', 'adams-plugin' ) . '</a></p>';
+			echo "<p class='return'><a href='$url'>" . __( 'Return to Calendar', 'my-calendar' ) . '</a></p>';
 		}
 	}
 	?>
@@ -599,45 +608,47 @@ function my_calendar_edit() {
 	my_calendar_check_db();
 	if ( 2 == get_site_option( 'mc_multisite' ) ) {
 		if ( 0 == get_option( 'mc_current_table' ) ) {
-			$message = __( 'Currently editing your local calendar', 'adams-plugin' );
+			$message = __( 'Currently editing your local calendar', 'my-calendar' );
 		} else {
-			$message = __( 'Currently editing your central calendar', 'adams-plugin' );
+			$message = __( 'Currently editing your central calendar', 'my-calendar' );
 		}
 		mc_show_notice( $message );
 	}
 	if ( 'edit' == $action ) {
 		?>
-		<h1><?php _e( 'Edit Schedule', 'adams-plugin' ); ?></h1>
+		<h1><?php _e( 'Edit Schedule', 'my-calendar' ); ?></h1>
 		<?php
 		if ( empty( $event_id ) ) {
-			mc_show_error( __( 'You must provide an event ID to edit events.', 'adams-plugin' ) );
+			mc_show_error( __( 'You must provide an schedule ID to edit events.', 'my-calendar' ) );
 		} else {
 			mc_edit_event_form( 'edit', $event_id );
 		}
 	} elseif ( 'copy' == $action ) {
 		?>
-		<h1><?php _e( 'Copy Schedule', 'adams-plugin' ); ?></h1>
+		<h1><?php _e( 'Copy Schedule', 'my-calendar' ); ?></h1>
 		<?php
 		if ( empty( $event_id ) ) {
-			mc_show_error( __( 'You must provide an event ID to copy events.', 'adams-plugin' ) );
+			mc_show_error( __( 'You must provide an schedule ID to copy schedules.', 'my-calendar' ) );
 		} else {
 			mc_edit_event_form( 'copy', $event_id );
 		}
 	} else {
 		?>
-		<h1><?php _e( 'Add Schedule', 'adams-plugin' ); ?></h1>
+		<h1><?php _e( 'Add Schedule', 'my-calendar' ); ?></h1>
 		<?php
 		mc_edit_event_form();
-	} ?>
+	}
+	mc_show_sidebar();
+	?>
 	</div>
 	<?php
 }
 
 /**
- * Save an event to the database
+ * Save an schedule to the database
  *
  * @param string $action Type of action.
- * @param array  $output Checked event data.
+ * @param array  $output Checked schedule data.
  * @param int    $event_id Schedule ID.
  *
  * @return string message
@@ -659,9 +670,9 @@ function my_calendar_save( $action, $output, $event_id = false ) {
 		mc_increment_event( $event_id );
 		mc_set_category_relationships( $cats, $event_id );
 		if ( ! $result ) {
-			$message = mc_show_error( __( "I'm sorry! I couldn't add that event to the database.", 'adams-plugin' ), false );
+			$message = mc_show_error( __( "I'm sorry! I couldn't add that schedule to the database.", 'my-calendar' ), false );
 		} else {
-			// do an action using the $action and processed event data.
+			// do an action using the $action and processed schedule data.
 			$data        = $add;
 			$event_error = '';
 			do_action( 'mc_save_event', $action, $data, $event_id, $result );
@@ -672,7 +683,7 @@ function my_calendar_save( $action, $output, $event_id = false ) {
 				my_calendar_send_email( $event );
 			}
 			if ( 0 == $add['event_approved'] ) {
-				$message = mc_show_notice( __( 'Schedule draft saved.', 'adams-plugin' ), false );
+				$message = mc_show_notice( __( 'Schedule draft saved.', 'my-calendar' ), false );
 			} else {
 				// jd_doTwitterAPIPost was changed to wpt_post_to_twitter on 1.19.2017.
 				if ( function_exists( 'wpt_post_to_twitter' ) && isset( $_POST['mc_twitter'] ) && '' != trim( $_POST['mc_twitter'] ) ) {
@@ -688,10 +699,10 @@ function my_calendar_save( $action, $output, $event_id = false ) {
 				if ( '' != $event_error ) {
 					$message = $event_error;
 				} else {
-					$message = __( 'Schedule added. It will now show on the calendar.', 'adams-plugin' );
+					$message = __( 'Schedule added. It will now show on the calendar.', 'my-calendar' );
 					if ( false !== $event_link ) {
-						// Translators: URL to view event in calendar.
-						$message .= sprintf( __( ' <a href="%s">View Schedule</a>', 'adams-plugin' ), $event_link );
+						// Translators: URL to view schedule in calendar.
+						$message .= sprintf( __( ' <a href="%s">View Schedule</a>', 'my-calendar' ), $event_link );
 					}
 					$message = mc_show_notice( $message, false );
 				}
@@ -702,7 +713,7 @@ function my_calendar_save( $action, $output, $event_id = false ) {
 	if ( 'edit' == $action && true == $proceed ) {
 		$result = true;
 		// Translators: URL to view calendar.
-		$url = sprintf( __( 'View <a href="%s">your calendar</a>.', 'adams-plugin' ), mc_get_uri() );
+		$url = sprintf( __( 'View <a href="%s">your calendar</a>.', 'my-calendar' ), mc_get_uri() );
 		if ( mc_can_edit_event( $event_id ) ) {
 			$update = $output[2];
 			$cats   = $update['event_categories'];
@@ -718,11 +729,11 @@ function my_calendar_save( $action, $output, $event_id = false ) {
 			$update_time  = date( 'H:i:00', mc_strtotime( $update['event_time'] ) );
 			$date_changed = ( $update['event_begin'] != $prev_eb || $update_time != $prev_et || $update['event_end'] != $prev_ee || ( $endtime != $prev_eet && ( '' != $prev_eet && '23:59:59' != $endtime ) ) ) ? true : false;
 			if ( isset( $_POST['event_instance'] ) ) {
-				// compares the information sent to the information saved for a given event.
+				// compares the information sent to the information saved for a given schedule.
 				$is_changed     = mc_compare( $update, $event_id );
 				$event_instance = (int) $_POST['event_instance'];
 				if ( $is_changed ) {
-					// if changed, create new event, match group id, update instance to reflect event connection, same group id.
+					// if changed, create new schedule, match group id, update instance to reflect schedule connection, same group id.
 					// if group ID == 0, need to add group ID to both records.
 					// if a single instance is edited, it should not inherit recurring settings from parent.
 					$update['event_recur'] = 'S1';
@@ -746,7 +757,7 @@ function my_calendar_save( $action, $output, $event_id = false ) {
 					} else {
 						// Only dates were changed.
 						$result  = mc_update_instance( $event_instance, $event_id, $update );
-						$message = mc_show_notice( __( 'Date/time information for this event has been updated.', 'adams-plugin' ) . " $url", false );
+						$message = mc_show_notice( __( 'Date/time information for this schedule has been updated.', 'my-calendar' ) . " $url", false );
 					}
 				}
 			} else {
@@ -759,7 +770,7 @@ function my_calendar_save( $action, $output, $event_id = false ) {
 					$recur_changed = false;
 				}
 				if ( $date_changed || $recur_changed ) {
-					// Function mc_increment_event uses previous events and re-uses same ID if new has same date as old event.
+					// Function mc_increment_event uses previous schedules and re-uses same ID if new has same date as old schedule.
 					$instances = mc_get_instances( $event_id );
 					mc_delete_instances( $event_id );
 					mc_increment_event( $event_id, array(), false, $instances );
@@ -768,11 +779,11 @@ function my_calendar_save( $action, $output, $event_id = false ) {
 			$data = $update;
 			do_action( 'mc_save_event', $action, $data, $event_id, $result );
 			if ( false === $result ) {
-				$message = mc_show_error( __( 'Your event was not updated.', 'adams-plugin' ) . " $url", false );
+				$message = mc_show_error( __( 'Your schedule was not updated.', 'my-calendar' ) . " $url", false );
 			} else {
-				// do an action using the $action and processed event data.
+				// do an action using the $action and processed schedule data.
 				$event_approved = ( current_user_can( 'mc_approve_events' ) ) ? 1 : 0;
-				// check for event_approved provides support for older versions of Schedule Pro.
+				// check for schedule_approved provides support for older versions of My Calendar Pro.
 				if ( isset( $post['event_approved'] ) && $post['event_approved'] != $event_approved ) {
 					$event_approved = absint( $post['event_approved'] );
 				}
@@ -780,10 +791,10 @@ function my_calendar_save( $action, $output, $event_id = false ) {
 					// Don't execute transition actions if prev status not known.
 					do_action( 'mc_transition_event', (int) $_POST['prev_event_status'], $event_approved );
 				}
-				$message = mc_show_notice( __( 'Schedule updated successfully', 'adams-plugin' ) . ". $url", false );
+				$message = mc_show_notice( __( 'Schedule updated successfully', 'my-calendar' ) . ". $url", false );
 			}
 		} else {
-			$message = mc_show_error( __( 'You do not have sufficient permissions to edit that event.', 'adams-plugin' ), false );
+			$message = mc_show_error( __( 'You do not have sufficient permissions to edit that schedule.', 'my-calendar' ), false );
 		}
 	}
 
@@ -798,10 +809,10 @@ function my_calendar_save( $action, $output, $event_id = false ) {
 }
 
 /**
- * Set up new category relationships for assigned cats to an event
+ * Set up new category relationships for assigned cats to an schedule
  *
  * @param array $cats array of category IDs.
- * @param int   $event_id Schedule event ID.
+ * @param int   $event_id schedule ID.
  */
 function mc_set_category_relationships( $cats, $event_id ) {
 	global $wpdb;
@@ -816,10 +827,10 @@ function mc_set_category_relationships( $cats, $event_id ) {
 }
 
 /**
- * Update existing category relationships for an event
+ * Update existing category relationships for an schedule
  *
  * @param array $cats array of category IDs.
- * @param int   $event_id Schedule event ID.
+ * @param int   $event_id schedule ID.
  */
 function mc_update_category_relationships( $cats, $event_id ) {
 	global $wpdb;
@@ -840,11 +851,11 @@ function mc_update_category_relationships( $cats, $event_id ) {
 }
 
 /**
- * Check an event for any occurrence overlap problems. Used in admin only.
+ * Check an schedule for any occurrence overlap problems. Used in admin only.
  *
  * @param integer $event_id Schedule ID.
  *
- * @return string with edit link to go to event.
+ * @return string with edit link to go to schedule.
  */
 function mc_error_check( $event_id ) {
 	$data      = mc_form_data( $event_id );
@@ -853,24 +864,24 @@ function mc_error_check( $event_id ) {
 		'mode'     => 'edit',
 		'event_id' => $event_id,
 	);
-	$edit_link = ' <a href="' . esc_url( add_query_arg( $args, admin_url( 'admin.php?page=my-calendar' ) ) ) . '">' . __( 'Edit Schedule', 'adams-plugin' ) . '</a>';
+	$edit_link = ' <a href="' . esc_url( add_query_arg( $args, admin_url( 'admin.php?page=my-calendar' ) ) ) . '">' . __( 'Edit Schedule', 'my-calendar' ) . '</a>';
 	$test      = ( '' != $test ) ? str_replace( '</p></div>', "$edit_link</p></div>", $test ) : $test;
 
 	return $test;
 }
 
 /**
- * Delete an event given event ID
+ * Delete an schedule given schedule ID
  *
- * @param int $event_id Schedule ID.
+ * @param int $event_id schedule ID.
  *
  * @return string message
  */
 function mc_delete_event( $event_id ) {
 	global $wpdb;
-	// Deal with deleting an event from the database.
+	// Deal with deleting an schedule from the database.
 	if ( empty( $event_id ) ) {
-		$message = mc_show_error( __( "You can't delete an event if you haven't submitted an event id", 'adams-plugin' ), false );
+		$message = mc_show_error( __( "You can't delete an schedule if you haven't submitted an event id", 'my-calendar' ), false );
 	} else {
 		$event_id = absint( $event_id );
 		$event_in = false;
@@ -892,9 +903,9 @@ function mc_delete_event( $event_id ) {
 			} else {
 				do_action( 'mc_delete_event', $event_id, $post_id );
 			}
-			$message = mc_show_notice( __( 'Schedule deleted successfully', 'adams-plugin' ), false );
+			$message = mc_show_notice( __( 'Schedule deleted successfully', 'my-calendar' ), false );
 		} else {
-			$message = mc_show_error( __( 'Despite issuing a request to delete, the event still remains in the database. Please investigate.', 'adams-plugin' ), false );
+			$message = mc_show_error( __( 'Despite issuing a request to delete, the schedule still remains in the database. Please investigate.', 'my-calendar' ), false );
 		}
 	}
 
@@ -902,9 +913,9 @@ function mc_delete_event( $event_id ) {
 }
 
 /**
- * Get form data for an event ID
+ * Get form data for an schedule ID
  *
- * @param mixed int/boolean $event_id Schedule event ID or false if submission had errors.
+ * @param mixed int/boolean $event_id schedule ID or false if submission had errors.
  *
  * @return mixed array/object submitted or saved data
  */
@@ -914,7 +925,7 @@ function mc_form_data( $event_id = false ) {
 		$event_id = absint( $event_id );
 		$data     = $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM ' . my_calendar_table() . ' WHERE event_id=%d LIMIT 1', $event_id ) ); // WPCS: unprepared SQL OK.
 		if ( empty( $data ) ) {
-			return mc_show_error( __( "Sorry! We couldn't find an event with that ID.", 'adams-plugin' ), false );
+			return mc_show_error( __( "Sorry! We couldn't find an schedule with that ID.", 'my-calendar' ), false );
 		}
 		$data = $data[0];
 		// Recover users entries if there was an error.
@@ -930,10 +941,10 @@ function mc_form_data( $event_id = false ) {
 }
 
 /**
- * The event edit form for the manage events admin page
+ * The schedule edit form for the manage schedules admin page
  *
  * @param string            $mode add, edit, or copy.
- * @param mixed int/boolean $event_id Schedule event ID (false for new events).
+ * @param mixed int/boolean $event_id schedule ID (false for new events).
  *
  * @return string HTML form
  */
@@ -941,7 +952,7 @@ function mc_edit_event_form( $mode = 'add', $event_id = false ) {
 	global $submission;
 
 	if ( $event_id && ! mc_can_edit_event( $event_id ) ) {
-		mc_show_error( __( 'You do not have permission to edit this event.', 'adams-plugin' ) );
+		mc_show_error( __( 'You do not have permission to edit this schedule.', 'my-calendar' ) );
 
 		return;
 	}
@@ -956,9 +967,9 @@ function mc_edit_event_form( $mode = 'add', $event_id = false ) {
 
 	if ( is_object( $data ) && 1 != $data->event_approved && 'edit' == $mode ) {
 		if ( 0 == $data->event_approved ) {
-			mc_show_error( __( '<strong>Draft</strong>: Publish this event to show it on the calendar.', 'adams-plugin' ) );
+			mc_show_error( __( '<strong>Draft</strong>: Publish this schedule to show it on the calendar.', 'my-calendar' ) );
 		} else {
-			mc_show_error( __( '<strong>Trash</strong>: Remove from the trash to show this event on the calendar.', 'adams-plugin' ) );
+			mc_show_error( __( '<strong>Trash</strong>: Remove from the trash to show this schedule on the calendar.', 'my-calendar' ) );
 		}
 	}
 
@@ -966,7 +977,7 @@ function mc_edit_event_form( $mode = 'add', $event_id = false ) {
 }
 
 /**
- * Get the instance-specific information about a single event instance.
+ * Get the instance-specific information about a single schedule instance.
  *
  * @param int $instance_id Schedule instance ID.
  *
@@ -1038,8 +1049,8 @@ function mc_show_block( $field, $has_data, $data, $echo = true, $default = '' ) 
 	$checked    = '';
 	$value      = '';
 	$show_block = mc_show_edit_block( $field );
-	$pre        = '';
-	$post       = '';
+	$pre        = '<div class="ui-sortable meta-box-sortables"><div class="postbox">';
+	$post       = '</div></div>';
 	switch ( $field ) {
 		case 'event_host':
 			if ( $show_block ) {
@@ -1047,11 +1058,11 @@ function mc_show_block( $field, $has_data, $data, $echo = true, $default = '' ) 
 				$select = mc_selected_users( $host, 'hosts' );
 				$return = '
 					<p>
-						<label for="e_host">' . __( 'Host', 'adams-plugin' ) . '</label>
-						<select id="e_host" name="event_host">' .
-							$select
-						. '</select>
-					</p>';
+					<label for="e_host">' . __( 'Host', 'my-calendar' ) . '</label>
+					<select id="e_host" name="event_host">' .
+						$select
+					. '</select>
+				</p>';
 			}
 			break;
 		case 'event_author':
@@ -1060,12 +1071,12 @@ function mc_show_block( $field, $has_data, $data, $echo = true, $default = '' ) 
 				$select = mc_selected_users( $author, 'authors' );
 				$return = '
 					<p>
-						<label for="e_author">' . __( 'Author', 'adams-plugin' ) . '</label>
-						<select id="e_author" name="event_author">
-							<option value="0" selected="selected">Public Submitter</option>' .
-							$select
-						. '</select>
-					</p>';
+					<label for="e_author">' . __( 'Author', 'my-calendar' ) . '</label>
+					<select id="e_author" name="event_author">
+						<option value="0" selected="selected">Public Submitter</option>' .
+						$select
+					. '</select>
+				</p>';
 			} else {
 				$return = '<input type="hidden" name="event_author" value="' . $default . '" />';
 			}
@@ -1081,13 +1092,13 @@ function mc_show_block( $field, $has_data, $data, $echo = true, $default = '' ) 
 				} else {
 					if ( 'post' == $current_screen->base ) {
 						$return = '<div class="event_description">
-										<label for="content" class="screen-reader-text">' . __( 'Schedule Description', 'adams-plugin' ) . '</label>
+										<label for="content" class="screen-reader-text">' . __( 'Schedule Description', 'my-calendar' ) . '</label>
 										<textarea id="content" name="content" class="event_desc" rows="8" cols="80">' . stripslashes( esc_attr( $value ) ) . '</textarea>
 									</div>';
 					} else {
 						echo '
 						<div class="event_description">
-						<label for="content" class="screen-reader-text">' . __( 'Schedule Description', 'adams-plugin' ) . '</label>';
+						<label for="content" class="screen-reader-text">' . __( 'Schedule Description', 'my-calendar' ) . '</label>';
 						if ( user_can_richedit() ) {
 							wp_editor( $value, 'content', array( 'textarea_rows' => 10 ) );
 						} else {
@@ -1103,7 +1114,7 @@ function mc_show_block( $field, $has_data, $data, $echo = true, $default = '' ) 
 				$value  = ( $has_data ) ? stripslashes( esc_attr( $data->event_short ) ) : '';
 				$return = '
 				<p>
-					<label for="e_short">' . __( 'Short Description', 'adams-plugin' ) . '</label><br /><textarea id="e_short" name="event_short" rows="2" cols="80">' . $value . '</textarea>
+					<label for="e_short">' . __( 'Short Description', 'my-calendar' ) . '</label><br /><textarea id="e_short" name="event_short" rows="2" cols="80">' . $value . '</textarea>
 				</p>';
 			}
 			break;
@@ -1119,14 +1130,14 @@ function mc_show_block( $field, $has_data, $data, $echo = true, $default = '' ) 
 				$return = '
 				<div class="mc-image-upload field-holder">
 					<input type="hidden" name="event_image_id" value="' . esc_attr( $image_id ) . '" class="textfield" id="e_image_id" />
-					<label for="e_image">' . __( 'Add an image:', 'adams-plugin' ) . '</label><br /><input type="text" name="event_image" id="e_image" size="60" value="' . esc_attr( $image ) . '" placeholder="http://yourdomain.com/image.jpg" /> <button type="button" class="button textfield-field">' . __( 'Upload', 'adams-plugin' ) . '</button>';
+					<label for="e_image">' . __( 'Add an image:', 'my-calendar' ) . '</label><br /><input type="text" name="event_image" id="e_image" size="60" value="' . esc_attr( $image ) . '" placeholder="http://yourdomain.com/image.jpg" /> <button type="button" class="button textfield-field">' . __( 'Upload', 'my-calendar' ) . '</button>';
 				if ( '' != $image ) {
 					$image   = ( has_post_thumbnail( $data->event_post ) ) ? get_the_post_thumbnail_url( $data->event_post ) : $data->event_image;
 					$return .= '<div class="event_image"><img src="' . esc_attr( $image ) . '" alt="" /></div>';
 				} else {
 					$return .= '<div class="event_image"></div>';
 				}
-				$return .= '</div><!-- find-me -->';
+				$return .= '</div>';
 			} else {
 				$return = '<input type="hidden" name="event_image" value="' . esc_attr( $image ) . '" />';
 			}
@@ -1141,7 +1152,7 @@ function mc_show_block( $field, $has_data, $data, $echo = true, $default = '' ) 
 							<select class="widefat" name="event_category" id="e_category">' . $select . '</select>
 						</p>';
 				} else {
-					$return = '<fieldset><legend>' . __( 'Categories', 'adams-plugin' ) . '</legend><ul class="checkboxes">' .
+					$return = '<fieldset><legend>' . __( 'Categories', 'my-calendar' ) . '</legend><ul class="checkboxes">' .
 						mc_category_select( $data, true, true ) . '
 					</ul></fieldset>';
 				}
@@ -1166,7 +1177,7 @@ function mc_show_block( $field, $has_data, $data, $echo = true, $default = '' ) 
 				}
 				$return = '
 					<p>
-						<label for="e_link">' . __( 'URL', 'adams-plugin' ) . '</label> <input type="text" id="e_link" name="event_link" size="40" value="' . $value . '" /> <input type="checkbox" value="1" id="e_link_expires" name="event_link_expires"' . $checked . ' /> <label for="e_link_expires">' . __( 'Link will expire after event', 'adams-plugin' ) . '</label>
+						<label for="e_link">' . __( 'URL', 'my-calendar' ) . '</label> <input type="text" id="e_link" name="event_link" size="40" value="' . $value . '" /> <input type="checkbox" value="1" id="e_link_expires" name="event_link_expires"' . $checked . ' /> <label for="e_link_expires">' . __( 'Link will expire after schedule', 'my-calendar' ) . '</label>
 					</p>';
 			}
 			break;
@@ -1192,21 +1203,24 @@ function mc_show_block( $field, $has_data, $data, $echo = true, $default = '' ) 
 			}
 			if ( $show_block && empty( $_GET['date'] ) ) {
 				$return = $pre . '
-	<h2>' . __( 'Repetition Pattern', 'adams-plugin' ) . '</h2>' . $prev . '
+	<h2>' . __( 'Repetition Pattern', 'my-calendar' ) . '</h2>
+	<div class="inside">' . $prev . '
 		<fieldset>
-		<legend class="screen-reader-text">' . __( 'Recurring Schedules', 'adams-plugin' ) . '</legend>
+		<legend class="screen-reader-text">' . __( 'Recurring Schedules', 'my-calendar' ) . '</legend>
 			<p>
-				<label for="e_repeats">' . __( 'Repeats', 'adams-plugin' ) . ' <input type="text" name="event_repeats" aria-labelledby="e_repeats_label" aria-describedby="e_repeats_desc" id="e_repeats" size="2" value="' . esc_attr( $repeats ) . '" /> <span id="e_repeats_label">' . __( 'times', 'adams-plugin' ) . '</span>, </label>
-				<label for="e_every">' . __( 'every', 'adams-plugin' ) . '</label> <input type="number" name="event_every" id="e_every" size="2" min="1" max="99" maxlength="2" value="' . esc_attr( $every ) . '" />
-				<label for="e_recur" class="screen-reader-text">' . __( 'Units', 'adams-plugin' ) . '</label>
+				<label for="e_repeats">' . __( 'Repeats', 'my-calendar' ) . ' <input type="text" name="event_repeats" aria-labelledby="e_repeats_label" aria-describedby="e_repeats_desc" id="e_repeats" size="2" value="' . esc_attr( $repeats ) . '" /> <span id="e_repeats_label">' . __( 'times', 'my-calendar' ) . '</span>, </label>
+				<label for="e_every">' . __( 'every', 'my-calendar' ) . '</label> <input type="number" name="event_every" id="e_every" size="2" min="1" max="99" maxlength="2" value="' . esc_attr( $every ) . '" />
+				<label for="e_recur" class="screen-reader-text">' . __( 'Units', 'my-calendar' ) . '</label>
 				<select name="event_recur" id="e_recur">
 					' . mc_recur_options( $recur ) . '
 				</select>
 			</p>
 			<p id="e_repeats_desc">
-				' . __( 'Your entry is the number of events after the first occurrence of the event: a recurrence of <em>2</em> means the event will happen three times.', 'adams-plugin' ) . '
+				' . __( 'Your entry is the number of schedules after the first occurrence of the schedule: a recurrence of <em>2</em> means the schedule will happen three times.', 'my-calendar' ) . '
 			</p>
-		</fieldset>' . $post;
+		</fieldset>
+	</div>
+							' . $post;
 			} else {
 				if ( '' == $every && '' == $repeats ) {
 					$every   = 'S';
@@ -1218,13 +1232,13 @@ function mc_show_block( $field, $has_data, $data, $echo = true, $default = '' ) 
 			break;
 		case 'event_access':
 			if ( $show_block ) {
-				$label  = __( 'Schedule Access', 'adams-plugin' );
-				$return = $pre . '<h2>' . $label . '</h2>' . mc_event_accessibility( '', $data, $label ) . apply_filters( 'mc_event_access_fields', '', $has_data, $data ) . '' . $post;
+				$label  = __( 'Schedule Access', 'my-calendar' );
+				$return = $pre . '<h2>' . $label . '</h2><div class="inside">' . mc_event_accessibility( '', $data, $label ) . apply_filters( 'mc_event_access_fields', '', $has_data, $data ) . '</div>' . $post;
 			}
 			break;
 		case 'event_open':
 			if ( $show_block ) {
-				$return = $pre . '<h2>' . __( 'Schedule Registration Settings', 'adams-plugin' ) . '</h2><fieldset><legend class="screen-reader-text">' . __( 'Schedule Registration', 'adams-plugin' ) . '</legend>' . apply_filters( 'mc_event_registration', '', $has_data, $data, 'admin' ) . '</fieldset>' . $post;
+				$return = $pre . '<h2>' . __( 'Schedule Registration Settings', 'my-calendar' ) . '</h2><div class="inside"><fieldset><legend class="screen-reader-text">' . __( 'Schedule Registration', 'my-calendar' ) . '</legend>' . apply_filters( 'mc_event_registration', '', $has_data, $data, 'admin' ) . '</fieldset></div>' . $post;
 			} else {
 				$tickets      = ( $has_data ) ? esc_url( $data->event_tickets ) : '';
 				$registration = ( $has_data ) ? esc_attr( $data->event_registration ) : '';
@@ -1268,32 +1282,32 @@ function mc_show_block( $field, $has_data, $data, $echo = true, $default = '' ) 
 
 
 /**
- * Test whether an event has an invalid overlap.
+ * Test whether an schedule has an invalid overlap.
  *
  * @param object  $data Schedule object.
  * @param boolean $return Return or echo.
  *
- * @return string Warning text about problem with event.
+ * @return string Warning text about problem with schedule.
  */
 function mc_test_occurrence_overlap( $data, $return = false ) {
 	$warning = '';
-	// If this event is single, skip query.
+	// If this schedule is single, skip query.
 	$single_recur = ( 'S' == $data->event_recur || 'S1' == $data->event_recur ) ? true : false;
-	// If event starts and ends on same day, skip query.
+	// If schedule starts and ends on same day, skip query.
 	$start_end = ( $data->event_begin == $data->event_end ) ? true : false;
-	// Only run test when an event is set up to recur & starts/ends on different days.
+	// Only run test when an schedule is set up to recur & starts/ends on different days.
 	if ( ! $single_recur && ! $start_end ) {
 		$check = mc_increment_event( $data->event_id, array(), 'test' );
 		if ( my_calendar_date_xcomp( $check['occur_begin'], $data->event_end . '' . $data->event_endtime ) ) {
-			$warning = "<div class='error'><span class='problem-icon dashicons dashicons-performance' aria-hidden='true'></span> <p><strong>" . __( 'Schedule hidden from public view.', 'adams-plugin' ) . '</strong> ' . __( 'This event ends after the next occurrence begins. Schedules must end <strong>before</strong> the next occurrence begins.', 'adams-plugin' ) . '</p><p>';
-			// Translators: End date, end time, beginning of next event.
-			$warning .= sprintf( __( 'Schedule end date: <strong>%1$s %2$s</strong>. Next occurrence starts: <strong>%3$s</strong>', 'adams-plugin' ), $data->event_end, $data->event_endtime, $check['occur_begin'] ) . '</p></div>';
+			$warning = "<div class='error'><span class='problem-icon dashicons dashicons-performance' aria-hidden='true'></span> <p><strong>" . __( 'Schedule hidden from public view.', 'my-calendar' ) . '</strong> ' . __( 'This schedule ends after the next occurrence begins. Schedules must end <strong>before</strong> the next occurrence begins.', 'my-calendar' ) . '</p><p>';
+			// Translators: End date, end time, beginning of next schedule.
+			$warning .= sprintf( __( 'Schedule end date: <strong>%1$s %2$s</strong>. Next occurrence starts: <strong>%3$s</strong>', 'my-calendar' ), $data->event_end, $data->event_endtime, $check['occur_begin'] ) . '</p></div>';
 			update_post_meta( $data->event_post, '_occurrence_overlap', 'false' );
 		} else {
 			delete_post_meta( $data->event_post, '_occurrence_overlap' );
 		}
 	} else {
-		// If event has been changed to same date, still delete meta.
+		// If schedule has been changed to same date, still delete meta.
 		delete_post_meta( $data->event_post, '_occurrence_overlap' );
 	}
 	if ( $return ) {
@@ -1354,201 +1368,222 @@ function mc_form_fields( $data, $mode, $event_id ) {
 		}
 		?>
 <form id="my-calendar" method="post" action="<?php echo $action; ?>">
-	<div>
-		<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'my-calendar-nonce' ); ?>" />
-		<?php
-		if ( isset( $_GET['ref'] ) ) {
-			echo '<input type="hidden" name="ref" value="' . esc_url( $_GET['ref'] ) . '" />';
-		}
-		?>
-		<input type="hidden" name="event_group_id" value="<?php echo $group_id; ?>" />
-		<input type="hidden" name="event_action" value="<?php echo esc_attr( $mode ); ?>" />
-		<?php
-		if ( ! empty( $_GET['date'] ) ) {
-			echo '<input type="hidden" name="event_instance" value="' . (int) $_GET['date'] . '"/>';
-		}
-		?>
-		<input type="hidden" name="event_id" value="<?php echo (int) $event_id; ?>"/>
-		<?php
-		if ( 'edit' == $mode ) {
-			if ( $has_data && ( ! property_exists( $data, 'event_post' ) || ! $data->event_post ) ) {
-				$array_data = (array) $data;
-				$post_id    = mc_event_post( 'add', $array_data, $event_id );
-			} else {
-				$post_id = ( $has_data ) ? $data->event_post : false;
-			}
-			echo '<input type="hidden" name="event_post" value="' . $post_id . '" />';
-		} else {
-			$post_id = false;
-		}
-		?>
-		<input type="hidden" name="event_nonce_name" value="<?php echo wp_create_nonce( 'event_nonce' ); ?>" />
-	</div>
+<div>
+	<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'my-calendar-nonce' ); ?>" />
 	<?php
-		$text = ( 'edit' == $mode ) ? __( 'Edit Schedule', 'adams-plugin' ) : __( 'Add Schedule', 'adams-plugin' );
+	if ( isset( $_GET['ref'] ) ) {
+		echo '<input type="hidden" name="ref" value="' . esc_url( $_GET['ref'] ) . '" />';
+	}
 	?>
-	<h2><?php esc_html( $text ); ?></h2>
-	<div class='mc-controls'>
-		<?php echo mc_controls( $mode, $has_data, $data ); ?>
-	</div>
-		<?php
-		if ( ! empty( $_GET['date'] ) && 'S' != $data->event_recur ) {
-			$event = mc_get_event( $instance );
-			$date  = date_i18n( get_option( 'mc_date_format' ), mc_strtotime( $event->occur_begin ) );
-			// Translators: Date of a specific event occurrence.
-			$message = sprintf( __( 'You are editing the <strong>%s</strong> instance of this event. Other instances of this event will not be changed.', 'adams-plugin' ), $date );
-			mc_show_notice( $message );
-		} elseif ( isset( $_GET['date'] ) && empty( $_GET['date'] ) ) {
-			mc_show_notice( __( 'The ID for this event instance was not provided. <strong>You are editing this entire recurring event series.</strong>', 'adams-plugin' ) );
+	<input type="hidden" name="event_group_id" value="<?php echo $group_id; ?>" />
+	<input type="hidden" name="event_action" value="<?php echo esc_attr( $mode ); ?>" />
+	<?php
+	if ( ! empty( $_GET['date'] ) ) {
+		echo '<input type="hidden" name="event_instance" value="' . (int) $_GET['date'] . '"/>';
+	}
+	?>
+	<input type="hidden" name="event_id" value="<?php echo (int) $event_id; ?>"/>
+	<?php
+	if ( 'edit' == $mode ) {
+		if ( $has_data && ( ! property_exists( $data, 'event_post' ) || ! $data->event_post ) ) {
+			$array_data = (array) $data;
+			$post_id    = mc_event_post( 'add', $array_data, $event_id );
+		} else {
+			$post_id = ( $has_data ) ? $data->event_post : false;
 		}
-		?>
-		<fieldset>
-			<legend class="screen-reader-text"><?php _e( 'Schedule Details', 'adams-plugin' ); ?></legend>
-			<p>
-				<label for="e_title"><?php _e( 'Name of the employee or volunteer', 'adams-plugin' ); ?></label><br/>
-				<input type="text" id="e_title" name="event_title" size="50" maxlength="255" value="<?php echo ( $has_data ) ? apply_filters( 'mc_manage_event_title', stripslashes( esc_attr( $data->event_title ) ), $data ) : ''; ?>" />
-			</p>
-			<?php
-			if ( is_object( $data ) && 1 == $data->event_flagged ) {
-				if ( '0' == $data->event_flagged ) {
-					$flagged = ' checked="checked"';
-				} elseif ( '1' == $data->event_flagged ) {
-					$flagged = '';
-				}
-				?>
-				<div class="error">
-					<p>
-						<input type="checkbox" value="0" id="e_flagged" name="event_flagged"<?php echo $flagged; ?> />
-						<label for="e_flagged"><?php _e( 'This event is not spam', 'adams-plugin' ); ?></label>
-					</p>
-				</div>
-				<?php
-			}
-			apply_filters( 'mc_insert_custom_fields', '', $has_data, $data );
+		echo '<input type="hidden" name="event_post" value="' . $post_id . '" />';
+	} else {
+		$post_id = false;
+	}
+	?>
+	<input type="hidden" name="event_nonce_name" value="<?php echo wp_create_nonce( 'event_nonce' ); ?>" />
+</div>
 
-			if ( function_exists( 'wpt_post_to_twitter' ) && current_user_can( 'wpt_can_tweet' ) ) {
-				if ( ! ( 'edit' == $mode && 1 == $data->event_approved ) ) {
-					$mc_allowed = absint( ( get_option( 'wpt_tweet_length' ) ) ? get_option( 'wpt_tweet_length' ) : 140 );
-					?>
-					<p class='mc-twitter'>
-						<label for='mc_twitter'><?php _e( 'Post to Twitter (via WP to Twitter)', 'adams-plugin' ); ?></label><br/>
-						<textarea cols='70' rows='2' id='mc_twitter' name='mc_twitter' data-allowed="<?php echo $mc_allowed; ?>"><?php echo apply_filters( 'mc_twitter_text', '', $data ); ?></textarea>
-					</p>
-					<?php
-				}
-			}
-			mc_show_block( 'event_desc', $has_data, $data );
-			mc_show_block( 'event_category', $has_data, $data );
-			?>
-		</fieldset>
-		<h2><?php _e( 'Date and Time', 'adams-plugin' ); ?></h2>
+<div class="ui-sortable meta-box-sortables">
+	<div class="postbox">
 		<?php
-		if ( is_object( $data ) ) { // Information for rewriting recurring data.
-			?>
-			<input type="hidden" name="prev_event_begin" value="<?php echo esc_attr( $data->event_begin ); ?>"/>
-			<input type="hidden" name="prev_event_time" value="<?php echo esc_attr( $data->event_time ); ?>"/>
-			<input type="hidden" name="prev_event_end" value="<?php echo esc_attr( $data->event_end ); ?>"/>
-			<input type="hidden" name="prev_event_endtime" value="<?php echo esc_attr( $data->event_endtime ); ?>"/>
-			<?php
-		}
+			$text = ( 'edit' == $mode ) ? __( 'Edit Schedule', 'my-calendar' ) : __( 'Add Schedule', 'my-calendar' );
 		?>
-		<fieldset>
-			<legend class="screen-reader-text"><?php _e( 'Schedule Date and Time', 'adams-plugin' ); ?></legend>
-			<div id="e_schedule">
-				<div id="event1" class="clonedInput" aria-live="assertive">
-					<?php echo apply_filters( 'mc_datetime_inputs', '', $has_data, $data, 'admin' ); ?>
-				</div>
+		<h2><?php esc_html( $text ); ?></h2>
+		<div class="inside">
+		<div class='mc-controls'>
+			<?php echo mc_controls( $mode, $has_data, $data ); ?>
+		</div>
+			<?php
+			if ( ! empty( $_GET['date'] ) && 'S' != $data->event_recur ) {
+				$event = mc_get_event( $instance );
+				$date  = date_i18n( get_option( 'mc_date_format' ), mc_strtotime( $event->occur_begin ) );
+				// Translators: Date of a specific schedule occurrence.
+				$message = sprintf( __( 'You are editing the <strong>%s</strong> instance of this schedule. Other instances of this schedule will not be changed.', 'my-calendar' ), $date );
+				mc_show_notice( $message );
+			} elseif ( isset( $_GET['date'] ) && empty( $_GET['date'] ) ) {
+				mc_show_notice( __( 'The ID for this schedule instance was not provided. <strong>You are editing this entire recurring schedule series.</strong>', 'my-calendar' ) );
+			}
+			?>
+			<fieldset>
+				<legend class="screen-reader-text"><?php _e( 'Schedule Details', 'my-calendar' ); ?></legend>
+				<p>
+					<label for="e_title"><?php _e( 'Schedule Title', 'my-calendar' ); ?></label><br/>
+					<input type="text" id="e_title" name="event_title" size="50" maxlength="255" value="<?php echo ( $has_data ) ? apply_filters( 'mc_manage_event_title', stripslashes( esc_attr( $data->event_title ) ), $data ) : ''; ?>" />
+				</p>
 				<?php
-				if ( 'edit' != $mode ) {
-					$span_checked = '';
-					if ( $has_data && '1' == $data->event_span ) {
-						$span_checked = ' checked="checked"';
-					} elseif ( $has_data && '0' == $data->event_span ) {
-						$span_checked = '';
+				if ( is_object( $data ) && 1 == $data->event_flagged ) {
+					if ( '0' == $data->event_flagged ) {
+						$flagged = ' checked="checked"';
+					} elseif ( '1' == $data->event_flagged ) {
+						$flagged = '';
 					}
 					?>
-				<p id="event_span">
-					<input type="checkbox" value="1" id="e_span" name="event_span"<?php echo $span_checked; ?> />
-					<label for="e_span"><?php _e( 'This is a multi-day event.', 'adams-plugin' ); ?></label>
-				</p>
-				<p class="note">
-					<em><?php _e( 'Enter start and end dates/times for each occurrence of the event.', 'adams-plugin' ); ?></em>
-				</p>
-				<div>
-					<input type="button" id="add_field" value="<?php _e( 'Add another occurrence', 'adams-plugin' ); ?>" class="button" />
-					<input type="button" id="del_field" value="<?php _e( 'Remove last occurrence', 'adams-plugin' ); ?>" class="button" />
-				</div>
-					<?php
-				} else {
-					?>
-					<div id='mc-accordion'>
-						<?php
-						if ( 'S' != $data->event_recur ) {
-							?>
-							<h4><span class='dashicons' aria-hidden='true'> </span><button type="button" class="button-link"><?php _e( 'Scheduled dates for this event', 'adams-plugin' ); ?></button></h4>
-							<div>
-								<p>
-								<?php _e( 'Editing a single date of an event changes only that date. Editing the root event changes all events in the series.', 'adams-plugin' ); ?>
-								</p>
-								<div class='mc_response' aria-live='assertive'></div>
-								<ul class="columns instance-list">
-									<?php
-									if ( isset( $_GET['date'] ) ) {
-										$date = (int) $_GET['date'];
-									} else {
-										$date = false;
-									}
-									echo mc_admin_instances( $data->event_id, $date );
-									?>
-								</ul>
-								<p><button type='button' class='add-occurrence' aria-expanded="false"><span class='dashicons' aria-hidden='true'> </span><?php _e( 'Add another date', 'adams-plugin' ); ?></button></p>
-								<div class='mc_add_new'>
-								<?php echo mc_recur_datetime_input(); ?>
-								<button type='button' class='save-occurrence'><?php _e( 'Add Date', 'adams-plugin' ); ?></button>
-								</div>
-							</div>
-							<?php
-						}
-						if ( 0 != $data->event_group_id ) {
-							$edit_group_url = admin_url( 'admin.php?page=my-calendar-groups&mode=edit&event_id=' . $data->event_id . '&group_id=' . $data->event_group_id );
-							?>
-							<h4><span class='dashicons' aria-hidden='true'> </span><button type="button" class="button-link"><?php _e( 'Related Schedules:', 'adams-plugin' ); ?></button> (<a href='<?php echo $edit_group_url; ?>'><?php _e( 'Edit group', 'adams-plugin' ); ?></a>)
-							</h4>
-							<div>
-								<ul class="columns">
-									<?php mc_related_events( $data->event_group_id ); ?>
-								</ul>
-							</div>
-							<?php
-						}
-						?>
+					<div class="error">
+						<p>
+							<input type="checkbox" value="0" id="e_flagged" name="event_flagged"<?php echo $flagged; ?> />
+							<label for="e_flagged"><?php _e( 'This schedule is not spam', 'my-calendar' ); ?></label>
+						</p>
 					</div>
 					<?php
 				}
+				apply_filters( 'mc_insert_custom_fields', '', $has_data, $data );
+
+				if ( function_exists( 'wpt_post_to_twitter' ) && current_user_can( 'wpt_can_tweet' ) ) {
+					if ( ! ( 'edit' == $mode && 1 == $data->event_approved ) ) {
+						$mc_allowed = absint( ( get_option( 'wpt_tweet_length' ) ) ? get_option( 'wpt_tweet_length' ) : 140 );
+						?>
+						<p class='mc-twitter'>
+							<label for='mc_twitter'><?php _e( 'Post to Twitter (via WP to Twitter)', 'my-calendar' ); ?></label><br/>
+							<textarea cols='70' rows='2' id='mc_twitter' name='mc_twitter' data-allowed="<?php echo $mc_allowed; ?>"><?php echo apply_filters( 'mc_twitter_text', '', $data ); ?></textarea>
+						</p>
+						<?php
+					}
+				}
+				mc_show_block( 'event_desc', $has_data, $data );
+				mc_show_block( 'event_category', $has_data, $data );
 				?>
-			</div>
-		</fieldset>
-		<?php mc_show_block( 'event_recurs', $has_data, $data ); ?>
+			</fieldset>
+		</div>
+	</div>
+</div>
 
-		<h2><?php _e( 'Schedule Details', 'adams-plugin' ); ?></h2>
+<div class="ui-sortable meta-box-sortables">
+	<div class="postbox">
+		<h2><?php _e( 'Date and Time', 'my-calendar' ); ?></h2>
 
-		<?php
-			mc_show_block( 'event_short', $has_data, $data );
-			mc_show_block( 'event_image', $has_data, $data );
-			mc_show_block( 'event_host', $has_data, $data );
-			mc_show_block( 'event_author', $has_data, $data, true, $event_author );
-			mc_show_block( 'event_link', $has_data, $data );
+		<div class="inside">
+			<?php
+			if ( is_object( $data ) ) { // Information for rewriting recurring data.
+				?>
+				<input type="hidden" name="prev_event_begin" value="<?php echo esc_attr( $data->event_begin ); ?>"/>
+				<input type="hidden" name="prev_event_time" value="<?php echo esc_attr( $data->event_time ); ?>"/>
+				<input type="hidden" name="prev_event_end" value="<?php echo esc_attr( $data->event_end ); ?>"/>
+				<input type="hidden" name="prev_event_endtime" value="<?php echo esc_attr( $data->event_endtime ); ?>"/>
+				<?php
+			}
+			?>
+			<fieldset>
+				<legend class="screen-reader-text"><?php _e( 'Schedule Date and Time', 'my-calendar' ); ?></legend>
+				<div id="e_schedule">
+					<div id="event1" class="clonedInput" aria-live="assertive">
+						<?php echo apply_filters( 'mc_datetime_inputs', '', $has_data, $data, 'admin' ); ?>
+					</div>
+					<?php
+					if ( 'edit' != $mode ) {
+						$span_checked = '';
+						if ( $has_data && '1' == $data->event_span ) {
+							$span_checked = ' checked="checked"';
+						} elseif ( $has_data && '0' == $data->event_span ) {
+							$span_checked = '';
+						}
+						?>
+					<p id="event_span">
+						<input type="checkbox" value="1" id="e_span" name="event_span"<?php echo $span_checked; ?> />
+						<label for="e_span"><?php _e( 'This is a multi-day schedule.', 'my-calendar' ); ?></label>
+					</p>
+					<p class="note">
+						<em><?php _e( 'Enter start and end dates/times for each occurrence of the schedule.', 'my-calendar' ); ?></em>
+					</p>
+					<div>
+						<input type="button" id="add_field" value="<?php _e( 'Add another occurrence', 'my-calendar' ); ?>" class="button" />
+						<input type="button" id="del_field" value="<?php _e( 'Remove last occurrence', 'my-calendar' ); ?>" class="button" />
+					</div>
+						<?php
+					} else {
+						?>
+						<div id='mc-accordion'>
+							<?php
+							if ( 'S' != $data->event_recur ) {
+								?>
+								<h4><span class='dashicons' aria-hidden='true'> </span><button type="button" class="button-link"><?php _e( 'Scheduled dates for this schedule', 'my-calendar' ); ?></button></h4>
+								<div>
+									<p>
+									<?php _e( 'Editing a single date of an schedule changes only that date. Editing the root schedule changes all schedules in the series.', 'my-calendar' ); ?>
+									</p>
+									<div class='mc_response' aria-live='assertive'></div>
+									<ul class="columns instance-list">
+										<?php
+										if ( isset( $_GET['date'] ) ) {
+											$date = (int) $_GET['date'];
+										} else {
+											$date = false;
+										}
+										echo mc_admin_instances( $data->event_id, $date );
+										?>
+									</ul>
+									<p><button type='button' class='add-occurrence' aria-expanded="false"><span class='dashicons' aria-hidden='true'> </span><?php _e( 'Add another date', 'my-calendar' ); ?></button></p>
+									<div class='mc_add_new'>
+									<?php echo mc_recur_datetime_input(); ?>
+									<button type='button' class='save-occurrence'><?php _e( 'Add Date', 'my-calendar' ); ?></button>
+									</div>
+								</div>
+								<?php
+							}
+							if ( 0 != $data->event_group_id ) {
+								$edit_group_url = admin_url( 'admin.php?page=my-calendar-groups&mode=edit&event_id=' . $data->event_id . '&group_id=' . $data->event_group_id );
+								?>
+								<h4><span class='dashicons' aria-hidden='true'> </span><button type="button" class="button-link"><?php _e( 'Related Schedules:', 'my-calendar' ); ?></button> (<a href='<?php echo $edit_group_url; ?>'><?php _e( 'Edit group', 'my-calendar' ); ?></a>)
+								</h4>
+								<div>
+									<ul class="columns">
+										<?php mc_related_events( $data->event_group_id ); ?>
+									</ul>
+								</div>
+								<?php
+							}
+							?>
+						</div>
+						<?php
+					}
+					?>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+</div>
+	<?php mc_show_block( 'event_recurs', $has_data, $data ); ?>
+<div class="ui-sortable meta-box-sortables">
+	<div class="postbox">
+		<h2><?php _e( 'Schedule Details', 'my-calendar' ); ?></h2>
+		<div class="inside">
+	<?php
+		mc_show_block( 'event_short', $has_data, $data );
+		mc_show_block( 'event_image', $has_data, $data );
+		mc_show_block( 'event_host', $has_data, $data );
+		mc_show_block( 'event_author', $has_data, $data, true, $event_author );
+		mc_show_block( 'event_link', $has_data, $data );
+	?>
+		</div>
+	</div>
+</div>
+	<?php
+	$custom_fields = apply_filters( 'mc_event_details', '', $has_data, $data, 'admin' );
+	if ( '' != $custom_fields ) {
 		?>
-
-		<?php
-		$custom_fields = apply_filters( 'mc_event_details', '', $has_data, $data, 'admin' );
-		if ( '' != $custom_fields ) {
-		?>
-
-		<h2><?php _e( 'Schedule Custom Fields', 'adams-plugin' ); ?></h2>
-
+<div class="ui-sortable meta-box-sortables">
+	<div class="postbox">
+		<h2><?php _e( 'Schedule Custom Fields', 'my-calendar' ); ?></h2>
+		<div class="inside">
 			<?php echo apply_filters( 'mc_event_details', '', $has_data, $data, 'admin' ); ?>
-
+		</div>
+	</div>
+</div>
 		<?php
 	}
 	mc_show_block( 'event_access', $has_data, $data );
@@ -1556,12 +1591,13 @@ function mc_form_fields( $data, $mode, $event_id ) {
 	if ( mc_show_edit_block( 'event_location' ) || mc_show_edit_block( 'event_location_dropdown' ) ) {
 		?>
 
+<div class="ui-sortable meta-box-sortables">
+	<div class="postbox">
+		<h2><?php _e( 'Schedule Location', 'my-calendar' ); ?></h2>
 
-		<h2><?php _e( 'Schedule Location', 'adams-plugin' ); ?></h2>
-
-		<div class="location_form">
+		<div class="inside location_form">
 			<fieldset>
-				<legend class='screen-reader-text'><?php _e( 'Schedule Location', 'adams-plugin' ); ?></legend>
+				<legend class='screen-reader-text'><?php _e( 'Schedule Location', 'my-calendar' ); ?></legend>
 		<?php
 	}
 	if ( mc_show_edit_block( 'event_location_dropdown' ) ) {
@@ -1570,7 +1606,7 @@ function mc_form_fields( $data, $mode, $event_id ) {
 		if ( ! empty( $locs ) ) {
 			?>
 			<p>
-			<label for="l_preset"><?php _e( 'Choose location:', 'adams-plugin' ); ?></label> <select
+			<label for="l_preset"><?php _e( 'Choose location:', 'my-calendar' ); ?></label> <select
 				name="location_preset" id="l_preset" aria-describedby='mc-current-location'>
 				<option value="none">--</option>
 				<?php
@@ -1586,7 +1622,7 @@ function mc_form_fields( $data, $mode, $event_id ) {
 							}
 							if ( $loc->location_id == $event_location ) {
 								// Translators: label for current location.
-								$current_location  = "<span id='mc-current-location'>" . sprintf( __( 'Current location: %s', 'adams-plugin' ), $loc_name ) . '</span>';
+								$current_location  = "<span id='mc-current-location'>" . sprintf( __( 'Current location: %s', 'my-calendar' ), $loc_name ) . '</span>';
 								$current_location .= "<input type='hidden' name='preset_location' value='$event_location' />";
 							}
 						}
@@ -1602,7 +1638,7 @@ function mc_form_fields( $data, $mode, $event_id ) {
 			?>
 		<input type="hidden" name="location_preset" value="none" />
 		<p>
-			<a href="<?php echo admin_url( 'admin.php?page=my-calendar-locations' ); ?>"><?php _e( 'Add recurring locations for later use.', 'adams-plugin' ); ?></a>
+			<a href="<?php echo admin_url( 'admin.php?page=my-calendar-locations' ); ?>"><?php _e( 'Add recurring locations for later use.', 'my-calendar' ); ?></a>
 		</p>
 			<?php
 		}
@@ -1615,7 +1651,9 @@ function mc_form_fields( $data, $mode, $event_id ) {
 	if ( mc_show_edit_block( 'event_location' ) || mc_show_edit_block( 'event_location_dropdown' ) ) {
 		?>
 			</fieldset>
-
+		</div>
+	</div>
+</div>
 		<?php
 	}
 	if ( mc_show_edit_block( 'event_specials' ) ) {
@@ -1626,20 +1664,25 @@ function mc_form_fields( $data, $mode, $event_id ) {
 			$fifth_checked = ( '1' == $data->event_fifth_week ) ? ' checked="checked"' : '';
 		}
 		?>
-			<h2><?php _e( 'Special scheduling options', 'adams-plugin' ); ?></h2>
+		<div class="ui-sortable meta-box-sortables">
+		<div class="postbox">
+			<h2><?php _e( 'Special scheduling options', 'my-calendar' ); ?></h2>
 
+			<div class="inside">
 				<fieldset>
-					<legend class="screen-reader-text"><?php _e( 'Special Options', 'adams-plugin' ); ?></legend>
+					<legend class="screen-reader-text"><?php _e( 'Special Options', 'my-calendar' ); ?></legend>
 					<p>
-						<label for="e_holiday"><?php _e( 'Cancel this event if it occurs on a date with an event in the Holidays category', 'adams-plugin' ); ?></label>
+						<label for="e_holiday"><?php _e( 'Cancel this schedule if it occurs on a date with an schedule in the Holidays category', 'my-calendar' ); ?></label>
 						<input type="checkbox" value="true" id="e_holiday" name="event_holiday"<?php echo $hol_checked; ?> />
 					</p>
 					<p>
-						<label for="e_fifth_week"><?php _e( 'If this event recurs, and falls on the 5th week of the month in a month with only four weeks, move it back one week.', 'adams-plugin' ); ?></label>
+						<label for="e_fifth_week"><?php _e( 'If this schedule recurs, and falls on the 5th week of the month in a month with only four weeks, move it back one week.', 'my-calendar' ); ?></label>
 						<input type="checkbox" value="true" id="e_fifth_week" name="event_fifth_week"<?php echo $fifth_checked; ?> />
 					</p>
 				</fieldset>
-
+			</div>
+		</div>
+		</div>
 		<?php
 	} else {
 		if ( $has_data ) {
@@ -1657,14 +1700,18 @@ function mc_form_fields( $data, $mode, $event_id ) {
 		<?php
 	}
 	?>
-
+	<div class="ui-sortable meta-box-sortables">
+	<div class="postbox">
+		<div class="inside">
 			<div class='mc-controls footer'>
 				<?php echo mc_controls( $mode, $has_data, $data, 'footer' ); ?>
 			</div>
 		</div>
-	</form>
+	</div>
+	</div>
+</form>
 </div>
-</div>
+	</div>
 	<?php
 }
 
@@ -1716,24 +1763,24 @@ function mc_selected_users( $selected = '', $group = 'authors' ) {
 }
 
 /**
- * Return valid accessibility features for events.
+ * Return valid accessibility features for schedules.
  *
  * @return array
  */
 function mc_event_access() {
 	$event_access = apply_filters( 'mc_event_access_choices', array(
-		'1'  => __( 'Audio Description', 'adams-plugin' ),
-		'2'  => __( 'ASL Interpretation', 'adams-plugin' ),
-		'3'  => __( 'ASL Interpretation with voicing', 'adams-plugin' ),
-		'4'  => __( 'Deaf-Blind ASL', 'adams-plugin' ),
-		'5'  => __( 'Real-time Captioning', 'adams-plugin' ),
-		'6'  => __( 'Scripted Captioning', 'adams-plugin' ),
-		'7'  => __( 'Assisted Listening Devices', 'adams-plugin' ),
-		'8'  => __( 'Tactile/Touch Tour', 'adams-plugin' ),
-		'9'  => __( 'Braille Playbill', 'adams-plugin' ),
-		'10' => __( 'Large Print Playbill', 'adams-plugin' ),
-		'11' => __( 'Sensory Friendly', 'adams-plugin' ),
-		'12' => __( 'Other', 'adams-plugin' ),
+		'1'  => __( 'Audio Description', 'my-calendar' ),
+		'2'  => __( 'ASL Interpretation', 'my-calendar' ),
+		'3'  => __( 'ASL Interpretation with voicing', 'my-calendar' ),
+		'4'  => __( 'Deaf-Blind ASL', 'my-calendar' ),
+		'5'  => __( 'Real-time Captioning', 'my-calendar' ),
+		'6'  => __( 'Scripted Captioning', 'my-calendar' ),
+		'7'  => __( 'Assisted Listening Devices', 'my-calendar' ),
+		'8'  => __( 'Tactile/Touch Tour', 'my-calendar' ),
+		'9'  => __( 'Braille Playbill', 'my-calendar' ),
+		'10' => __( 'Large Print Playbill', 'my-calendar' ),
+		'11' => __( 'Sensory Friendly', 'my-calendar' ),
+		'12' => __( 'Other', 'my-calendar' ),
 	) );
 
 	return $event_access;
@@ -1775,7 +1822,7 @@ function mc_event_accessibility( $form, $data, $label ) {
 	if ( isset( $events_access['notes'] ) ) {
 		$note_value = esc_attr( $events_access['notes'] );
 	}
-	$form .= '<li class="events_access_notes"><label for="events_access_notes">' . __( 'Notes', 'adams-plugin' ) . '</label> <input type="text" id="events_access_notes" name="events_access[notes]" value="' . esc_attr( $note_value ) . '" /></li>';
+	$form .= '<li class="events_access_notes"><label for="events_access_notes">' . __( 'Notes', 'my-calendar' ) . '</label> <input type="text" id="events_access_notes" name="events_access[notes]" value="' . esc_attr( $note_value ) . '" /></li>';
 	$form .= '</ul>
 	</fieldset>';
 
@@ -1783,7 +1830,7 @@ function mc_event_accessibility( $form, $data, $label ) {
 }
 
 /**
- * Used on the manage events admin page to display a list of events
+ * Used on the manage schedules admin page to display a list of schedules
  */
 function mc_list_events() {
 	global $wpdb;
@@ -1896,7 +1943,7 @@ function mc_list_events() {
 		if ( '' == $filter || ! $allow_filters ) {
 			$filtered = '';
 		} else {
-			$filtered = "<span class='dashicons dashicons-no' aria-hidden='true'></span><a href='" . admin_url( 'admin.php?page=my-calendar-manage' ) . "'>" . __( 'Clear filters', 'adams-plugin' ) . '</a>';
+			$filtered = "<span class='dashicons dashicons-no' aria-hidden='true'></span><a href='" . admin_url( 'admin.php?page=my-calendar-manage' ) . "'>" . __( 'Clear filters', 'my-calendar' ) . '</a>';
 		}
 		$current        = empty( $_GET['paged'] ) ? 1 : intval( $_GET['paged'] );
 		$user           = get_current_user_id();
@@ -1938,8 +1985,8 @@ function mc_list_events() {
 				<a <?php echo ( isset( $_GET['limit'] ) && 'published' == $_GET['limit'] ) ? 'class="active-link" aria-current="true"' : ''; ?>
 					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;limit=published' ); ?>">
 				<?php
-					// Translators: Number of published events.
-					printf( __( 'Published (%d)', 'adams-plugin' ), $counts['published'] );
+					// Translators: Number of published schedules.
+					printf( __( 'Published (%d)', 'my-calendar' ), $counts['published'] );
 				?>
 				</a>
 			</li>
@@ -1947,8 +1994,8 @@ function mc_list_events() {
 				<a <?php echo ( isset( $_GET['limit'] ) && 'draft' == $_GET['limit'] ) ? 'class="active-link" aria-current="true"' : ''; ?>
 					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;limit=draft' ); ?>">
 				<?php
-					// Translators: Number of draft events.
-					printf( __( 'Drafts (%d)', 'adams-plugin' ), $counts['draft'] );
+					// Translators: Number of draft schedules.
+					printf( __( 'Drafts (%d)', 'my-calendar' ), $counts['draft'] );
 				?>
 				</a>
 			</li>
@@ -1956,8 +2003,8 @@ function mc_list_events() {
 				<a <?php echo ( isset( $_GET['limit'] ) && 'trashed' == $_GET['limit'] ) ? 'class="active-link" aria-current="true"' : ''; ?>
 					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;limit=trashed' ); ?>">
 				<?php
-					// Translators: Number of trashed events.
-					printf( __( 'Trash (%d)', 'adams-plugin' ), $counts['trash'] );
+					// Translators: Number of trashed schedules.
+					printf( __( 'Trash (%d)', 'my-calendar' ), $counts['trash'] );
 				?>
 				</a>
 			</li>
@@ -1965,8 +2012,8 @@ function mc_list_events() {
 				<a <?php echo ( isset( $_GET['restrict'] ) && 'archived' == $_GET['restrict'] ) ? 'class="active-link" aria-current="true"' : ''; ?>
 					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;restrict=archived' ); ?>">
 				<?php
-					// Translators: Number of archived events.
-					printf( __( 'Archived (%d)', 'adams-plugin' ), $counts['archive'] );
+					// Translators: Number of archived schedules.
+					printf( __( 'Archived (%d)', 'my-calendar' ), $counts['archive'] );
 				?>
 				</a>
 			</li>
@@ -1977,8 +2024,8 @@ function mc_list_events() {
 				<a <?php echo ( isset( $_GET['restrict'] ) && 'flagged' == $_GET['restrict'] ) ? 'class="active-link" aria-current="true"' : ''; ?>
 					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;restrict=flagged&amp;filter=1' ); ?>">
 				<?php
-					// Translators: Number of events marked as spam.
-					printf( __( 'Spam (%d)', 'adams-plugin' ), $counts['spam'] );
+					// Translators: Number of schedules marked as spam.
+					printf( __( 'Spam (%d)', 'my-calendar' ), $counts['spam'] );
 				?>
 				</a>
 			</li>
@@ -1987,7 +2034,7 @@ function mc_list_events() {
 			?>
 			<li>
 				<a <?php echo ( isset( $_GET['limit'] ) && 'all' == $_GET['limit'] || ( ! isset( $_GET['limit'] ) && ! isset( $_GET['restrict'] ) ) ) ? 'class="active-link" aria-current="true"' : ''; ?>
-					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;limit=all' ); ?>"><?php _e( 'All', 'adams-plugin' ); ?></a>
+					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;limit=all' ); ?>"><?php _e( 'All', 'my-calendar' ); ?></a>
 			</li>
 		</ul>
 		<?php
@@ -1998,9 +2045,9 @@ function mc_list_events() {
 				<div><input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'my-calendar-nonce' ); ?>"/>
 				</div>
 				<div>
-					<label for="mc_search" class='screen-reader-text'><?php _e( 'Search', 'adams-plugin' ); ?></label>
+					<label for="mc_search" class='screen-reader-text'><?php _e( 'Search', 'my-calendar' ); ?></label>
 					<input type='text' role='search' name='mcs' id='mc_search' value=' <?php echo esc_attr( $search_text ); ?>' />
-					<input type='submit' value='<?php _e( 'Search Schedules', 'adams-plugin' ); ?>' class='button-secondary'/>
+					<input type='submit' value='<?php _e( 'Search Schedules', 'my-calendar' ); ?>' class='button-secondary'/>
 				</div>
 			</form>
 		</div>
@@ -2011,8 +2058,8 @@ function mc_list_events() {
 			$page_links = paginate_links( array(
 				'base'      => add_query_arg( 'paged', '%#%' ),
 				'format'    => '',
-				'prev_text' => __( '&laquo; Previous<span class="screen-reader-text"> Schedules</span>', 'adams-plugin' ),
-				'next_text' => __( 'Next<span class="screen-reader-text"> Schedules</span> &raquo;', 'adams-plugin' ),
+				'prev_text' => __( '&laquo; Previous<span class="screen-reader-text"> Schedules</span>', 'my-calendar' ),
+				'next_text' => __( 'Next<span class="screen-reader-text"> Schedules</span> &raquo;', 'my-calendar' ),
 				'total'     => $num_pages,
 				'current'   => $current,
 				'mid_size'  => 1,
@@ -2025,18 +2072,18 @@ function mc_list_events() {
 				<div><input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'my-calendar-nonce' ); ?>" /></div>
 				<div class='mc-actions'>
 					<?php
-					echo '<input type="submit" class="button-secondary delete" name="mass_delete" value="' . __( 'Delete events', 'adams-plugin' ) . '"/> ';
-					echo '<input type="submit" class="button-secondary trash" name="mass_trash" value="' . __( 'Trash events', 'adams-plugin' ) . '"/> ';
+					echo '<input type="submit" class="button-secondary delete" name="mass_delete" value="' . __( 'Delete schedules', 'my-calendar' ) . '"/> ';
+					echo '<input type="submit" class="button-secondary trash" name="mass_trash" value="' . __( 'Trash schedules', 'my-calendar' ) . '"/> ';
 					if ( current_user_can( 'mc_approve_events' ) ) {
-						echo '<input type="submit" class="button-secondary mc-approve" name="mass_approve" value="' . __( 'Publish events', 'adams-plugin' ) . '" /> ';
+						echo '<input type="submit" class="button-secondary mc-approve" name="mass_approve" value="' . __( 'Publish schedules', 'my-calendar' ) . '" /> ';
 					}
 					if ( ! ( isset( $_GET['restrict'] ) && 'archived' == $_GET['restrict'] ) ) {
-						echo '<input type="submit" class="button-secondary mc-archive" name="mass_archive" value="' . __( 'Archive events', 'adams-plugin' ) . '" /> ';
+						echo '<input type="submit" class="button-secondary mc-archive" name="mass_archive" value="' . __( 'Archive schedules', 'my-calendar' ) . '" /> ';
 					} else {
-						echo '<input type="submit" class="button-secondary mc-archive" name="mass_undo_archive" value="' . __( 'Remove from archive', 'adams-plugin' ) . '" /> ';
+						echo '<input type="submit" class="button-secondary mc-archive" name="mass_undo_archive" value="' . __( 'Remove from archive', 'my-calendar' ) . '" /> ';
 					}
 					if ( isset( $_GET['restrict'] ) && 'flagged' == $_GET['restrict'] ) {
-						echo '<input type="submit" class="button-secondary mc-archive" name="mass_not_spam" value="' . __( 'Not spam', 'adams-plugin' ) . '" /> ';
+						echo '<input type="submit" class="button-secondary mc-archive" name="mass_not_spam" value="' . __( 'Not spam', 'my-calendar' ) . '" /> ';
 					}
 					?>
 				</div>
@@ -2045,23 +2092,23 @@ function mc_list_events() {
 				<thead>
 					<tr>
 						<th scope="col" style="width: 50px;"><input type='checkbox' class='selectall' id='mass_edit'/>
-							<label for='mass_edit' class="screen-reader-text"><?php _e( 'Check/Uncheck all', 'adams-plugin' ); ?></label>
-							<a class="<?php echo ( 1 == $sortby ) ? 'active' : ''; ?>" href="<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;sort=1$sorting" ); ?>"><?php _e( 'ID', 'adams-plugin' ); ?></a>
+							<label for='mass_edit' class="screen-reader-text"><?php _e( 'Check/Uncheck all', 'my-calendar' ); ?></label>
+							<a class="<?php echo ( 1 == $sortby ) ? 'active' : ''; ?>" href="<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;sort=1$sorting" ); ?>"><?php _e( 'ID', 'my-calendar' ); ?></a>
 						</th>
 						<th scope="col">
-							<a class="<?php echo ( 2 == $sortby ) ? 'active' : ''; ?>" href="<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;sort=2$sorting" ); ?>"><?php _e( 'Title', 'adams-plugin' ); ?></a>
+							<a class="<?php echo ( 2 == $sortby ) ? 'active' : ''; ?>" href="<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;sort=2$sorting" ); ?>"><?php _e( 'Title', 'my-calendar' ); ?></a>
 						</th>
 						<th scope="col">
-							<a class="<?php echo ( 7 == $sortby ) ? 'active' : ''; ?>" href="<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;sort=7$sorting" ); ?>"><?php _e( 'Location', 'adams-plugin' ); ?></a>
+							<a class="<?php echo ( 7 == $sortby ) ? 'active' : ''; ?>" href="<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;sort=7$sorting" ); ?>"><?php _e( 'Location', 'my-calendar' ); ?></a>
 						</th>
 						<th scope="col">
-							<a class="<?php echo ( 4 == $sortby ) ? 'active' : ''; ?>" href="<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;sort=4$sorting" ); ?>"><?php _e( 'Date/Time', 'adams-plugin' ); ?></a>
+							<a class="<?php echo ( 4 == $sortby ) ? 'active' : ''; ?>" href="<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;sort=4$sorting" ); ?>"><?php _e( 'Date/Time', 'my-calendar' ); ?></a>
 						</th>
 						<th scope="col">
-							<a class="<?php echo ( 5 == $sortby ) ? 'active' : ''; ?>" href="<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;sort=5$sorting" ); ?>"><?php _e( 'Author', 'adams-plugin' ); ?></a>
+							<a class="<?php echo ( 5 == $sortby ) ? 'active' : ''; ?>" href="<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;sort=5$sorting" ); ?>"><?php _e( 'Author', 'my-calendar' ); ?></a>
 						</th>
 						<th scope="col">
-							<a class="<?php echo ( 6 == $sortby ) ? 'active' : ''; ?>" href="<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;sort=6$sorting" ); ?>"><?php _e( 'Category', 'adams-plugin' ); ?></a>
+							<a class="<?php echo ( 6 == $sortby ) ? 'active' : ''; ?>" href="<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;sort=6$sorting" ); ?>"><?php _e( 'Category', 'my-calendar' ); ?></a>
 						</th>
 					</tr>
 				</thead>
@@ -2083,14 +2130,14 @@ function mc_list_events() {
 					if ( 1 == $event->event_flagged && ( isset( $_GET['restrict'] ) && 'flagged' == $_GET['restrict'] ) ) {
 						$spam       = 'spam';
 						$pending    = '';
-						$spam_label = '<strong>' . __( 'Possible spam', 'adams-plugin' ) . ':</strong> ';
+						$spam_label = '<strong>' . __( 'Possible spam', 'my-calendar' ) . ':</strong> ';
 					} else {
 						$spam       = '';
 						$spam_label = '';
 					}
 
-					$trash      = ( '' != $trashed ) ? ' - ' . __( 'Trash', 'adams-plugin' ) : '';
-					$draft      = ( '' != $pending ) ? ' - ' . __( 'Draft', 'adams-plugin' ) : $trash;
+					$trash      = ( '' != $trashed ) ? ' - ' . __( 'Trash', 'my-calendar' ) : '';
+					$draft      = ( '' != $pending ) ? ' - ' . __( 'Draft', 'my-calendar' ) : $trash;
 					$check      = mc_test_occurrence_overlap( $event, true );
 					$problem    = ( '' != $check ) ? 'problem' : '';
 					$edit_url   = admin_url( "admin.php?page=my-calendar&amp;mode=edit&amp;event_id=$event->event_id" );
@@ -2107,7 +2154,7 @@ function mc_list_events() {
 								<label for="mc<?php echo $event->event_id; ?>">
 								<?php
 								// Translators: Schedule ID.
-								printf( __( "<span class='screen-reader-text'>Select event </span>%d", 'adams-plugin' ), $event->event_id );
+								printf( __( "<span class='screen-reader-text'>Select event </span>%d", 'my-calendar' ), $event->event_id );
 								?>
 								</label>
 							</th>
@@ -2125,7 +2172,7 @@ function mc_list_events() {
 									echo '</a>';
 									if ( '' != $check ) {
 										// Translators: URL to edit event.
-										echo '<br /><strong class="error">' . sprintf( __( 'There is a problem with this event. <a href="%s">Edit</a>', 'adams-plugin' ), $edit_url ) . '</strong>';
+										echo '<br /><strong class="error">' . sprintf( __( 'There is a problem with this event. <a href="%s">Edit</a>', 'my-calendar' ), $edit_url ) . '</strong>';
 									}
 								}
 								echo $draft;
@@ -2136,27 +2183,27 @@ function mc_list_events() {
 									<?php
 									if ( mc_event_published( $event ) ) {
 										?>
-										<a href="<?php echo $view_url; ?>" class='view'><?php _e( 'View', 'adams-plugin' ); ?></a> |
+										<a href="<?php echo $view_url; ?>" class='view'><?php _e( 'View', 'my-calendar' ); ?></a> |
 										<?php
 									} elseif ( current_user_can( 'mc_manage_events' ) ) {
 										?>
-										<a href="<?php echo add_query_arg( 'preview', 'true', $view_url ); ?>" class='view'><?php _e( 'Preview', 'adams-plugin' ); ?></a> |
+										<a href="<?php echo add_query_arg( 'preview', 'true', $view_url ); ?>" class='view'><?php _e( 'Preview', 'my-calendar' ); ?></a> |
 										<?php
 									}
 									?>
-									<a href="<?php echo $copy_url; ?>" class='copy'><?php _e( 'Copy', 'adams-plugin' ); ?></a>
+									<a href="<?php echo $copy_url; ?>" class='copy'><?php _e( 'Copy', 'my-calendar' ); ?></a>
 									<?php
 									if ( $can_edit ) {
 										if ( mc_event_is_grouped( $event->event_group_id ) ) {
 											?>
-											| <a href="<?php echo $group_url; ?>" class='edit group'><?php _e( 'Edit Group', 'adams-plugin' ); ?></a>
+											| <a href="<?php echo $group_url; ?>" class='edit group'><?php _e( 'Edit Group', 'my-calendar' ); ?></a>
 											<?php
 										}
 										?>
-										| <a href="<?php echo $delete_url; ?>" class="delete"><?php _e( 'Delete', 'adams-plugin' ); ?></a>
+										| <a href="<?php echo $delete_url; ?>" class="delete"><?php _e( 'Delete', 'my-calendar' ); ?></a>
 										<?php
 									} else {
-										_e( 'Not editable.', 'adams-plugin' );
+										_e( 'Not editable.', 'my-calendar' );
 									}
 									?>
 									|
@@ -2164,10 +2211,10 @@ function mc_list_events() {
 									if ( current_user_can( 'mc_approve_events' ) ) {
 										if ( 1 == $event->event_approved ) {
 											$mo = 'reject';
-											$te = __( 'Trash', 'adams-plugin' );
+											$te = __( 'Trash', 'my-calendar' );
 										} else {
 											$mo = 'publish';
-											$te = __( 'Publish', 'adams-plugin' );
+											$te = __( 'Publish', 'my-calendar' );
 										}
 										?>
 										<a href="<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;mode=$mo&amp;event_id=$event->event_id" ); ?>" class='<?php echo $mo; ?>'><?php echo $te; ?></a>
@@ -2175,13 +2222,13 @@ function mc_list_events() {
 									} else {
 										switch ( $event->event_approved ) {
 											case 1:
-												_e( 'Published', 'adams-plugin' );
+												_e( 'Published', 'my-calendar' );
 												break;
 											case 2:
-												_e( 'Trashed', 'adams-plugin' );
+												_e( 'Trashed', 'my-calendar' );
 												break;
 											default:
-												_e( 'Awaiting Approval', 'adams-plugin' );
+												_e( 'Awaiting Approval', 'my-calendar' );
 										}
 									}
 									?>
@@ -2192,7 +2239,7 @@ function mc_list_events() {
 								if ( '' != $event->event_label ) {
 									$elabel = urlencode( $event->event_label );
 									?>
-								<a class='mc_filter' href='<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;filter=$elabel&amp;restrict=where" ); ?>' title="<?php _e( 'Filter by location', 'adams-plugin' ); ?>"><span class="screen-reader-text"><?php _e( 'Show only: ', 'adams-plugin' ); ?></span><?php echo strip_tags( stripslashes( $event->event_label ) ); ?></a>
+								<a class='mc_filter' href='<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;filter=$elabel&amp;restrict=where" ); ?>' title="<?php _e( 'Filter by location', 'my-calendar' ); ?>"><span class="screen-reader-text"><?php _e( 'Show only: ', 'my-calendar' ); ?></span><?php echo strip_tags( stripslashes( $event->event_label ) ); ?></a>
 									<?php
 								}
 								?>
@@ -2218,8 +2265,8 @@ function mc_list_events() {
 							$author = ( is_object( $author ) ? $author->display_name : $author );
 							?>
 							<td>
-								<a class='mc_filter' href="<?php echo $filter; ?>" title="<?php _e( 'Filter by author', 'adams-plugin' ); ?>">
-									<span class="screen-reader-text"><?php _e( 'Show only: ', 'adams-plugin' ); ?></span><?php echo $author; ?>
+								<a class='mc_filter' href="<?php echo $filter; ?>" title="<?php _e( 'Filter by author', 'my-calendar' ); ?>">
+									<span class="screen-reader-text"><?php _e( 'Show only: ', 'my-calendar' ); ?></span><?php echo $author; ?>
 								</a>
 							</td>
 							<?php
@@ -2235,7 +2282,7 @@ function mc_list_events() {
 							?>
 							<td>
 								<div class="category-color" style="background-color:<?php echo $color; ?>;"></div>
-								<a class='mc_filter' href='<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;filter=$event->event_category&amp;restrict=category" ); ?>' title="<?php _e( 'Filter by category', 'adams-plugin' ); ?>"><span class="screen-reader-text"><?php _e( 'Show only: ', 'adams-plugin' ); ?></span><?php echo strip_tags( $cat->category_name ); ?>
+								<a class='mc_filter' href='<?php echo admin_url( "admin.php?page=my-calendar-manage&amp;filter=$event->event_category&amp;restrict=category" ); ?>' title="<?php _e( 'Filter by category', 'my-calendar' ); ?>"><span class="screen-reader-text"><?php _e( 'Show only: ', 'my-calendar' ); ?></span><?php echo strip_tags( $cat->category_name ); ?>
 								</a>
 								<?php
 								$string = '';
@@ -2261,8 +2308,8 @@ function mc_list_events() {
 				<a <?php echo ( isset( $_GET['limit'] ) && 'published' == $_GET['limit'] ) ? 'class="active-link" aria-current="true"' : ''; ?>
 					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;limit=published' ); ?>">
 				<?php
-					// Translators: Number of published events.
-					printf( __( 'Published (%d)', 'adams-plugin' ), $counts['published'] );
+					// Translators: Number of published schedules.
+					printf( __( 'Published (%d)', 'my-calendar' ), $counts['published'] );
 				?>
 				</a>
 			</li>
@@ -2270,8 +2317,8 @@ function mc_list_events() {
 				<a <?php echo ( isset( $_GET['limit'] ) && 'draft' == $_GET['limit'] ) ? 'class="active-link" aria-current="true"' : ''; ?>
 					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;limit=draft' ); ?>">
 				<?php
-					// Translators: Number of draft events.
-					printf( __( 'Drafts (%d)', 'adams-plugin' ), $counts['draft'] );
+					// Translators: Number of draft schedules.
+					printf( __( 'Drafts (%d)', 'my-calendar' ), $counts['draft'] );
 				?>
 				</a>
 			</li>
@@ -2279,8 +2326,8 @@ function mc_list_events() {
 				<a <?php echo ( isset( $_GET['limit'] ) && 'trashed' == $_GET['limit'] ) ? 'class="active-link" aria-current="true"' : ''; ?>
 					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;limit=trashed' ); ?>">
 				<?php
-					// Translators: Number of trashed events.
-					printf( __( 'Trash (%d)', 'adams-plugin' ), $counts['trash'] );
+					// Translators: Number of trashed schedules.
+					printf( __( 'Trash (%d)', 'my-calendar' ), $counts['trash'] );
 				?>
 				</a>
 			</li>
@@ -2288,8 +2335,8 @@ function mc_list_events() {
 				<a <?php echo ( isset( $_GET['restrict'] ) && 'archived' == $_GET['restrict'] ) ? 'class="active-link" aria-current="true"' : ''; ?>
 					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;restrict=archived' ); ?>">
 				<?php
-					// Translators: Number of archived events.
-					printf( __( 'Archived (%d)', 'adams-plugin' ), $counts['archive'] );
+					// Translators: Number of archived schedules.
+					printf( __( 'Archived (%d)', 'my-calendar' ), $counts['archive'] );
 				?>
 				</a>
 			</li>
@@ -2300,8 +2347,8 @@ function mc_list_events() {
 				<a <?php echo ( isset( $_GET['restrict'] ) && 'flagged' == $_GET['restrict'] ) ? 'class="active-link" aria-current="true"' : ''; ?>
 					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;restrict=flagged&amp;filter=1' ); ?>">
 				<?php
-					// Translators: Number of events marked as spam.
-					printf( __( 'Spam (%d)', 'adams-plugin' ), $counts['spam'] );
+					// Translators: Number of schedules marked as spam.
+					printf( __( 'Spam (%d)', 'my-calendar' ), $counts['spam'] );
 				?>
 				</a>
 			</li>
@@ -2310,7 +2357,7 @@ function mc_list_events() {
 			?>
 			<li>
 				<a <?php echo ( isset( $_GET['limit'] ) && 'all' == $_GET['limit'] || ( ! isset( $_GET['limit'] ) && ! isset( $_GET['restrict'] ) ) ) ? 'class="active-link" aria-current="true"' : ''; ?>
-					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;limit=all' ); ?>"><?php _e( 'All', 'adams-plugin' ); ?></a>
+					href="<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;limit=all' ); ?>"><?php _e( 'All', 'my-calendar' ); ?></a>
 			</li>
 		</ul>
 			<?php
@@ -2320,8 +2367,8 @@ function mc_list_events() {
 				$page_links = paginate_links( array(
 					'base'      => add_query_arg( 'paged', '%#%' ),
 					'format'    => '',
-					'prev_text' => __( '&laquo; Previous<span class="screen-reader-text"> Schedules</span>', 'adams-plugin' ),
-					'next_text' => __( 'Next<span class="screen-reader-text"> Schedules</span> &raquo;', 'adams-plugin' ),
+					'prev_text' => __( '&laquo; Previous<span class="screen-reader-text"> Schedules</span>', 'my-calendar' ),
+					'next_text' => __( 'Next<span class="screen-reader-text"> Schedules</span> &raquo;', 'my-calendar' ),
 					'total'     => $num_pages,
 					'current'   => $current,
 					'mid_size'  => 1,
@@ -2331,17 +2378,17 @@ function mc_list_events() {
 			?>
 		<div class='mc-admin-footer'>
 			<div class="mc-actions">
-				<input type="submit" class="button-secondary delete" name="mass_delete" value="<?php _e( 'Delete events', 'adams-plugin' ); ?>"/>
-				<input type="submit" class="button-secondary trash" name="mass_trash" value="<?php _e( 'Trash events', 'adams-plugin' ); ?>"/>
+				<input type="submit" class="button-secondary delete" name="mass_delete" value="<?php _e( 'Delete schedules', 'my-calendar' ); ?>"/>
+				<input type="submit" class="button-secondary trash" name="mass_trash" value="<?php _e( 'Trash schedules', 'my-calendar' ); ?>"/>
 				<?php
 				if ( current_user_can( 'mc_approve_events' ) ) {
 					?>
-					<input type="submit" class="button-secondary mc-approve" name="mass_approve" value="<?php _e( 'Publish events', 'adams-plugin' ); ?>"/>
+					<input type="submit" class="button-secondary mc-approve" name="mass_approve" value="<?php _e( 'Publish schedules', 'my-calendar' ); ?>"/>
 					<?php
 				}
 				if ( ! ( isset( $_GET['restrict'] ) && 'archived' == $_GET['restrict'] ) ) {
 					?>
-					<input type="submit" class="button-secondary mc-archive" name="mass_archive" value="<?php _e( 'Archive events', 'adams-plugin' ); ?>"/>
+					<input type="submit" class="button-secondary mc-archive" name="mass_archive" value="<?php _e( 'Archive schedules', 'my-calendar' ); ?>"/>
 					<?php
 				}
 				?>
@@ -2351,11 +2398,11 @@ function mc_list_events() {
 				<?php
 				if ( ! ( isset( $_GET['restrict'] ) && 'archived' == $_GET['restrict'] ) ) {
 					?>
-					<a class='mc_filter' href='<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;restrict=archived' ); ?>'><?php _e( 'View Archived Schedules', 'adams-plugin' ); ?></a>
+					<a class='mc_filter' href='<?php echo admin_url( 'admin.php?page=my-calendar-manage&amp;restrict=archived' ); ?>'><?php _e( 'View Archived Schedules', 'my-calendar' ); ?></a>
 					<?php
 				} else {
 					?>
-					<a class='mc_filter' href='<?php echo admin_url( 'admin.php?page=my-calendar-manage' ); ?>'><?php _e( 'Return to Manage Schedules', 'adams-plugin' ); ?></a>
+					<a class='mc_filter' href='<?php echo admin_url( 'admin.php?page=my-calendar-manage' ); ?>'><?php _e( 'Return to Manage Schedules', 'my-calendar' ); ?></a>
 					<?php
 				}
 				?>
@@ -2366,9 +2413,9 @@ function mc_list_events() {
 				<div><input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'my-calendar-nonce' ); ?>"/>
 				</div>
 				<div>
-					<label for="mc_search_footer" class='screen-reader-text'><?php _e( 'Search', 'adams-plugin' ); ?></label>
+					<label for="mc_search_footer" class='screen-reader-text'><?php _e( 'Search', 'my-calendar' ); ?></label>
 					<input type='text' role='search' name='mcs' id='mc_search_footer' value='<?php echo ( isset( $_POST['mcs'] ) ? esc_attr( $_POST['mcs'] ) : '' ); ?>' />
-					<input type='submit' value='<?php _e( 'Search Schedules', 'adams-plugin' ); ?>' class='button-secondary'/>
+					<input type='submit' value='<?php _e( 'Search Schedules', 'my-calendar' ); ?>' class='button-secondary'/>
 				</div>
 			</form>
 			</div>
@@ -2376,7 +2423,7 @@ function mc_list_events() {
 			<?php
 		} else {
 			?>
-			<p class='mc-none'><?php _e( 'There are no events in the database meeting your current criteria.', 'adams-plugin' ); ?></p>
+			<p class='mc-none'><?php _e( 'There are no schedules in the database meeting your current criteria.', 'my-calendar' ); ?></p>
 			<?php
 		}
 	}
@@ -2387,7 +2434,7 @@ function mc_list_events() {
  *
  * @param string $action Type of action being performed.
  * @param array  $post Post data.
- * @param int    $i If multiple events submitted, which index this is.
+ * @param int    $i If multiple schedules submitted, which index this is.
  *
  * @return array Modified data and information about approval.
  */
@@ -2447,8 +2494,8 @@ function mc_check_data( $action, $post, $i ) {
 		$short = ! empty( $post['event_short'] ) ? trim( $post['event_short'] ) : '';
 		$recur = ! empty( $post['event_recur'] ) ? trim( $post['event_recur'] ) : '';
 		$every = ! empty( $post['event_every'] ) ? (int) $post['event_every'] : 1;
-		// if this is an all weekdays event, and it's been scheduled to start on a weekend, the math gets nasty.
-		// ...AND there's no reason to allow it, since weekday events will NEVER happen on the weekend.
+		// if this is an all weekdays schedule, and it's been scheduled to start on a weekend, the math gets nasty.
+		// ...AND there's no reason to allow it, since weekday schedules will NEVER happen on the weekend.
 		$begin = trim( $post['event_begin'][ $i ] );
 		$end   = ( ! empty( $post['event_end'] ) ) ? trim( $post['event_end'][ $i ] ) : $post['event_begin'][ $i ];
 		if ( 'E' == $recur && 0 == ( date( 'w', mc_strtotime( $begin ) ) || 6 == date( 'w', mc_strtotime( $begin ) ) ) ) {
@@ -2480,7 +2527,7 @@ function mc_check_data( $action, $post, $i ) {
 			$default_modifier = apply_filters( 'mc_default_event_length', '1 hour' );
 			$endtime          = ! empty( $post['event_endtime'][ $i ] ) ? trim( $post['event_endtime'][ $i ] ) : date( 'H:i:s', mc_strtotime( $time . ' +' . $default_modifier ) );
 			if ( empty( $post['event_endtime'][ $i ] ) && date( 'H', mc_strtotime( $endtime ) ) == '00' ) {
-				// If one hour pushes event into next day, reset to 11:59pm.
+				// If one hour pushes schedule into next day, reset to 11:59pm.
 				$endtime = '23:59:00';
 			}
 		} else {
@@ -2518,7 +2565,7 @@ function mc_check_data( $action, $post, $i ) {
 						$primary = $cat;
 					}
 				}
-				// Backwards compatibility for old versions of Schedule Pro.
+				// Backwards compatibility for old versions of My Calendar Pro.
 			} else {
 				$primary = $cats;
 				$cats    = array( $cats );
@@ -2528,7 +2575,7 @@ function mc_check_data( $action, $post, $i ) {
 		$event_link   = ! empty( $post['event_link'] ) ? trim( $post['event_link'] ) : '';
 		$expires      = ! empty( $post['event_link_expires'] ) ? $post['event_link_expires'] : '0';
 		$approved     = ( current_user_can( 'mc_approve_events' ) ) ? 1 : 0;
-		// Check for event_approved provides support for older versions of Schedule Pro.
+		// Check for event_approved provides support for older versions of My Calendar Pro.
 		if ( isset( $post['event_approved'] ) && $post['event_approved'] != $approved ) {
 			$approved = absint( $post['event_approved'] );
 		}
@@ -2580,7 +2627,7 @@ function mc_check_data( $action, $post, $i ) {
 			$event_access    = ! empty( $post['event_access'] ) ? $post['event_access'] : '';
 			$event_access    = ! empty( $post['event_access_hidden'] ) ? unserialize( $post['event_access_hidden'] ) : $event_access;
 			if ( isset( $post['mc_copy_location'] ) && 'on' == $post['mc_copy_location'] && 0 == $i ) {
-				// Only the first event, if adding multiples.
+				// Only the first schedule, if adding multiples.
 				$add_loc = array(
 					'location_label'     => $event_label,
 					'location_street'    => $event_street,
@@ -2608,10 +2655,10 @@ function mc_check_data( $action, $post, $i ) {
 		if ( mc_checkdate( $begin ) && mc_checkdate( $end ) ) {
 			// Make sure dates are equal or end date is later than start date.
 			if ( mc_strtotime( "$end $endtime" ) < mc_strtotime( "$begin $time" ) ) {
-				$errors .= mc_show_error( __( 'Your event end date must be either after or the same as your event begin date', 'adams-plugin' ), false );
+				$errors .= mc_show_error( __( 'Your schedule end date must be either after or the same as your schedule begin date', 'my-calendar' ), false );
 			}
 		} else {
-			$errors .= mc_show_error( __( 'Your date format is correct but one or more of your dates is invalid. Check for number of days in month and leap year related errors.', 'adams-plugin' ), false );
+			$errors .= mc_show_error( __( 'Your date format is correct but one or more of your dates is invalid. Check for number of days in month and leap year related errors.', 'my-calendar' ), false );
 		}
 
 		// Check for a valid or empty time.
@@ -2620,12 +2667,12 @@ function mc_check_data( $action, $post, $i ) {
 		$time_format_two = '/^([2][0-3]):([0-5][0-9]):([0-5][0-9])$/';
 		if ( preg_match( $time_format_one, $time ) || preg_match( $time_format_two, $time ) ) {
 		} else {
-			$errors .= mc_show_error( __( 'The time field must either be blank or be entered in the format hh:mm am/pm', 'adams-plugin' ), false );
+			$errors .= mc_show_error( __( 'The time field must either be blank or be entered in the format hh:mm am/pm', 'my-calendar' ), false );
 		}
 		// Check for a valid or empty end time.
 		if ( preg_match( $time_format_one, $endtime ) || preg_match( $time_format_two, $endtime ) || '' == $endtime ) {
 		} else {
-			$errors .= mc_show_error( __( 'The end time field must either be blank or be entered in the format hh:mm am/pm', 'adams-plugin' ), false );
+			$errors .= mc_show_error( __( 'The end time field must either be blank or be entered in the format hh:mm am/pm', 'my-calendar' ), false );
 		}
 		// Check for valid URL (blank or starting with http://).
 		if ( ! ( '' == $event_link || preg_match( '/^(http)(s?)(:)\/\//', $event_link ) ) ) {
@@ -2635,7 +2682,7 @@ function mc_check_data( $action, $post, $i ) {
 	// A title is required, and can't be more than 255 characters.
 	$title_length = strlen( $title );
 	if ( ! ( $title_length >= 1 && $title_length <= 255 ) ) {
-		$title = __( 'Untitled Schedule', 'adams-plugin' );
+		$title = __( 'Untitled Schedule', 'my-calendar' );
 	}
 	// Run checks on recurrence profile.
 	$valid_recur = array( 'W', 'B', 'M', 'U', 'Y', 'D', 'E' );
@@ -2652,8 +2699,8 @@ function mc_check_data( $action, $post, $i ) {
 			$conflict_id = $conflicts[0]->occur_id;
 			$conflict_ev = mc_get_event( $conflict_id );
 			$conflict    = mc_get_details_link( $conflict_ev );
-			// Translators: URL to event details.
-			$errors .= mc_show_error( sprintf( __( 'That event conflicts with a <a href="%s">previously scheduled event</a>.', 'adams-plugin' ), $conflict ), false );
+			// Translators: URL to schedule details.
+			$errors .= mc_show_error( sprintf( __( 'That schedule conflicts with a <a href="%s">previously scheduled schedule</a>.', 'my-calendar' ), $conflict ), false );
 		}
 	}
 	$spam_content = ( '' != $desc ) ? $desc : $short;
@@ -2774,13 +2821,13 @@ function mc_check_data( $action, $post, $i ) {
 }
 
 /**
- * Find event that conflicts with newly scheduled events based on time and location.
+ * Find schedule that conflicts with newly scheduled schedules based on time and location.
  *
- * @param string $begin date of event.
- * @param string $time time of event.
- * @param string $end date of event.
- * @param string $endtime time of event.
- * @param string $event_label location of event.
+ * @param string $begin date of schedule.
+ * @param string $time time of schedule.
+ * @param string $end date of schedule.
+ * @param string $endtime time of schedule.
+ * @param string $event_label location of schedule.
  *
  * @return mixed results array or false
  */
@@ -2819,10 +2866,10 @@ function mcs_check_conflicts( $begin, $time, $end, $endtime, $event_label ) {
 }
 
 /**
- * Compare whether event date or recurrence characteristics have changed.
+ * Compare whether schedule date or recurrence characteristics have changed.
  *
  * @param array $update data being saved in update.
- * @param int   $id id of event being modified.
+ * @param int   $id id of schedule being modified.
  *
  * @return boolean false if unmodified.
  */
@@ -2848,10 +2895,10 @@ function mc_compare( $update, $id ) {
 }
 
 /**
- * Update a single event instance.
+ * Update a single schedule instance.
  *
  * @param int   $event_instance Instance ID.
- * @param int   $event_id New event ID.
+ * @param int   $event_id New schedule ID.
  * @param array $update New date array.
  *
  * Return query result.
@@ -2884,7 +2931,7 @@ function mc_update_instance( $event_instance, $event_id, $update = array() ) {
 }
 
 /**
- * Update a single arbitrary field in event table
+ * Update a single arbitrary field in schedule table
  *
  * @param int    $event_id Schedule to modify.
  * @param string $field column name for field.
@@ -2916,11 +2963,11 @@ function mc_group_id() {
 }
 
 /**
- * Return all instances of a given event.
+ * Return all instances of a given schedule.
  *
  * @param array $args Arguments describing the output type.
  *
- * @return string HTML list of instance data & single event view
+ * @return string HTML list of instance data & single schedule view
  */
 function mc_instance_list( $args ) {
 	$id = isset( $args['event'] ) ? $args['event'] : false;
@@ -2973,12 +3020,12 @@ function mc_instance_list( $args ) {
 }
 
 /**
- * Generate a list of instances for the currently edited event
+ * Generate a list of instances for the currently edited schedule
  *
  * @param int $id Schedule ID.
  * @param int $occur Specific occurrence ID.
  *
- * @return string list of event dates
+ * @return string list of schedule dates
  */
 function mc_admin_instances( $id, $occur = false ) {
 	global $wpdb;
@@ -2989,10 +3036,10 @@ function mc_admin_instances( $id, $occur = false ) {
 			$begin = "<span id='occur_date_$result->occur_id'>" . date_i18n( get_option( 'mc_date_format' ), mc_strtotime( $result->occur_begin ) ) . ', ' . date( get_option( 'mc_time_format' ), mc_strtotime( $result->occur_begin ) ) . '</span>';
 			if ( $result->occur_id == $occur ) {
 				$control = '';
-				$edit    = '<em>' . __( 'Editing Now', 'adams-plugin' ) . '</em>';
+				$edit    = '<em>' . __( 'Editing Now', 'my-calendar' ) . '</em>';
 			} else {
-				$control = "$begin: <button class='delete_occurrence' type='button' data-value='$result->occur_id' aria-describedby='occur_date_$result->occur_id' />" . __( 'Delete', 'adams-plugin' ) . '</button> ';
-				$edit    = "<a href='" . admin_url( 'admin.php?page=my-calendar' ) . "&amp;mode=edit&amp;event_id=$id&amp;date=$result->occur_id' aria-describedby='occur_date_$result->occur_id'>" . __( 'Edit', 'adams-plugin' ) . '</a>';
+				$control = "$begin: <button class='delete_occurrence' type='button' data-value='$result->occur_id' aria-describedby='occur_date_$result->occur_id' />" . __( 'Delete', 'my-calendar' ) . '</button> ';
+				$edit    = "<a href='" . admin_url( 'admin.php?page=my-calendar' ) . "&amp;mode=edit&amp;event_id=$id&amp;date=$result->occur_id' aria-describedby='occur_date_$result->occur_id'>" . __( 'Edit', 'my-calendar' ) . '</a>';
 			}
 			$output .= "<li>$control$edit</li>";
 		}
@@ -3002,7 +3049,7 @@ function mc_admin_instances( $id, $occur = false ) {
 }
 
 /**
- * Check whether an event is a member of a group
+ * Check whether an schedule is a member of a group
  *
  * @param int $group_id Schedule Group ID.
  *
@@ -3025,7 +3072,7 @@ function mc_event_is_grouped( $group_id ) {
 }
 
 /**
- * Test an event and see if it's an all day event.
+ * Test an schedule and see if it's an all day schedule.
  *
  * @param object $event Schedule object.
  *
@@ -3073,25 +3120,25 @@ function mc_standard_datetime_input( $form, $has_data, $data, $instance, $contex
 	$allday_label = ( $has_data ) ? mc_notime_label( $data ) : get_option( 'mc_notime_text' );
 
 	$form .= '<p>
-		<label for="mc_event_date" id="eblabel">' . __( 'Date (YYYY-MM-DD)', 'adams-plugin' ) . '</label> <input type="text" id="mc_event_date" class="mc-datepicker" name="event_begin[]" size="10" value="" data-value="' . esc_attr( $event_begin ) . '" />
-		<label for="mc_event_time">' . __( 'From', 'adams-plugin' ) . '</label>
+		<label for="mc_event_date" id="eblabel">' . __( 'Date (YYYY-MM-DD)', 'my-calendar' ) . '</label> <input type="text" id="mc_event_date" class="mc-datepicker" name="event_begin[]" size="10" value="" data-value="' . esc_attr( $event_begin ) . '" />
+		<label for="mc_event_time">' . __( 'From', 'my-calendar' ) . '</label>
 		<input type="text" id="mc_event_time" class="mc-timepicker" name="event_time[]" size="8" value="' . esc_attr( $starttime ) . '" />
-		<label for="mc_event_endtime">' . __( 'To', 'adams-plugin' ) . '</label>
+		<label for="mc_event_endtime">' . __( 'To', 'my-calendar' ) . '</label>
 		<input type="text" id="mc_event_endtime" class="mc-timepicker" name="event_endtime[]" size="8" value="' . esc_attr( $endtime ) . '" />
 	</p>
 	<ul>
-		<li><input type="checkbox" value="1" id="e_allday" name="event_allday"' . $allday . ' /> <label for="e_allday">' . __( 'All day event', 'adams-plugin' ) . '</label> <span class="event_time_label"><label for="e_time_label">' . __( 'Time label:', 'adams-plugin' ) . '</label> <input type="text" name="event_time_label" id="e_time_label" value="' . esc_attr( $allday_label ) . '" /> </li>
-		<li><input type="checkbox" value="1" id="e_hide_end" name="event_hide_end"' . $hide . ' /> <label for="e_hide_end">' . __( 'Hide end time', 'adams-plugin' ) . '</label></li>
+		<li><input type="checkbox" value="1" id="e_allday" name="event_allday"' . $allday . ' /> <label for="e_allday">' . __( 'All day event', 'my-calendar' ) . '</label> <span class="event_time_label"><label for="e_time_label">' . __( 'Time label:', 'my-calendar' ) . '</label> <input type="text" name="event_time_label" id="e_time_label" value="' . esc_attr( $allday_label ) . '" /> </li>
+		<li><input type="checkbox" value="1" id="e_hide_end" name="event_hide_end"' . $hide . ' /> <label for="e_hide_end">' . __( 'Hide end time', 'my-calendar' ) . '</label></li>
 	</ul>
 	<p>
-		<label for="mc_event_enddate" id="eelabel"><em>' . __( 'End Date (YYYY-MM-DD, optional)', 'adams-plugin' ) . '</em></label> <input type="text" name="event_end[]" id="mc_event_enddate" class="mc-datepicker" size="10" value="" data-value="' . esc_attr( $event_end ) . '" />
+		<label for="mc_event_enddate" id="eelabel"><em>' . __( 'End Date (YYYY-MM-DD, optional)', 'my-calendar' ) . '</em></label> <input type="text" name="event_end[]" id="mc_event_enddate" class="mc-datepicker" size="10" value="" data-value="' . esc_attr( $event_end ) . '" />
 	</p>';
 
 	return $form;
 }
 
 /**
- * Date time inputs to add a single instance to recurring event info
+ * Date time inputs to add a single instance to recurring schedule info
  *
  * @return string form HTML
  */
@@ -3102,25 +3149,25 @@ function mc_recur_datetime_input() {
 	$endtime     = '';
 
 	$form = '<p>
-		<label for="r_begin">' . __( 'Date (YYYY-MM-DD)', 'adams-plugin' ) . '</label> <input type="text" id="r_begin" class="mc-datepicker" name="recur_begin[]" size="10" value="" data-value="' . esc_attr( $event_begin ) . '" />
-		<label for="r_time">' . __( 'From', 'adams-plugin' ) . '</label>
+		<label for="r_begin">' . __( 'Date (YYYY-MM-DD)', 'my-calendar' ) . '</label> <input type="text" id="r_begin" class="mc-datepicker" name="recur_begin[]" size="10" value="" data-value="' . esc_attr( $event_begin ) . '" />
+		<label for="r_time">' . __( 'From', 'my-calendar' ) . '</label>
 		<input type="text" id="r_time" class="mc-timepicker" name="recur_time[]" size="8" value="' . esc_attr( $starttime ) . '" />
-		<label for="r_endtime">' . __( 'To', 'adams-plugin' ) . '</label>
+		<label for="r_endtime">' . __( 'To', 'my-calendar' ) . '</label>
 		<input type="text" id="r_endtime" class="mc-timepicker" name="recur_endtime[]" size="8" value="' . esc_attr( $endtime ) . '" />
 	</p>
 	<p>
-		<label for="r_end"><em>' . __( 'End Date (YYYY-MM-DD, optional)', 'adams-plugin' ) . '</em></label> <input type="text" name="recur_end[]" id="r_end" class="mc-datepicker" size="10" value="" data-value="' . esc_attr( $event_end ) . '" />
+		<label for="r_end"><em>' . __( 'End Date (YYYY-MM-DD, optional)', 'my-calendar' ) . '</em></label> <input type="text" name="recur_end[]" id="r_end" class="mc-datepicker" size="10" value="" data-value="' . esc_attr( $event_end ) . '" />
 	</p>';
 
 	return $form;
 }
 
 /**
- * Generate standard event registration info fields.
+ * Generate standard schedule registration info fields.
  *
  * @param string  $form Form HTML.
- * @param boolean $has_data Does this event have data.
- * @param object  $data Data for event.
+ * @param boolean $has_data Does this schedule have data.
+ * @param object  $data Data for schedule.
  * @param string  $context Context displayed in.
  *
  * @return string HTML output for form
@@ -3136,10 +3183,10 @@ function mc_standard_event_registration( $form, $has_data, $data, $context = 'ad
 	}
 
 	$form .= "<p>
-				<label for='event_tickets'>" . __( 'Tickets URL', 'adams-plugin' ) . "</label> <input type='url' name='event_tickets' id='event_tickets' value='" . esc_attr( $tickets ) . "' />
+				<label for='event_tickets'>" . __( 'Tickets URL', 'my-calendar' ) . "</label> <input type='url' name='event_tickets' id='event_tickets' value='" . esc_attr( $tickets ) . "' />
 			</p>
 			<p>
-				<label for='event_registration'>" . __( 'Registration Information', 'adams-plugin' ) . "</label> <textarea name='event_registration'id='event_registration'cols='40'rows='4'/>$registration</textarea>
+				<label for='event_registration'>" . __( 'Registration Information', 'my-calendar' ) . "</label> <textarea name='event_registration'id='event_registration'cols='40'rows='4'/>$registration</textarea>
 			</p>";
 
 	return apply_filters( 'mc_event_registration_form', $form, $has_data, $data, 'admin' );
@@ -3148,7 +3195,7 @@ function mc_standard_event_registration( $form, $has_data, $data, $context = 'ad
 
 add_action( 'save_post', 'mc_post_update_event' );
 /**
- * When updating event post, make sure changed featured image is copied into event.
+ * When updating schedule post, make sure changed featured image is copied into schedule.
  *
  * @param int $id Post ID.
  */
@@ -3229,10 +3276,10 @@ function mc_strtotime( $string ) {
 }
 
 /**
- * Generate controls for a given event
+ * Generate controls for a given schedule
  *
- * @param string  $mode Context of event editing page.
- * @param boolean $has_data Does this event have data.
+ * @param string  $mode Context of schedule editing page.
+ * @param boolean $has_data Does this schedule have data.
  * @param object  $event Schedule data.
  * @param string  $position location of form.
  *
@@ -3243,7 +3290,7 @@ function mc_controls( $mode, $has_data, $event, $position = 'header' ) {
 	$controls  = array();
 
 	if ( 'edit' == $mode ) {
-		$publish_text = __( 'Save', 'adams-plugin' );
+		$publish_text = __( 'Save', 'my-calendar' );
 		$event_id     = $event->event_id;
 		$args         = '';
 		if ( isset( $_GET['date'] ) ) {
@@ -3252,27 +3299,27 @@ function mc_controls( $mode, $has_data, $event, $position = 'header' ) {
 				$args = "&amp;date=$id";
 			}
 		}
-		$controls['delete'] = "<span class='dashicons dashicons-no' aria-hidden='true'></span><a href='" . admin_url( "admin.php?page=my-calendar-manage&amp;mode=delete&amp;event_id=$event_id$args" ) . "' class='delete'>" . __( 'Delete', 'adams-plugin' ) . '</a>';
+		$controls['delete'] = "<span class='dashicons dashicons-no' aria-hidden='true'></span><a href='" . admin_url( "admin.php?page=my-calendar-manage&amp;mode=delete&amp;event_id=$event_id$args" ) . "' class='delete'>" . __( 'Delete', 'my-calendar' ) . '</a>';
 		if ( 'true' == apply_filters( 'mc_use_permalinks', get_option( 'mc_use_permalinks' ) ) ) {
 			$post_id          = $event->event_post;
 			$post_link        = ( $post_id ) ? get_edit_post_link( $post_id ) : false;
-			$controls['post'] = ( $post_link ) ? sprintf( "<span class='dashicons dashicons-admin-post' aria-hidden='true'></span><a href='%s'>" . __( 'Edit Schedule Post', 'adams-plugin' ) . '</a>', $post_link ) : '';
+			$controls['post'] = ( $post_link ) ? sprintf( "<span class='dashicons dashicons-admin-post' aria-hidden='true'></span><a href='%s'>" . __( 'Edit Schedule Post', 'my-calendar' ) . '</a>', $post_link ) : '';
 		}
 	} else {
-		$publish_text = __( 'Publish', 'adams-plugin' );
+		$publish_text = __( 'Publish', 'my-calendar' );
 	}
 
 	if ( $has_data && is_object( $event ) ) {
 		$first    = mc_get_first_event( $event->event_id );
 		$view_url = mc_get_details_link( $first );
 		if ( mc_event_published( $event ) ) {
-			$controls['view'] = "<span class='dashicons dashicons-laptop' aria-hidden='true'></span><a href='" . $view_url . "' class='view'>" . __( 'View', 'adams-plugin' ) . '</a>';
+			$controls['view'] = "<span class='dashicons dashicons-laptop' aria-hidden='true'></span><a href='" . $view_url . "' class='view'>" . __( 'View', 'my-calendar' ) . '</a>';
 		} elseif ( current_user_can( 'mc_manage_events' ) ) {
-			$controls['view'] = "<span class='dashicons dashicons-laptop' aria-hidden='true'></span><a href='" . add_query_arg( 'preview', 'true', $view_url ) . "' class='view'>" . __( 'Preview', 'adams-plugin' ) . '</a>';
+			$controls['view'] = "<span class='dashicons dashicons-laptop' aria-hidden='true'></span><a href='" . add_query_arg( 'preview', 'true', $view_url ) . "' class='view'>" . __( 'Preview', 'my-calendar' ) . '</a>';
 		}
 	}
 
-	$manage_text         = ( current_user_can( 'mc_manage_events' ) ) ? __( 'Manage schedules', 'adams-plugin' ) : __( 'Manage your events', 'adams-plugin' );
+	$manage_text         = ( current_user_can( 'mc_manage_events' ) ) ? __( 'Manage events', 'my-calendar' ) : __( 'Manage your events', 'my-calendar' );
 	$controls['manage']  = "<span class='dashicons dashicons-calendar' aria-hidden='true'></span>" . '<a href="' . admin_url( 'admin.php?page=my-calendar-manage' ) . '">' . $manage_text . '</a>';
 	$controls['publish'] = '<input type="submit" name="save" class="button-primary" value="' . esc_attr( $publish_text ) . '" />';
 	// Schedule Status settings: draft, published, trash, (custom).
@@ -3287,26 +3334,26 @@ function mc_controls( $mode, $has_data, $event, $position = 'header' ) {
 					$checked = '';
 				}
 				$status_control = "
-						<option value='1'" . selected( $event->event_approved, '1', false ) . '>' . __( 'Publish', 'adams-plugin' ) . "</option>
-						<option value='0'" . selected( $event->event_approved, '0', false ) . '>' . __( 'Draft', 'adams-plugin' ) . "</option>
-						<option value='2'" . selected( $event->event_approved, '2', false ) . '>' . __( 'Trash', 'adams-plugin' ) . '</option>';
+						<option value='1'" . selected( $event->event_approved, '1', false ) . '>' . __( 'Publish', 'my-calendar' ) . "</option>
+						<option value='0'" . selected( $event->event_approved, '0', false ) . '>' . __( 'Draft', 'my-calendar' ) . "</option>
+						<option value='2'" . selected( $event->event_approved, '2', false ) . '>' . __( 'Trash', 'my-calendar' ) . '</option>';
 			} else {
 				$status_control = "
-						<option value='0'" . selected( $event->event_approved, '0', false ) . '>' . __( 'Draft', 'adams-plugin' ) . "</option>
-						<option value='2'" . selected( $event->event_approved, '2', false ) . '>' . __( 'Trash', 'adams-plugin' ) . '</option>';
+						<option value='0'" . selected( $event->event_approved, '0', false ) . '>' . __( 'Draft', 'my-calendar' ) . "</option>
+						<option value='2'" . selected( $event->event_approved, '2', false ) . '>' . __( 'Trash', 'my-calendar' ) . '</option>';
 			}
 		} else { // Case: adding new event (if user can, then 1, else 0).
 			if ( current_user_can( 'mc_approve_events' ) ) {
 				$status_control = "
-						<option value='1'>" . __( 'Published', 'adams-plugin' ) . "</option>
-						<option value='0'>" . __( 'Draft', 'adams-plugin' ) . '</option>';
+						<option value='1'>" . __( 'Published', 'my-calendar' ) . "</option>
+						<option value='0'>" . __( 'Draft', 'my-calendar' ) . '</option>';
 			} else {
 				$status_control = "
-						<option value='0'" . $drafted . '>' . __( 'Draft', 'adams-plugin' ) . '</option>';
+						<option value='0'" . $drafted . '>' . __( 'Draft', 'my-calendar' ) . '</option>';
 			}
 		}
 		$controls['status'] = "
-					<label for='e_approved' class='screen-reader-text'>" . __( 'Status', 'adams-plugin' ) . "</label>
+					<label for='e_approved' class='screen-reader-text'>" . __( 'Status', 'my-calendar' ) . "</label>
 					<select name='event_approved' id='e_approved'>
 						$status_control
 					</select>";
@@ -3325,7 +3372,7 @@ function mc_controls( $mode, $has_data, $event, $position = 'header' ) {
 }
 
 /**
- * Get a list of related events and list admin editing links
+ * Get a list of related schedules and list admin editing links
  *
  * @param int $id group ID.
  */
@@ -3349,7 +3396,7 @@ function mc_related_events( $id ) {
 			$output  .= "<li>$template</li>";
 		}
 	} else {
-		$output = '<li>' . __( 'No related events', 'adams-plugin' ) . '</li>';
+		$output = '<li>' . __( 'No related schedules', 'my-calendar' ) . '</li>';
 	}
 
 	echo $output;
@@ -3375,7 +3422,7 @@ function mc_can_edit_category( $category, $user ) {
 
 
 /**
- * Unless an admin, authors can only edit their own events if they don't have mc_manage_events capabilities.
+ * Unless an admin, authors can only edit their own schedules if they don't have mc_manage_events capabilities.
  *
  * @param mixed object/boolean $event Schedule object.
  *
@@ -3445,38 +3492,38 @@ function mc_recur_string( $event ) {
 	switch ( $recur ) {
 		case 'D':
 			// Translators: number of days between repetitions.
-			$string = ( 1 == $every ) ? __( 'Daily', 'adams-plugin' ) : sprintf( __( 'Every %d days', 'adams-plugin' ), $every );
+			$string = ( 1 == $every ) ? __( 'Daily', 'my-calendar' ) : sprintf( __( 'Every %d days', 'my-calendar' ), $every );
 			break;
 		case 'E':
 			// Translators: number of days between repetitions.
-			$string = ( 1 == $every ) ? __( 'Weekdays', 'adams-plugin' ) : sprintf( __( 'Every %d weekdays', 'adams-plugin' ), $every );
+			$string = ( 1 == $every ) ? __( 'Weekdays', 'my-calendar' ) : sprintf( __( 'Every %d weekdays', 'my-calendar' ), $every );
 			break;
 		case 'W':
 			// Translators: number of weeks between repetitions.
-			$string = ( 1 == $every ) ? __( 'Weekly', 'adams-plugin' ) : sprintf( __( 'Every %d weeks', 'adams-plugin' ), $every );
+			$string = ( 1 == $every ) ? __( 'Weekly', 'my-calendar' ) : sprintf( __( 'Every %d weeks', 'my-calendar' ), $every );
 			break;
 		case 'B':
-			$string = __( 'Bi-Weekly', 'adams-plugin' );
+			$string = __( 'Bi-Weekly', 'my-calendar' );
 			break;
 		case 'M':
 			// Translators: number of months between repetitions.
-			$string = ( 1 == $every ) ? __( 'Monthly (by date)', 'adams-plugin' ) : sprintf( __( 'Every %d months (by date)', 'adams-plugin' ), $every );
+			$string = ( 1 == $every ) ? __( 'Monthly (by date)', 'my-calendar' ) : sprintf( __( 'Every %d months (by date)', 'my-calendar' ), $every );
 			break;
 		case 'U':
-			$string = __( 'Monthly (by day)', 'adams-plugin' );
+			$string = __( 'Monthly (by day)', 'my-calendar' );
 			break;
 		case 'Y':
 			// Translators: number of years between repetitions.
-			$string = ( 1 == $every ) ? __( 'Yearly', 'adams-plugin' ) : sprintf( __( 'Every %d years', 'adams-plugin' ), $every );
+			$string = ( 1 == $every ) ? __( 'Yearly', 'my-calendar' ) : sprintf( __( 'Every %d years', 'my-calendar' ), $every );
 			break;
 	}
 	$eternity = _mc_increment_values( $recur );
 	if ( $event->event_repeats > 0 && 'S' != $recur ) {
 		// Translators: number of repeats.
-		$string .= ' ' . sprintf( __( '&ndash; %d Times', 'adams-plugin' ), $event->event_repeats );
+		$string .= ' ' . sprintf( __( '&ndash; %d Times', 'my-calendar' ), $event->event_repeats );
 	} elseif ( $eternity ) {
 		// Translators: number of repeats.
-		$string .= ' ' . sprintf( __( '&ndash; %d Times', 'adams-plugin' ), $eternity );
+		$string .= ' ' . sprintf( __( '&ndash; %d Times', 'my-calendar' ), $eternity );
 	}
 
 	return $string;
@@ -3486,7 +3533,7 @@ function mc_recur_string( $event ) {
 /**
  * Generate recurrence options list
  *
- * @param string $value current event's value.
+ * @param string $value current schedule's value.
  *
  * @return string form options
  */
@@ -3500,13 +3547,13 @@ function mc_recur_options( $value ) {
 	$y = ( 'Y' == $value ) ? ' selected="selected"' : '';
 
 	$return = "
-				<option class='input' value='S' $s>" . __( 'Does not recur', 'adams-plugin' ) . "</option>
-				<option class='input' value='D' $d>" . __( 'Days', 'adams-plugin' ) . "</option>
-				<option class='input' value='E' $e>" . __( 'Days, weekdays only', 'adams-plugin' ) . "</option>
-				<option class='input' value='W' $w>" . __( 'Weeks', 'adams-plugin' ) . "</option>
-				<option class='input' value='M' $m>" . __( 'Months by date (e.g., the 24th of each month)', 'adams-plugin' ) . "</option>
-				<option class='input' value='U' $u>" . __( 'Month by day (e.g., the 3rd Monday of each month)', 'adams-plugin' ) . "</option>
-				<option class='input' value='Y' $y>" . __( 'Year', 'adams-plugin' ) . '</option>';
+				<option class='input' value='S' $s>" . __( 'Does not recur', 'my-calendar' ) . "</option>
+				<option class='input' value='D' $d>" . __( 'Days', 'my-calendar' ) . "</option>
+				<option class='input' value='E' $e>" . __( 'Days, weekdays only', 'my-calendar' ) . "</option>
+				<option class='input' value='W' $w>" . __( 'Weeks', 'my-calendar' ) . "</option>
+				<option class='input' value='M' $m>" . __( 'Months by date (e.g., the 24th of each month)', 'my-calendar' ) . "</option>
+				<option class='input' value='U' $u>" . __( 'Month by day (e.g., the 3rd Monday of each month)', 'my-calendar' ) . "</option>
+				<option class='input' value='Y' $y>" . __( 'Year', 'my-calendar' ) . '</option>';
 
 	return $return;
 }
@@ -3550,7 +3597,7 @@ function _mc_increment_values( $recur ) {
  *
  * @param int $id Schedule ID.
  *
- * @return array of event dates & instance IDs
+ * @return array of schedule dates & instance IDs
  */
 function mc_get_instances( $id ) {
 	global $wpdb;
@@ -3567,7 +3614,7 @@ function mc_get_instances( $id ) {
 }
 
 /**
- * Deletes all instances of an event without deleting the event details. Sets stage for rebuilding event instances.
+ * Deletes all instances of an schedule without deleting the schedule details. Sets stage for rebuilding schedule instances.
  *
  * @param int $id Schedule ID.
  */
@@ -3585,7 +3632,7 @@ add_filter( 'mc_instance_data', 'mc_reuse_id', 10, 3 );
  *
  * @param array  $data data to be inserted into occurrences.
  * @param string $begin Starting time for the new occurrence.
- * @param array  $instances Array of previous instances for this event.
+ * @param array  $instances Array of previous instances for this schedule.
  *
  * @return array new data to insert
  */
@@ -3606,7 +3653,7 @@ add_filter( 'mc_instance_format', 'mc_reuse_id_format', 10, 3 );
  *
  * @param array  $format Original formats array.
  * @param string $begin Starting time for the new occurrence.
- * @param array  $instances Array of previous instances for this event.
+ * @param array  $instances Array of previous instances for this schedule.
  *
  * @return array new formats for data
  */
@@ -3621,12 +3668,12 @@ function mc_reuse_id_format( $format, $begin, $instances ) {
 }
 
 /**
- * Given a recurrence pattern and a start date/time, increment the additional instances of an event.
+ * Given a recurrence pattern and a start date/time, increment the additional instances of an schedule.
  *
  * @param integer $id Schedule ID in my_calendar db.
  * @param array   $post an array of POST data (or array containing dates).
  * @param boolean $test true if testing.
- * @param array   $instances When rebuilding, an array of all prior event dates & ids.
+ * @param array   $instances When rebuilding, an array of all prior schedule dates & ids.
  *
  * @return null by default; data array if testing
  */
@@ -3654,7 +3701,7 @@ function mc_increment_event( $id, $post = array(), $test = false, $instances = a
 	// Can't use 2nd value directly if it's two digits.
 	$every = ( isset( $recurs[1] ) ) ? str_replace( $recurs[0], '', $event->event_recur ) : 1;
 	if ( 'S' != $recur ) {
-		// If this event had a rep of 0, translate that.
+		// If this schedule had a rep of 0, translate that.
 		$event_repetition = ( 0 != $event->event_repeats ) ? $event->event_repeats : _mc_increment_values( $recur );
 		$numforward       = (int) $event_repetition;
 		if ( 'S' != $recur ) {
@@ -3938,7 +3985,7 @@ function mc_increment_event( $id, $post = array(), $test = false, $instances = a
 }
 
 /**
- * Check for events with known occurrence overlap problems.
+ * Check for schedules with known occurrence overlap problems.
  */
 function mc_list_problems() {
 	$events   = get_posts( array(

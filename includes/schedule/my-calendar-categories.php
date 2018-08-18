@@ -1,9 +1,9 @@
 <?php
 /**
- * Manage event categories.
+ * Manage schedule categories.
  *
  * @category Schedules
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -483,7 +483,7 @@ function mc_category_settings_update() {
 		update_option( 'mc_inverse_color', ( ! empty( $_POST['mc_inverse_color'] ) && 'on' == $_POST['mc_inverse_color'] ) ? 'true' : 'false' );
 		update_option( 'mc_multiple_categories', ( ! empty( $_POST['mc_multiple_categories'] ) && 'on' == $_POST['mc_multiple_categories'] ) ? 'true' : 'false' );
 
-		$message = mc_show_notice( __( 'Schedule Category Configuration Updated', 'my-calendar' ), false );
+		$message = mc_show_notice( __( 'My Calendar Category Configuration Updated', 'my-calendar' ), false );
 	}
 
 	return $message;
@@ -516,7 +516,7 @@ function mc_category_settings() {
 			<ul>
 				<li>' . mc_settings_field( 'mc_inverse_color', __( 'Optimize contrast for category colors.', 'my-calendar' ), '', '', array(), 'checkbox-single', false ) . '
 				<li>' . mc_settings_field( 'mc_hide_icons', __( 'Hide Category icons', 'my-calendar' ), '', '', array(), 'checkbox-single', false ) . '</li>
-				<li>' . mc_settings_field( 'mc_multiple_categories', __( 'Use multiple categories on events', 'my-calendar' ), '', '', array(), 'checkbox-single', false ) . '</li>
+				<li>' . mc_settings_field( 'mc_multiple_categories', __( 'Use multiple categories on schedules', 'my-calendar' ), '', '', array(), 'checkbox-single', false ) . '</li>
 			</ul>
 			<p>
 				<input type="submit" name="mc_category_settings" class="button-primary" value="' . __( 'Save Settings', 'my-calendar' ) . '" />
@@ -706,7 +706,7 @@ function mc_profile() {
 		$permissions = get_user_meta( $user_edit, 'mc_user_permissions', true );
 		$selected    = ( empty( $permissions ) || in_array( 'all', $permissions ) ) ? ' checked="checked"' : '';
 		?>
-		<h3><?php _e( 'Schedule Editor Permissions', 'my-calendar' ); ?></h3>
+		<h3><?php _e( 'My Calendar Editor Permissions', 'my-calendar' ); ?></h3>
 		<table class="form-table">
 			<tr>
 				<th scope="row">
@@ -750,7 +750,7 @@ function mc_save_profile() {
 
 
 /**
- * Generate fields to select event categories.
+ * Generate fields to select schedule categories.
  *
  * @param object               $data object with event_category value.
  * @param boolean              $option Type of form.
@@ -843,7 +843,7 @@ function mc_category_select( $data = false, $option = true, $multiple = false, $
 }
 
 /**
- * Get all categories for given event
+ * Get all categories for given schedule
  *
  * @param object  $event Schedule object.
  * @param boolean $ids Return objects or ids.
@@ -905,7 +905,7 @@ function mc_get_categories( $event, $ids = true ) {
  * Return HTML representing categories.
  *
  * @param array $results array of categories.
- * @param int   $primary Primary selected category for event.
+ * @param int   $primary Primary selected category for schedule.
  *
  * @return String
  */

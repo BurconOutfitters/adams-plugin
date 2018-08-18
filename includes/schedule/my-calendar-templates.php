@@ -1,9 +1,9 @@
 <?php
 /**
- * Draw templates for Schedule events.
+ * Draw templates for My Calendar schedules.
  *
  * @category Calendar
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -39,8 +39,8 @@ function mc_draw_template( $array, $template, $type = 'list' ) {
 		 *
 		 * Since this is a very expensive operation (potentially doubling rendering time), I'm removing it from execution.
 		 *
-		 * This does not decrease the security of Schedule, but it does mean that if
-		 * your site was compromised prior to version 2.4.19, those events will no longer be cleaned
+		 * This does not decrease the security of My Calendar, but it does mean that if
+		 * your site was compromised prior to version 2.4.19, those schedules will no longer be cleaned
 		 * unless you edit them or otherwise remove the compromised data.
 		 *
 		 * Based on my information, this is very unlikely.
@@ -100,7 +100,7 @@ function mc_draw_template( $array, $template, $type = 'list' ) {
  * Setup string version of address data
  *
  * @param object $event object containing location properties.
- * @param string $source event or location.
+ * @param string $source schedule or location.
  *
  * @return stringified address info
  */
@@ -172,7 +172,7 @@ function mc_clean_location( $event, $source = 'event' ) {
  *
  * @param object $event object containing location properties.
  * @param string $request source of request.
- * @param string $source event/location.
+ * @param string $source schedule/location.
  *
  * @return string URL or link depending on request
  */
@@ -226,14 +226,14 @@ function mc_maplink( $event, $request = 'map', $source = 'event' ) {
 }
 
 /**
- * Set up link to push events into Google Calendar.
+ * Set up link to push schedules into Google Calendar.
  *
  * @param string $dtstart date begin.
  * @param string $dtend date end.
- * @param string $url link to event.
- * @param string $title Title of event.
+ * @param string $url link to schedule.
+ * @param string $title Title of schedule.
  * @param string $location string version of location.
- * @param string $description info about event.
+ * @param string $description info about schedule.
  *
  * @return string Google add to cal url
  */
@@ -251,12 +251,12 @@ function mc_google_cal( $dtstart, $dtend, $url, $title, $location, $description 
 }
 
 /**
- * Format an hcard for event location
+ * Format an hcard for schedule location
  *
  * @param object $event object with location properties.
  * @param string $address Whether to return the address.
  * @param string $map Whether to return the map.
- * @param string $source event/location.
+ * @param string $source schedule/location.
  *
  * @return string hcard
  */
@@ -310,12 +310,12 @@ function mc_hcard( $event, $address = 'true', $map = 'true', $source = 'event' )
 }
 
 /**
- * Produces the array of event details used for drawing templates
+ * Produces the array of schedule details used for drawing templates
  *
  * @param object $event Schedule object.
  * @param string $context Context being executed in.
  *
- * @return array event data
+ * @return array schedule data
  */
 function mc_create_tags( $event, $context = 'filters' ) {
 	if ( ! is_object( $event ) ) {
@@ -374,7 +374,7 @@ function mc_create_tags( $event, $context = 'filters' ) {
 	$e['timerange'] = ( ( $e['time'] == $e['endtime'] ) || 1 == $event->event_hide_end || '23:59:59' == date( 'H:i:s', strtotime( $real_end_date ) ) ) ? $e['time'] : "<span class='mc_tb'>" . $e['time'] . "</span> <span>&ndash;</span> <span class='mc_te'>" . $e['endtime'] . '</span>';
 	$e['datespan']  = ( 1 == $event->event_span || ( $e['date'] != $e['enddate'] ) ) ? mc_format_date_span( $dates ) : $date;
 	$e['multidate'] = mc_format_date_span( $dates, 'complex', "<span class='fallback-date'>$date</span><span class='separator'>,</span> <span class='fallback-time'>$e[time]</span>&ndash;<span class='fallback-endtime'>$e[endtime]</span>" );
-	$e['began']     = $event->event_begin; // returns date of first occurrence of an event.
+	$e['began']     = $event->event_begin; // returns date of first occurrence of an schedule.
 	$e['recurs']    = mc_event_recur_string( $event, $real_begin_date );
 	$e['repeats']   = $event->event_repeats;
 
@@ -501,7 +501,7 @@ function mc_create_tags( $event, $context = 'filters' ) {
 	$e['gcal_link'] = "<a href='" . $e['gcal'] . "' class='gcal external' rel='nofollow' aria-describedby='mc_$event->occur_id-title'>" . __( 'Google Calendar', 'my-calendar' ) . '</a>';
 
 	// IDs.
-	$e['dateid']     = $event->occur_id; // Unique ID for this date of this event.
+	$e['dateid']     = $event->occur_id; // Unique ID for this date of this schedule.
 	$e['id']         = $event->event_id;
 	$e['group']      = $event->event_group_id;
 	$e['event_span'] = $event->event_span;
@@ -532,7 +532,7 @@ function mc_create_tags( $event, $context = 'filters' ) {
 }
 
 /**
- * Get the label for all day events.
+ * Get the label for all day schedules.
  *
  * @param object $event Schedule object.
  *
@@ -550,9 +550,9 @@ function mc_notime_label( $event ) {
 }
 
 /**
- * Get link to event's details page.
+ * Get link to schedule's details page.
  *
- * @param mixed object/int $event Full event object or event occurrence ID.
+ * @param mixed object/int $event Full schedule object or schedule occurrence ID.
  *
  * @return string URL.
  */
@@ -695,11 +695,11 @@ function mc_format_timestamp( $os, $source ) {
 }
 
 /**
- * Get a human-readable version of the duration of an event
+ * Get a human-readable version of the duration of an schedule
  *
  * @param string $start start date/time.
  * @param string $end  end date/time.
- * @param object $event event object.
+ * @param object $event schedule object.
  *
  * @return string human readable time
  */
@@ -745,7 +745,7 @@ function mc_duration( $event ) {
 }
 
 /**
- * Get event link if not designated to expire & expired.
+ * Get schedule link if not designated to expire & expired.
  *
  * @param object $event Schedule Object.
  *
@@ -770,7 +770,7 @@ function mc_event_link( $event ) {
 }
 
 /**
- * Test if event has already passed.
+ * Test if schedule has already passed.
  *
  * @param object $event Schedule object.
  *
@@ -792,7 +792,7 @@ function mc_event_expired( $event ) {
  * Generate script and HTML for Google Maps embed if API key present
  *
  * @param object $event Object containing location parameters.
- * @param string $source event or location.
+ * @param string $source schedule or location.
  *
  * @return string HTML
  */
@@ -882,7 +882,7 @@ function mc_generate_map( $event, $source = 'event' ) {
 /**
  * Expand access data into a list of features.
  *
- * @param array $data Either event or location accessibility data.
+ * @param array $data Either schedule or location accessibility data.
  *
  * @return string list of features.
  */
@@ -907,11 +907,11 @@ function mc_expand( $data ) {
 }
 
 /**
- * Get the full date span of a set of events for display.
+ * Get the full date span of a set of schedules for display.
  *
  * @param int   $group_id Group ID.
- * @param int   $event_span Whether these events constitute one event.
- * @param array $dates Start and end dates of current event.
+ * @param int   $event_span Whether these schedules constitute one schedule.
+ * @param array $dates Start and end dates of current schedule.
  *
  * @return string
  */
@@ -980,9 +980,9 @@ function mc_format_date_span( $dates, $display = 'simple', $default = '' ) {
 
 add_filter( 'mc_insert_author_data', 'mc_author_data', 10, 2 );
 /**
- * Include data about event author in event array.
+ * Include data about schedule author in schedule array.
  *
- * @param array  $e Array of event details.
+ * @param array  $e Array of schedule details.
  * @param object $event Schedule object.
  *
  * @return array $e
@@ -1021,7 +1021,7 @@ add_filter( 'mc_filter_shortcodes', 'mc_auto_excerpt', 10, 2 );
 /**
  * Custom excerpt for use in templates.
  *
- * @param array  $e Array of event details.
+ * @param array  $e Array of schedule details.
  * @param object $event Schedule object.
  *
  * @return array $e

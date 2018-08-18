@@ -3,7 +3,7 @@
  * Construct widgets. Incorporate widget classes & supporting widget functions.
  *
  * @category Calendar
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -13,14 +13,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-include_once plugin_dir_path( dirname( __FILE__ ) ) . 'schedule/includes/widgets/class-my-calendar-simple-search.php';
-include_once plugin_dir_path( dirname( __FILE__ ) ) . 'schedule/includes/widgets/class-my-calendar-filters.php';
-include_once plugin_dir_path( dirname( __FILE__ ) ) . 'schedule/includes/widgets/class-my-calendar-today-widget.php';
-include_once plugin_dir_path( dirname( __FILE__ ) ) . 'schedule/includes/widgets/class-my-calendar-upcoming-widget.php';
-include_once plugin_dir_path( dirname( __FILE__ ) ) . 'schedule/includes/widgets/class-my-calendar-mini-widget.php';
+include( dirname( __FILE__ ) . '/includes/widgets/class-my-calendar-simple-search.php' );
+include( dirname( __FILE__ ) . '/includes/widgets/class-my-calendar-filters.php' );
+include( dirname( __FILE__ ) . '/includes/widgets/class-my-calendar-today-widget.php' );
+include( dirname( __FILE__ ) . '/includes/widgets/class-my-calendar-upcoming-widget.php' );
+include( dirname( __FILE__ ) . '/includes/widgets/class-my-calendar-mini-widget.php' );
 
 /**
- * Generate the widget output for upcoming events.
+ * Generate the widget output for upcoming schedules.
  *
  * @param array $args Schedule selection arguments.
  *
@@ -169,7 +169,7 @@ function my_calendar_upcoming_events( $args ) {
 				if ( is_array( $value ) ) {
 					foreach ( $value as $k => $v ) {
 						if ( mc_private_event( $v ) ) {
-							// this event is private.
+							// this schedule is private.
 						} else {
 							$temp_array[] = $v;
 						}
@@ -206,8 +206,8 @@ function my_calendar_upcoming_events( $args ) {
 					}
 				}
 			}
-			$skips[]   = $details['dateid']; // Prevent the same event from showing more than once.
-			$last_id   = $details['group']; // Prevent group events from displaying in a row. Not if there are intervening events.
+			$skips[]   = $details['dateid']; // Prevent the same schedule from showing more than once.
+			$last_id   = $details['group']; // Prevent group schedules from displaying in a row. Not if there are intervening schedules.
 			$last_item = $item;
 			$last_date = $details['date'];
 		}
@@ -255,7 +255,7 @@ function my_calendar_upcoming_events( $args ) {
 }
 
 /**
- * For a set of grouped events, get the total time spanned by the group of events.
+ * For a set of grouped schedules, get the total time spanned by the group of schedules.
  *
  * @param int $group_id Schedule Group ID.
  *
@@ -278,23 +278,23 @@ function mc_span_time( $group_id ) {
 }
 
 /**
- * Generates the list of upcoming events when counting by events rather than a date pattern
+ * Generates the list of upcoming schedules when counting by schedules rather than a date pattern
  *
- * @param array  $events (Array of events to analyze).
+ * @param array  $events (Array of schedules to analyze).
  * @param string $template Custom template to use for display.
  * @param string $type Usually 'list', but also RSS or export.
  * @param string $order 'asc' or 'desc'.
- * @param int    $skip Number of events to skip over.
- * @param int    $before How many past events to show.
- * @param int    $after How many future events to show.
- * @param string $show_today 'yes' (anything else is false); whether to include events happening today.
+ * @param int    $skip Number of schedules to skip over.
+ * @param int    $before How many past schedules to show.
+ * @param int    $after How many future schedules to show.
+ * @param string $show_today 'yes' (anything else is false); whether to include schedules happening today.
  * @param string $context Display context.
  *
  * @return string; HTML output of list
  */
 function mc_produce_upcoming_events( $events, $template, $type = 'list', $order = 'asc', $skip = 0, $before, $after, $show_today = 'yes', $context = 'filters' ) {
 	// $events has +5 before and +5 after if those values are non-zero.
-	// $events equals array of events based on before/after queries. Nothing skipped, order is not set, holiday conflicts removed.
+	// $events equals array of schedules based on before/after queries. Nothing skipped, order is not set, holiday conflicts removed.
 	$output      = array();
 	$near_events = array();
 	$temp_array  = array();
@@ -309,7 +309,7 @@ function mc_produce_upcoming_events( $events, $template, $type = 'list', $order 
 	$occur = array();
 	$extra = 0;
 	$i     = 0;
-	// Create near_events array.
+	// Create near_schedules array.
 	$last_events = array();
 	$last_group  = array();
 	if ( is_array( $events ) ) {
@@ -324,7 +324,7 @@ function mc_produce_upcoming_events( $events, $template, $type = 'list', $order 
 							$end       = $e->occur_end;
 							// Store span time in an array to avoid repeating database query.
 							if ( 1 == $e->event_span && ( ! isset( $spans[ $e->occur_group_id ] ) ) ) {
-								// This is a multi-day event: treat each event as if it spanned the entire range of the group.
+								// This is a multi-day schedule: treat each schedule as if it spanned the entire range of the group.
 								$span_time                   = mc_span_time( $e->occur_group_id );
 								$beginning                   = $span_time[0];
 								$end                         = $span_time[1];
@@ -336,7 +336,7 @@ function mc_produce_upcoming_events( $events, $template, $type = 'list', $order 
 							}
 							$current = date( 'Y-m-d H:i:00', current_time( 'timestamp' ) );
 							if ( $e ) {
-								// If a multi-day event, show only once.
+								// If a multi-day schedule, show only once.
 								if ( 0 != $e->occur_group_id && 1 == $e->event_span && in_array( $e->occur_group_id, $group ) || in_array( $e->occur_id, $occur ) ) {
 									$md = true;
 								} else {
@@ -346,11 +346,11 @@ function mc_produce_upcoming_events( $events, $template, $type = 'list', $order 
 								}
 								// end multi-day reduction.
 								if ( ! $md ) {
-									// check if this event instance or this event group has already been displayed.
+									// check if this schedule instance or this schedule group has already been displayed.
 									$same_event = ( in_array( $e->occur_id, $last_events ) ) ? true : false;
 									$same_group = ( in_array( $e->occur_group_id, $last_group ) ) ? true : false;
 									if ( 'yes' == $show_today && my_calendar_date_equal( $beginning, $current ) ) {
-										$in_total = apply_filters( 'mc_include_today_in_total', 'yes' ); // count todays events in total.
+										$in_total = apply_filters( 'mc_include_today_in_total', 'yes' ); // count todays schedules in total.
 										if ( 'no' != $in_total ) {
 											$near_events[] = $e;
 											if ( $before > $after ) {
@@ -364,9 +364,9 @@ function mc_produce_upcoming_events( $events, $template, $type = 'list', $order 
 									} elseif ( ( $past <= $before && $future <= $after ) ) {
 										$near_events[] = $e; // If neither limit is reached, split off ly.
 									} elseif ( $past <= $before && ( my_calendar_date_comp( $beginning, $current ) ) ) {
-										$near_events[] = $e; // Split off another past event.
+										$near_events[] = $e; // Split off another past schedule.
 									} elseif ( $future <= $after && ( ! my_calendar_date_comp( $end, $current ) ) ) {
-										$near_events[] = $e; // Split off another future event.
+										$near_events[] = $e; // Split off another future schedule.
 									}
 
 									if ( my_calendar_date_comp( $beginning, $current ) ) {
@@ -394,7 +394,7 @@ function mc_produce_upcoming_events( $events, $template, $type = 'list', $order 
 		}
 	}
 	$events = $near_events;
-	usort( $events, 'mc_datetime_cmp' ); // Sort split events by date.
+	usort( $events, 'mc_datetime_cmp' ); // Sort split schedules by date.
 
 	if ( is_array( $events ) ) {
 		foreach ( array_keys( $events ) as $key ) {
@@ -449,7 +449,7 @@ function mc_produce_upcoming_events( $events, $template, $type = 'list', $order 
 			}
 		}
 	}
-	// If more items than there should be (due to handling of current-day's events), pop off.
+	// If more items than there should be (due to handling of current-day's schedules), pop off.
 	$intended = $before + $after + $extra;
 	$actual   = count( $output );
 	if ( $actual > $intended ) {
@@ -538,7 +538,7 @@ function my_calendar_todays_events( $args ) {
 	$footer        = '</ul>';
 	$groups        = array();
 	$todays_events = array();
-	// quick loop through all events today to check for holidays.
+	// quick loop through all schedules today to check for holidays.
 	if ( is_array( $today ) ) {
 		foreach ( $today as $e ) {
 			if ( ! mc_private_event( $e ) && ! in_array( $e->event_group_id, $groups ) ) {

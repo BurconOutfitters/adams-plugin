@@ -260,7 +260,7 @@ $style_vars
 }
 
 /**
- * Deal with events posted by a user when that user is deleted
+ * Deal with schedules posted by a user when that user is deleted
  *
  * @param int $id user ID of deleted user.
  */
@@ -322,10 +322,10 @@ function my_calendar_write_js() {
 	}
 }
 
-// add_action( 'in_plugin_update_message-my-calendar/my-calendar.php', 'mc_plugin_update_message' );
+add_action( 'in_plugin_update_message-my-calendar/my-calendar.php', 'mc_plugin_update_message' );
 /**
  * Display notices from  WordPress.org about updated versions.
- *
+ */
 function mc_plugin_update_message() {
 	global $mc_version;
 	define( 'MC_PLUGIN_README_URL', 'http://svn.wp-plugins.org/my-calendar/trunk/readme.txt' );
@@ -884,7 +884,7 @@ function my_calendar_send_email( $event ) {
 }
 
 /**
- * Checks submitted events against akismet, if available
+ * Checks submitted schedules against akismet, if available
  *
  * @param string $event_url Provided URL.
  * @param string $description Schedule description.
@@ -943,7 +943,7 @@ function mc_spam( $event_url = '', $description = '', $post = array() ) {
 }
 
 /**
- * Cache total number of events for admin.
+ * Cache total number of schedules for admin.
  */
 function mc_update_count_cache() {
 	global $wpdb;
@@ -1095,7 +1095,7 @@ function mc_post_lookup() {
 
 add_action( 'wp_ajax_delete_occurrence', 'mc_ajax_delete_occurrence' );
 /**
- * Delete a single occurrence of an event from the event manager.
+ * Delete a single occurrence of an schedule from the schedule manager.
  */
 function mc_ajax_delete_occurrence() {
 	if ( ! check_ajax_referer( 'mc-delete-nonce', 'security', false ) ) {
@@ -1424,7 +1424,7 @@ $plugins_string
 
 add_action( 'init', 'mc_register_actions' );
 /**
- * Register actions attached to My Calendar events, usable to add additional actions during those events.
+ * Register actions attached to schedules, usable to add additional actions during those schedules.
  */
 function mc_register_actions() {
 	add_filter( 'mc_event_registration', 'mc_standard_event_registration', 10, 4 );
@@ -1480,8 +1480,8 @@ function mc_post_type() {
 	);
 	$types     = array(
 		'mc-events' => array(
-			__( 'event', 'my-calendar' ),
-			__( 'events', 'my-calendar' ),
+			__( 'schedule', 'my-calendar' ),
+			__( 'schedules', 'my-calendar' ),
 			__( 'Schedule', 'my-calendar' ),
 			__( 'Schedules', 'my-calendar' ),
 			$arguments,
@@ -1491,7 +1491,7 @@ function mc_post_type() {
 	return $types;
 }
 /**
- * Register custom post types for events
+ * Register custom post types for schedules
  */
 function mc_posttypes() {
 	$types   = mc_post_type();
@@ -1503,14 +1503,14 @@ function mc_posttypes() {
 			$labels = array(
 				'name'               => $value[3],
 				'singular_name'      => $value[2],
-				'add_new'            => _x( 'Add New', 'Add new event', 'my-calendar' ),
+				'add_new'            => _x( 'Add New', 'Add new schedule', 'my-calendar' ),
 				'add_new_item'       => __( 'Create New Schedule', 'my-calendar' ),
 				'edit_item'          => __( 'Modify Schedule', 'my-calendar' ),
 				'new_item'           => __( 'New Schedule', 'my-calendar' ),
 				'view_item'          => __( 'View Schedule', 'my-calendar' ),
 				'search_items'       => __( 'Search Schedules', 'my-calendar' ),
-				'not_found'          => __( 'No event found', 'my-calendar' ),
-				'not_found_in_trash' => __( 'No events found in Trash', 'my-calendar' ),
+				'not_found'          => __( 'No schedule found', 'my-calendar' ),
+				'not_found_in_trash' => __( 'No schedules found in Trash', 'my-calendar' ),
 				'parent_item_colon'  => '',
 			);
 			$raw    = $value[4];
@@ -1538,7 +1538,7 @@ function mc_posttypes() {
 
 add_filter( 'the_posts', 'mc_close_comments' );
 /**
- * Most people don't want comments open on events. This will automatically close them.
+ * Most people don't want comments open on schedules. This will automatically close them.
  *
  * @param array $posts Array of WP Post objects.
  *
@@ -1562,7 +1562,7 @@ function mc_close_comments( $posts ) {
 
 add_filter( 'default_content', 'mc_posttypes_defaults', 10, 2 );
 /**
- * By default, disable comments on event posts on save
+ * By default, disable comments on schedule posts on save
  *
  * @param string $post_content unused.
  * @param object $post WP Post object.
@@ -1621,22 +1621,22 @@ function mc_posttypes_messages( $messages ) {
 			$value            = $types[ $key ];
 			$messages[ $key ] = array(
 				0  => '', // Unused. Messages start at index 1.
-				// Translators: URL to view event.
+				// Translators: URL to view schedule.
 				1  => sprintf( __( 'Schedule updated. <a href="%s">View Schedule</a>' ), esc_url( get_permalink( $post_ID ) ) ),
 				2  => __( 'Custom field updated.' ),
 				3  => __( 'Custom field deleted.' ),
 				4  => __( 'Schedule updated.' ),
 				// Translators: %s: date and time of the revision.
 				5  => isset( $_GET['revision'] ) ? sprintf( __( 'Schedule restored to revision from %s' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-				// Translators: URL to view event.
-				6  => sprintf( __( 'Schedule published. <a href="%s">View event</a>' ), esc_url( get_permalink( $post_ID ) ) ),
+				// Translators: URL to view schedule.
+				6  => sprintf( __( 'Schedule published. <a href="%s">View schedule</a>' ), esc_url( get_permalink( $post_ID ) ) ),
 				7  => sprintf( __( 'Schedule saved.' ) ),
-				// Translators: URL to preview event.
-				8  => sprintf( __( 'Schedule submitted. <a target="_blank" href="%s">Preview event</a>' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
-				// Translators: Date event scheduled to be published, URL to preview event.
-				9  => sprintf( __( 'Schedule scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview event</a>' ), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
-				// Translators: URL to preview event.
-				10 => sprintf( __( 'Schedule draft updated. <a target="_blank" href="%s">Preview event</a>' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+				// Translators: URL to preview schedule.
+				8  => sprintf( __( 'Schedule submitted. <a target="_blank" href="%s">Preview schedule</a>' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+				// Translators: Date schedule scheduled to be published, URL to preview schedule.
+				9  => sprintf( __( 'Schedule scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview schedule</a>' ), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
+				// Translators: URL to preview schedule.
+				10 => sprintf( __( 'Schedule draft updated. <a target="_blank" href="%s">Preview schedule</a>' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
 			);
 		}
 	}
@@ -1667,7 +1667,7 @@ function mc_update_notice() {
 	}
 	if ( current_user_can( 'manage_options' ) && isset( $_GET['page'] ) && stripos( $_GET['page'], 'my-calendar' ) !== false ) {
 		if ( 'true' == get_option( 'mc_remote' ) ) {
-			mc_show_notice( __( 'My Calendar is configured to retrieve events from a remote source.', 'my-calendar' ) . ' <a href="' . admin_url( 'admin.php?page=my-calendar-config' ) . '">' . __( 'Update Settings', 'my-calendar' ) . '</a>' );
+			mc_show_notice( __( 'My Calendar is configured to retrieve schedules from a remote source.', 'my-calendar' ) . ' <a href="' . admin_url( 'admin.php?page=my-calendar-config' ) . '">' . __( 'Update Settings', 'my-calendar' ) . '</a>' );
 		}
 	}
 }
@@ -1709,7 +1709,7 @@ function my_calendar_privacy_export( $email_address, $page = 1 ) {
 		return $data;
 	}
 
-	// Need to get all events with this email address as host, author, or meta data.
+	// Need to get all schedules with this email address as host, author, or meta data.
 	$posts = $wpdb->get_results( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_submitter_details' AND 'meta_value' LIKE %s", '%' . $wpdb->esc_like( $email_address ) . '%s' ) );
 	foreach ( $posts as $post ) {
 		$events[] = get_post_meta( $post, '_mc_event_id', true );
@@ -1806,7 +1806,7 @@ function my_calendar_privacy_eraser( $email_address, $page = 1 ) {
 		);
 	}
 
-	// Need to get all events with this email address as host, author, or meta data.
+	// Need to get all schedules with this email address as host, author, or meta data.
 	$posts = $wpdb->get_results( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_submitter_details' AND 'meta_value' LIKE %s", '%' . $wpdb->esc_like( $email_address ) . '%s' ) );
 	foreach ( $posts as $post ) {
 		$deletions[] = get_post_meta( $post, '_mc_event_id', true );

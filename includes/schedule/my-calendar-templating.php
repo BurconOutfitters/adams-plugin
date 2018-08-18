@@ -1,9 +1,9 @@
 <?php
 /**
- * Manage Schedule templates.
+ * Manage My Calendar templates.
  *
  * @category Core
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -71,7 +71,7 @@ function mc_templates_edit() {
 	$core     = mc_template_description( $key );
 	?>
 	<div class="wrap my-calendar-admin">
-		<h1 class="wp-heading-inline"><?php _e( 'Schedule Templates', 'my-calendar' ); ?></h1>
+		<h1 class="wp-heading-inline"><?php _e( 'My Calendar Templates', 'my-calendar' ); ?></h1>
 		<a href="<?php echo add_query_arg( 'mc_template', 'add-new', admin_url( 'admin.php?page=my-calendar-templates' ) ); ?>" class="page-title-action"><?php _e( 'Add New', 'my-calendar' ); ?></a>
 		<hr class="wp-header-end">
 		<div class="postbox-container jcd-wide">
@@ -158,52 +158,52 @@ function mc_templates_edit() {
 							</p>
 							<dl>
 								<dt><code>{title}</code></dt>
-								<dd><?php _e( 'Title of the event.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Title of the schedule.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{link_title}</code></dt>
-								<dd><?php _e( 'Title of the event as a link if a URL is present, or the title alone if not.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Title of the schedule as a link if a URL is present, or the title alone if not.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{time}</code></dt>
-								<dd><?php _e( 'Start time for the event.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Start time for the schedule.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{date}</code></dt>
-								<dd><?php _e( 'Date on which the event begins.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Date on which the schedule begins.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{daterange}</code></dt>
 								<dd><?php _e( 'Beginning date to end date; excludes end date if same as beginning.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{multidate}</code></dt>
-								<dd><?php _e( 'Multi-day events: an unordered list of dates/times. Otherwise, beginning date/time.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Multi-day schedules: an unordered list of dates/times. Otherwise, beginning date/time.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{author}</code></dt>
-								<dd><?php _e( 'Author who posted the event.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Author who posted the schedule.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{host}</code></dt>
-								<dd><?php _e( 'Name of the assigned host for the event.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Name of the assigned host for the schedule.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{shortdesc}</code></dt>
-								<dd><?php _e( 'Short event description.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Short schedule description.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{description}</code></dt>
-								<dd><?php _e( 'Description of the event.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Description of the schedule.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{image}</code></dt>
-								<dd><?php _e( 'Image associated with the event.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Image associated with the schedule.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{link}</code></dt>
-								<dd><?php _e( 'URL provided for the event.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'URL provided for the schedule.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{details}</code></dt>
-								<dd><?php _e( 'Link to an auto-generated page containing information about the event.', 'my-calendar' ); ?>
+								<dd><?php _e( 'Link to an auto-generated page containing information about the schedule.', 'my-calendar' ); ?>
 
 								<dt><code>{event_status}</code></dt>
-								<dd><?php _e( 'Current status of event: either "Published" or "Reserved."', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Current status of schedule: either "Published" or "Reserved."', 'my-calendar' ); ?></dd>
 							</dl>
 
 							<h3><?php _e( 'Location Template Tags', 'my-calendar' ); ?></h3>
 							<dl>
 								<dt><code>{location}</code></dt>
-								<dd><?php _e( 'Name of the location of the event.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Name of the location of the schedule.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{street}</code></dt>
 								<dd><?php _e( 'First line of the site address.', 'my-calendar' ); ?></dd>
@@ -224,7 +224,7 @@ function mc_templates_edit() {
 								<dd><?php _e( 'Custom region.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{country}</code></dt>
-								<dd><?php _e( 'Country for the event location.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Country for the schedule location.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{sitelink}</code></dt>
 								<dd><?php _e( 'Output the URL for the location.', 'my-calendar' ); ?></dd>
@@ -233,22 +233,22 @@ function mc_templates_edit() {
 								<dd><?php _e( 'Schedule address in <a href="http://microformats.org/wiki/hcard">hcard</a> format.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{link_map}</code></dt>
-								<dd><?php _e( 'Link to Google Map to the event, if address information is available.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Link to Google Map to the schedule, if address information is available.', 'my-calendar' ); ?></dd>
 							</dl>
 							<h3><?php _e( 'Category Template Tags', 'my-calendar' ); ?></h3>
 
 							<dl>
 								<dt><code>{category}</code></dt>
-								<dd><?php _e( 'Name of the category of the event.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Name of the category of the schedule.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{icon}</code></dt>
-								<dd><?php _e( 'URL for the event\'s category icon.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'URL for the schedule\'s category icon.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{color}</code></dt>
-								<dd><?php _e( 'Hex code for the event\'s category color.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'Hex code for the schedule\'s category color.', 'my-calendar' ); ?></dd>
 
 								<dt><code>{cat_id}</code></dt>
-								<dd><?php _e( 'ID of the category of the event.', 'my-calendar' ); ?></dd>
+								<dd><?php _e( 'ID of the category of the schedule.', 'my-calendar' ); ?></dd>
 							</dl>
 						</div>
 					</div>
@@ -256,7 +256,9 @@ function mc_templates_edit() {
 			</div>
 		</div>
 	</div>
-	<?php }
+	<?php
+	mc_show_sidebar();
+}
 
 /**
  * Check whether the current key refers to a core template
@@ -363,10 +365,10 @@ function mc_template_description( $key ) {
 			$return = __( '<strong>Core Template:</strong> used in the details pop-up in the main calendar view.', 'my-calendar' );
 			break;
 		case 'details':
-			$return = __( '<strong>Core Template:</strong> used on the single event view.', 'my-calendar' );
+			$return = __( '<strong>Core Template:</strong> used on the single schedule view.', 'my-calendar' );
 			break;
 		case 'list':
-			$return = __( '<strong>Core Template:</strong> used when viewing events in the main calendar list view.', 'my-calendar' );
+			$return = __( '<strong>Core Template:</strong> used when viewing schedules in the main calendar list view.', 'my-calendar' );
 			break;
 		case 'rss':
 			$return = __( '<strong>Core Template:</strong> used for RSS feeds.', 'my-calendar' );

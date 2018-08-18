@@ -1,9 +1,9 @@
 <?php
 /**
- * Schedule Upcoming Schedules Widget
+ * Upcoming Schedules Widget
  *
  * @category Widgets
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -14,10 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Schedule Upcoming Schedules class.
+ * Upcoming Schedules class.
  *
  * @category  Widgets
- * @package   Schedule
+ * @package   My Calendar
  * @author    Joe Dolson
  * @copyright 2009
  * @license   GPLv2 or later
@@ -31,16 +31,16 @@ class My_Calendar_Upcoming_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			false,
-			$name = __( 'Schedule: Upcoming Schedules', 'my-calendar' ),
+			$name = __( 'Upcoming Schedules', 'my-calendar' ),
 			array(
 				'customize_selective_refresh' => true,
-				'description'                 => __( 'List recent and future events.', 'my-calendar' ),
+				'description'                 => __( 'List recent and future schedules.', 'my-calendar' ),
 			)
 		);
 	}
 
 	/**
-	 * Build the Schedule Upcoming Schedules widget output.
+	 * Build the Upcoming Schedules widget output.
 	 *
 	 * @param array $args Widget arguments.
 	 * @param array $instance This instance settings.
@@ -114,7 +114,7 @@ class My_Calendar_Upcoming_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Edit the upcoming events widget.
+	 * Edit the upcoming schedules widget.
 	 *
 	 * @param array $instance Current widget settings.
 	 */
@@ -172,7 +172,7 @@ class My_Calendar_Upcoming_Widget extends WP_Widget {
 			<input class="widefat" type="text" id="<?php echo $this->get_field_id( 'mc_link' ); ?>" name="<?php echo $this->get_field_name( 'mc_link' ); ?>" value="<?php echo $link; ?>"/>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'my_calendar_upcoming_type' ); ?>"><?php _e( 'Display upcoming events by:', 'my-calendar' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'my_calendar_upcoming_type' ); ?>"><?php _e( 'Display upcoming schedules by:', 'my-calendar' ); ?></label>
 			<select id="<?php echo $this->get_field_id( 'my_calendar_upcoming_type' ); ?>" name="<?php echo $this->get_field_name( 'my_calendar_upcoming_type' ); ?>">
 				<option value="events" <?php echo ( 'events' == $type ) ? 'selected="selected"' : ''; ?>><?php _e( 'Schedules (e.g. 2 past, 3 future)', 'my-calendar' ); ?></option>
 				<option value="days" <?php echo ( 'days' == $type ) ? 'selected="selected"' : ''; ?>><?php _e( 'Dates (e.g. 4 days past, 5 forward)', 'my-calendar' ); ?></option>
@@ -241,7 +241,7 @@ class My_Calendar_Upcoming_Widget extends WP_Widget {
 		?>
 		<p>
 			<input type="checkbox" id="<?php echo $this->get_field_id( 'my_calendar_upcoming_show_today' ); ?>" name="<?php echo $this->get_field_name( 'my_calendar_upcoming_show_today' ); ?>" value="yes"<?php echo ( 'yes' == $show_today ) ? ' checked="checked"' : ''; ?> />
-			<label for="<?php echo $this->get_field_id( 'my_calendar_upcoming_show_today' ); ?>"><?php _e( "Include today's events", 'my-calendar' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'my_calendar_upcoming_show_today' ); ?>"><?php _e( "Include today's schedules", 'my-calendar' ); ?></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'my_calendar_no_events_text' ); ?>"><?php _e( 'Show this text if there are no events meeting your criteria:', 'my-calendar' ); ?></label><br/>
@@ -279,7 +279,7 @@ class My_Calendar_Upcoming_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Update the Schedule Upcoming Widget settings.
+	 * Update the My Calendar Upcoming Widget settings.
 	 *
 	 * @param object $new Widget settings new data.
 	 * @param object $instance Widget settings instance.

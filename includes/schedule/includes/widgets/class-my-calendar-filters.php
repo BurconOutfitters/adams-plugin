@@ -1,9 +1,9 @@
 <?php
 /**
- * Schedule Filters Widget
+ * My Calendar Filters Widget
  *
  * @category Widgets
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -14,10 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Schedule Schedule Filters class.
+ * Schedule Filters class.
  *
  * @category  Widgets
- * @package   Schedule
+ * @package   My Calendar
  * @author    Joe Dolson
  * @copyright 2009
  * @license   GPLv2 or later
@@ -31,16 +31,16 @@ class My_Calendar_Filters extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			false,
-			$name = __( 'Schedule: Schedule Filters', 'my-calendar' ),
+			$name = __( 'Schedule Filters', 'my-calendar' ),
 			array(
 				'customize_selective_refresh' => true,
-				'description'                 => __( 'Filter displayed events.', 'my-calendar' ),
+				'description'                 => __( 'Filter displayed schedules.', 'my-calendar' ),
 			)
 		);
 	}
 
 	/**
-	 * Build the Schedule Schedule filters widget output.
+	 * Build the Schedule filters widget output.
 	 *
 	 * @param array $args Widget arguments.
 	 * @param array $instance This instance settings.
@@ -114,7 +114,7 @@ class My_Calendar_Filters extends WP_Widget {
 	}
 
 	/**
-	 * Update the Schedule Schedule Filters Widget settings.
+	 * Update the Schedule Filters Widget settings.
 	 *
 	 * @param object $new Widget settings new data.
 	 * @param object $instance Widget settings instance.

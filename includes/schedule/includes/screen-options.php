@@ -3,7 +3,7 @@
  * Implement screen options on pages where needed.
  *
  * @category Utilities
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -28,7 +28,7 @@ function mc_event_editing() {
 
 add_filter( 'screen_settings', 'mc_show_event_editing', 10, 2 );
 /**
- * Show event editing options for user
+ * Show schedule editing options for user
  *
  * @param string $status string.
  * @param array  $args array Arguments.

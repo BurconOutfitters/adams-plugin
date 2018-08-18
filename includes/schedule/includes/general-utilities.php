@@ -1,9 +1,9 @@
 <?php
 /**
- * General utilities, not directly related to events display, management, or organization.
+ * General utilities, not directly related to schedules display, management, or organization.
  *
  * @category Utilities
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -35,7 +35,7 @@ function mc_switch_sites() {
 }
 
 /**
- * Send a Tweet on approval of event
+ * Send a Tweet on approval of schedule
  *
  * @param string $prev Previous status.
  * @param string $new New status.
@@ -49,10 +49,10 @@ function mc_tweet_approval( $prev, $new ) {
 }
 
 /**
- * Flatten event array; need an array that isn't multi dimensional
- * Once used in upcoming events?
+ * Flatten schedule array; need an array that isn't multi dimensional
+ * Once used in upcoming schedules?
  *
- * @param array $events Array of events.
+ * @param array $events Array of schedules.
  *
  * @return new array
  */
@@ -74,7 +74,7 @@ add_action( 'admin_menu', 'mc_add_outer_box' );
  * Add meta boxes
  */
 function mc_add_outer_box() {
-	add_meta_box( 'mcs_add_event', __( 'Schedule Schedule', 'my-calendar' ), 'mc_add_inner_box', 'mc-events', 'side', 'high' );
+	add_meta_box( 'mcs_add_event', __( 'Schedule', 'my-calendar' ), 'mc_add_inner_box', 'mc-events', 'side', 'high' );
 }
 
 /**
@@ -92,7 +92,7 @@ function mc_add_inner_box() {
 			$content .= '<p>' . sprintf( __( '<strong>Location:</strong> %s', 'my-calendar' ), strip_tags( $event->event_label, mc_strip_tags() ) ) . '</p>';
 		}
 		// Translators: Schedule URL.
-		$content .= '<p>' . sprintf( __( '<a href="%s">Edit event</a>.', 'my-calendar' ), $url ) . '</p>';
+		$content .= '<p>' . sprintf( __( '<a href="%s">Edit schedule</a>.', 'my-calendar' ), $url ) . '</p>';
 
 		echo $content;
 	}
@@ -400,11 +400,11 @@ function reverse_array( $array, $boolean, $order ) {
  * @param string $email target email (if sending via email).
  */
 function mc_debug( $subject, $body, $email = false ) {
-	if ( defined( 'MC_DEBUG' ) && true == MC_DEBUG ) {
+	if ( defined( 'SC_RES_DEBUG' ) && true == SC_RES_DEBUG ) {
 		if ( ! $email ) {
 			$email = get_option( 'admin_email' );
 		}
-		if ( defined( 'MC_DEBUG_METHOD' ) && 'email' == MC_DEBUG_METHOD ) {
+		if ( defined( 'SC_RES_DEBUG_METHOD' ) && 'email' == SC_RES_DEBUG_METHOD ) {
 			wp_mail( get_option( 'admin_email' ), $subject, print_r( $body ) );
 		} else {
 			do_action( 'mc_debug', $subject, $body );

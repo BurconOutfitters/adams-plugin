@@ -3,7 +3,7 @@
  * Construct shortcodes.
  *
  * @category Core
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Create a shortcode for Schedule.
+ * Create a shortcode for My Calendar.
  */
 function mc_generate() {
 	if ( isset( $_POST['generator'] ) ) {
@@ -106,7 +106,7 @@ function mc_generator( $type ) {
 			</p>
 
 			<p id='location-info'>
-				<?php _e( '<strong>Note:</strong> If you provide a location filter value, it must be an exact match for that information as saved with your events. (e.g. "Saint Paul" is not equivalent to "saint paul" or "St. Paul")', 'my-calendar' ); ?>
+				<?php _e( '<strong>Note:</strong> If you provide a location filter value, it must be an exact match for that information as saved with your schedules. (e.g. "Saint Paul" is not equivalent to "saint paul" or "St. Paul")', 'my-calendar' ); ?>
 			</p>
 			<?php
 			// Grab authors and list them.
@@ -257,7 +257,7 @@ function mc_generator( $type ) {
 				<?php
 			}
 			if ( 'upcoming' == $type ) {
-				// Upcoming events only.
+				// Upcoming schedules only.
 				?>
 				<p>
 					<label for="before"><?php _e( 'Schedules/Days Before Current Day', 'my-calendar' ); ?></label>

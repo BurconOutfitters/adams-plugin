@@ -1,9 +1,9 @@
 <?php
 /**
- * Schedule Today's Schedules Widget
+ * Today's Schedules Widget
  *
  * @category Widgets
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -14,10 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Schedule Today's Schedules class.
+ * Today's Schedules class.
  *
  * @category  Widgets
- * @package   Schedule
+ * @package   My Calendar
  * @author    Joe Dolson
  * @copyright 2009
  * @license   GPLv2 or later
@@ -31,16 +31,16 @@ class My_Calendar_Today_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			false,
-			$name = __( 'Schedule: Today\'s Schedules', 'my-calendar' ),
+			$name = __( 'Today\'s Schedules', 'my-calendar' ),
 			array(
 				'customize_selective_refresh' => true,
-				'description'                 => __( 'A list of events today.', 'my-calendar' ),
+				'description'                 => __( 'A list of schedules today.', 'my-calendar' ),
 			)
 		);
 	}
 
 	/**
-	 * Build the Schedule Today's Schedules widget output.
+	 * Build the Today's Schedules widget output.
 	 *
 	 * @param array $args Widget arguments.
 	 * @param array $instance This instance settings.
@@ -90,7 +90,7 @@ class My_Calendar_Today_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Edit the today's events widget.
+	 * Edit the today's schedules widget.
 	 *
 	 * @param array $instance Current widget settings.
 	 */
@@ -162,7 +162,7 @@ class My_Calendar_Today_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Update the Schedule Today's Schedules Widget settings.
+	 * Update the Today's Schedules Widget settings.
 	 *
 	 * @param object $new Widget settings new data.
 	 * @param object $instance Widget settings instance.

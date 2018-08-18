@@ -1,9 +1,9 @@
 <?php
 /**
- * Manage Schedule scripting.
+ * Manage My Calendar scripting.
  *
  * @category Core
- * @package    Adams_Plugin
+ * @package  My Calendar
  * @author   Joe Dolson
  * @license  GPLv2 or later
  * @link     https://www.joedolson.com/my-calendar/
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Edit or configure scripts used with Schedule
+ * Edit or configure scripts used with My Calendar
  */
 function my_calendar_behaviors_edit() {
 	if ( isset( $_POST['mc-js-save'] ) ) {
@@ -53,7 +53,7 @@ function my_calendar_behaviors_edit() {
 	$mc_show_js = stripcslashes( get_option( 'mc_show_js' ) );
 	?>
 	<div class="wrap my-calendar-admin">
-		<h1><?php _e( 'Schedule Scripting', 'my-calendar' ); ?></h1>
+		<h1><?php _e( 'My Calendar Scripting', 'my-calendar' ); ?></h1>
 
 		<div class="postbox-container jcd-wide">
 			<div class="metabox-holder">
@@ -61,7 +61,7 @@ function my_calendar_behaviors_edit() {
 				<div class="ui-sortable meta-box-sortables">
 					<div class="postbox" id="mc-behaviors">
 
-						<h2><?php _e( 'Schedule Script Manager', 'my-calendar' ); ?></h2>
+						<h2><?php _e( 'My Calendar Script Manager', 'my-calendar' ); ?></h2>
 
 						<div class="inside">
 							<form id="my-calendar" method="post" action="<?php echo admin_url( 'admin.php?page=my-calendar-behaviors' ); ?>">
@@ -121,6 +121,7 @@ function my_calendar_behaviors_edit() {
 				</div>
 			</div>
 		</div>
+		<?php mc_show_sidebar(); ?>
 	</div>
 	<?php
 }
