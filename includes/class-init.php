@@ -9,7 +9,7 @@
  * @author     Greg Sweet <greg@ccdzine.com>
  */
 
-//  namespace Adams_Plugin\Includes;
+namespace Burcon\Includes;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -74,11 +74,14 @@ class Init {
 		// Translation functionality.
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-i18n.php';
 
+		// Post types and taxonomies.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/post-types-taxes/class-post-type-tax.php';
+
 		// Admin/backend functionality, scripts and styles.
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin.php';
 
 		// Schedule for employees, volunteers, etc.
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/schedule/class-schedule.php';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/schedule/class-schedule.php';
 
 		// Frontend functionality, scripts and styles.
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'frontend/class-frontend.php';
