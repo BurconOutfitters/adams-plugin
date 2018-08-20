@@ -25,7 +25,7 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
  * @since  1.0.0
  * @access public
  */
-class Init {
+final class Init {
 
 	/**
 	 * Get an instance of the plugin class.
@@ -58,7 +58,7 @@ class Init {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return self
+	 * @return void Constructor method is empty.
 	 */
 	public function __construct() {}
 
@@ -76,6 +76,9 @@ class Init {
 
 		// Post types and taxonomies.
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/post-types-taxes/class-post-type-tax.php';
+
+		// Post and page templates.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/templates/class-templates.php';
 
 		// Admin/backend functionality, scripts and styles.
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin.php';
