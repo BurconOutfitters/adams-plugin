@@ -1148,11 +1148,11 @@ function mc_show_block( $field, $has_data, $data, $echo = true, $default = '' ) 
 					$select = mc_category_select( $data, true, false );
 					$return = '
 						<p class="mc_category">
-							<label for="event_category">' . __( 'Category', 'my-calendar-submissions' ) . '</label>
+							<label for="event_category">' . __( 'Category or Shift', 'my-calendar-submissions' ) . '</label>
 							<select class="widefat" name="event_category" id="e_category">' . $select . '</select>
 						</p>';
 				} else {
-					$return = '<fieldset><legend>' . __( 'Categories', 'my-calendar' ) . '</legend><ul class="checkboxes">' .
+					$return = '<fieldset><legend>' . __( 'Categories and Shifts', 'my-calendar' ) . '</legend><ul class="checkboxes">' .
 						mc_category_select( $data, true, true ) . '
 					</ul></fieldset>';
 				}
@@ -1423,7 +1423,7 @@ function mc_form_fields( $data, $mode, $event_id ) {
 			<fieldset>
 				<legend class="screen-reader-text"><?php _e( 'Schedule Details', 'my-calendar' ); ?></legend>
 				<p>
-					<label for="e_title"><?php _e( 'Schedule Title', 'my-calendar' ); ?></label><br/>
+					<label for="e_title"><?php _e( 'Schedule Name', 'my-calendar' ); ?></label><br/>
 					<input type="text" id="e_title" name="event_title" size="50" maxlength="255" value="<?php echo ( $has_data ) ? apply_filters( 'mc_manage_event_title', stripslashes( esc_attr( $data->event_title ) ), $data ) : ''; ?>" />
 				</p>
 				<?php
@@ -3319,7 +3319,7 @@ function mc_controls( $mode, $has_data, $event, $position = 'header' ) {
 		}
 	}
 
-	$manage_text         = ( current_user_can( 'mc_manage_events' ) ) ? __( 'Manage events', 'my-calendar' ) : __( 'Manage your events', 'my-calendar' );
+	$manage_text         = ( current_user_can( 'mc_manage_events' ) ) ? __( 'Manage schedules', 'my-calendar' ) : __( 'Manage your events', 'my-calendar' );
 	$controls['manage']  = "<span class='dashicons dashicons-calendar' aria-hidden='true'></span>" . '<a href="' . admin_url( 'admin.php?page=my-calendar-manage' ) . '">' . $manage_text . '</a>';
 	$controls['publish'] = '<input type="submit" name="save" class="button-primary" value="' . esc_attr( $publish_text ) . '" />';
 	// Schedule Status settings: draft, published, trash, (custom).

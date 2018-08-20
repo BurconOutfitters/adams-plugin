@@ -357,7 +357,7 @@ function my_calendar_print_group_fields( $data, $mode, $event_id, $group_id = ''
 					</ul>
 				</div>
 				<p>
-					<label for="e_title"><?php _e( 'Schedule Title', 'my-calendar' ); ?> <span><?php _e( '(required)', 'my-calendar' ); ?></span>
+					<label for="e_title"><?php _e( 'Schedule Name', 'my-calendar' ); ?> <span><?php _e( '(required)', 'my-calendar' ); ?></span>
 					<?php
 					if ( ! mc_compare_group_members( $group_id, 'event_title' ) ) {
 							echo ' <span class="nomatch">' . __( 'Fields do not match', 'my-calendar' ) . '</span>';

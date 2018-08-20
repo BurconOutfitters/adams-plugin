@@ -126,7 +126,7 @@ class Schedule {
 	public function custom_canonical() {
 
 		if ( isset( $_GET['mc_id'] ) ) {
-			add_action( 'wp_head', [ $this, 'mc_canonical' ] );
+			add_action( 'wp_head', [ $this, 'canonical' ] );
 			remove_action( 'wp_head', 'rel_canonical' );
 		}
 
@@ -279,8 +279,8 @@ class Schedule {
 
 				add_submenu_page(
 					'my-calendar',
-					__( 'Schedule Categories', 'adams-plugin' ),
-					__( 'Manage Categories', 'adams-plugin' ),
+					__( 'Schedule Categories & Shifts', 'adams-plugin' ),
+					__( 'Categories & Shifts', 'adams-plugin' ),
 					'mc_edit_cats',
 					'my-calendar-categories',
 					'my_calendar_manage_categories'
@@ -407,41 +407,44 @@ function mc_show_sidebar( $show = '', $add = false, $remove = false ) {
 	if ( current_user_can( 'mc_view_help' ) ) {
 		?>
 		<div class="postbox-container jcd-narrow">
-		<div class="metabox-holder">
-		<?php
-		if ( is_array( $add ) ) {
-			foreach ( $add as $key => $value ) {
-				?>
+			<div class="metabox-holder">
+			<?php
+			if ( is_array( $add ) ) {
+				foreach ( $add as $key => $value ) {
+					?>
+					<div class="ui-sortable meta-box-sortables">
+						<div class="not-postbox">
+							<h2><?php echo $key; ?></h2>
+							<div class='<?php echo sanitize_title( $key ); ?> inside'>
+								<?php echo $value; ?>
+							</div>
+						</div>
+					</div>
+					<?php
+				}
+			} ?>
 				<div class="ui-sortable meta-box-sortables">
 					<div class="not-postbox">
-						<h2><?php echo $key; ?></h2>
-						<div class='<?php echo sanitize_title( $key ); ?> inside'>
-							<?php echo $value; ?>
+						<h2><?php _e( 'Get Help', 'adams-plugin' ); ?></h2>
+						<div class="inside">
+							<ul>
+								<li>
+									<a href="https://docs.joedolson.com/my-calendar/quick-start/" target="_blank"><?php _e( 'Documentation', 'adams-plugin' ); ?></a>
+									<ul>
+										<li><?php _e( 'Links to the original "My Calendar" plugin site.', 'adams-plugin' ); ?></li>
+									</ul>
+								</li>
+								<li>
+									<a href="<?php echo admin_url( 'admin.php?page=my-calendar-help' ); ?>#mc-generator"><?php _e( 'Shortcode Generator', 'adams-plugin' ); ?></a>
+								</li>
+								<li>
+									<a href="<?php echo admin_url( 'admin.php?page=my-calendar-help' ); ?>"><?php _e( 'Help with Schedules', 'adams-plugin' ); ?></a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
-				<?php
-			}
-		} ?>
-		<div class="ui-sortable meta-box-sortables">
-			<div class="not-postbox">
-				<h2><?php _e( 'Get Help', 'adams-plugin' ); ?></h2>
-				<div class="inside">
-					<ul>
-						<li>
-							<strong><a href="https://docs.joedolson.com/my-calendar/quick-start/"><?php _e( 'Documentation', 'adams-plugin' ); ?></a></strong>
-						</li>
-						<li>
-							<strong><a href="<?php echo admin_url( 'admin.php?page=my-calendar-help' ); ?>#mc-generator"><?php _e( 'Shortcode Generator', 'adams-plugin' ); ?></a></strong>
-						</li>
-						<li>
-							<a href="<?php echo admin_url( 'admin.php?page=my-calendar-help' ); ?>"><?php _e( 'Help with schedules', 'adams-plugin' ); ?></a>
-						</li>
-					</ul>
-				</div>
 			</div>
-		</div>
-		</div>
 		</div>
 		<?php
 	}
