@@ -76,7 +76,7 @@ if ( ! defined( 'ADAMS_PARENT_NAME' ) ) {
  * @return string Returns the child plugin name.
  */
 if ( ! defined( 'ADAMS_CHILD_NAME' ) ) {
-	define( 'ADAMS_CHILD_NAME', 'Adams\' Pack Station plugin' );
+	define( 'ADAMS_CHILD_NAME', 'Adams\' Pack Station' );
 }
 
 /**
@@ -297,7 +297,7 @@ function controlled_chaos_addon_about_link( $links ) {
 		$settings = [
 			sprintf(
 				'<a href="%1s" class="' . ADAMS_ADMIN_SLUG . '-settings-link">%2s</a>',
-				admin_url( 'options-general.php?page=' . ADAMS_ADMIN_SLUG . '-settings' ),
+				admin_url( 'admin.php?page=burcon-plugin-settings' ),
 				esc_attr( 'Settings', 'adams-plugin' )
 			),
 		];
