@@ -84,7 +84,7 @@ final class Init {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin.php';
 
 		// Schedule for employees, volunteers, etc.
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/schedule/class-schedule.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/schedule/class-schedule.php';
 
 		// Frontend functionality, scripts and styles.
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'frontend/class-frontend.php';
