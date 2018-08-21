@@ -1,0 +1,29 @@
+/**
+ * Dashboard
+ */
+
+/* At a Glance */
+#dashboard_right_now .post-count.concert-count a:before,
+#dashboard_right_now .post-count.concert-count span:before {
+	content: '\f127'
+}
+
+#dashboard_right_now .post-count.family-count a:before,
+#dashboard_right_now .post-count.family-count span:before {
+	content: '\f487'
+}
+
+#dashboard_right_now .post-count.product-count a:before,
+#dashboard_right_now .post-count.product-count span:before {
+	content: '\f513'
+}
+
+#dashboard_right_now .post-count.menu-count a:before,
+#dashboard_right_now .post-count.menu-count span:before {
+	content: '\f511'
+}
+
+#dashboard_right_now .post-count.mc-events-count a:before,
+#dashboard_right_now .post-count.mc-events-count span:before {
+	content: '\f508'
+}
