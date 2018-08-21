@@ -1536,7 +1536,7 @@ function mc_posttypes() {
 	}
 }
 
-add_filter( 'the_posts', 'mc_close_comments' );
+add_filter( 'the_posts', 'mc_close_comments', 100, 1 );
 /**
  * Most people don't want comments open on schedules. This will automatically close them.
  *
@@ -1545,11 +1545,19 @@ add_filter( 'the_posts', 'mc_close_comments' );
  * @return array $posts
  */
 function mc_close_comments( $posts ) {
-	if ( ! is_single() || empty( $posts ) ) {
+
+	/**
+	 * Find Me!
+	 *
+	 * Added the `! is_admin()` checks after the following error was thrown:
+	 * "is_single was called incorrectly. Conditional query tags do not work
+	 * before the query is run. Before then, they always return false."
+	 */
+	if ( ! is_admin() && ( ! is_single() || empty( $posts ) ) ) {
 		return $posts;
 	}
 
-	if ( 'mc-events' == get_post_type( $posts[0]->ID ) ) {
+	if ( ! is_admin() && 'mc-events' == get_post_type( $posts[0]->ID ) ) {
 		if ( apply_filters( 'mc_autoclose_comments', true ) && 'closed' != $posts[0]->comment_status ) {
 			$posts[0]->comment_status = 'closed';
 			$posts[0]->ping_status    = 'closed';
